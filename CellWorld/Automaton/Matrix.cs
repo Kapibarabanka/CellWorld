@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using CellWorld.Neighborhood;
 
 namespace CellWorld.Automaton
 {
@@ -46,18 +44,18 @@ namespace CellWorld.Automaton
         /// Previous cell value (X), then clockwise from N:
         /// X  N  NE  E  SE   S  SW   W  NW
         /// </summary>
-        public int[] Get2DNeighborhood(int i, int j)
+        public CellStateArea Get2DNeighborhood(int i, int j)
         {
-            var x = this[i, j];
-            var n = this[i - 1, j];
-            var ne = this[i - 1, j + 1];
-            var e = this[i, j + 1];
-            var se = this[i + 1, j + 1];
-            var s = this[i + 1, j];
-            var sw = this[i + 1, j - 1];
-            var w = this[i, j - 1];
-            var nw = this[i - 1, j - 1];
-            return new[] { x, n, ne, e, se, s, sw, w, nw };
+            var x = (CellState) this[i, j];
+            var n = (CellState) this[i - 1, j];
+            var ne =(CellState) this[i - 1, j + 1];
+            var e = (CellState) this[i, j + 1];
+            var se =(CellState) this[i + 1, j + 1];
+            var s = (CellState) this[i + 1, j];
+            var sw =(CellState) this[i + 1, j - 1];
+            var w = (CellState) this[i, j - 1];
+            var nw =(CellState) this[i - 1, j - 1];
+            return new CellStateArea(new[] { x, n, ne, e, se, s, sw, w, nw });
         }
 
         private int GetCycledI(int i)

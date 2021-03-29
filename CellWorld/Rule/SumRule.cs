@@ -1,35 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CellWorld.Automaton;
+using CellWorld.Neighborhood;
 
 namespace CellWorld.Rule
 {
+    /// <summary>
+    /// When applied, this rule will sum cells from cell's neighborhood that are in same position as "true" in Condition.
+    /// If this sum is equal to required, will return Result state to the cell.
+    /// </summary>
     public class SumRule : IRule
     {
-        public int Sum;
-        public int CellState;
+        public ConditionArea Condition { get; }
+        public int RequiredSum { get; }
 
-        public int Result;
+        public CellState Result;
 
-        public SumRule(int sum, int cellState, int result)
+        public SumRule(ConditionArea area, int requiredSum, CellState result)
         {
-            Sum = sum;
-            CellState = cellState;
+            Condition = area;
+            RequiredSum = requiredSum;
             Result = result;
         }
 
-        public bool TryApply(int[] cellNeighbors, out int? result)
+        public bool TryApply(CellStateArea cellNeighbors, out CellState result)
         {
-            result = null;
-            var cell = cellNeighbors[0];
-            if ((cell == CellState || CellState == -1) && cellNeighbors.Sum() - cell == Sum)
+            result = CellState.Error;
+            var sum = 0;
+            for (var i = 0; i < StaticData.AreaSize; i++)
             {
-                result = Result;
-                return true;
+                if (Condition[i])
+                {
+                    sum += (int)cellNeighbors[i];
+                }
             }
 
-            return false;
+            if (sum != RequiredSum) return false;
+
+            result = Result;
+            return true;
         }
     }
 }

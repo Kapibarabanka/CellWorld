@@ -1,47 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
+using CellWorld.Neighborhood;
 using CellWorld.Rule;
 
 namespace CellWorld.Automaton
 {
-    public class CAHelper
+    public class CaHelper
     {
-        public static void Test()
+        private const int Pause = 200;
+
+        public static void Test126(int size)
         {
-            var stopWatch = new Stopwatch();
-            var size = 40;
-            var a = new Matrix(size, size);
-            a[0, size/2] = 1;
-
-            // a[3, 5] = 1;
-            // a[3, 6] = 1;
-            // a[3, 7] = 1;
-            //
-            // a[2, 7] = 1;
-            // a[1, 6] = 1;
-
-            stopWatch.Start();
-
-            var result = Simulate(a, 100, StaticData.rule126);
-
-            stopWatch.Stop();
-
-            PrintSimulation(result, 200);
-
-            var ts = stopWatch.Elapsed;
-            var elapsedTime = $"{ts.Minutes:00}m:{ts.Seconds:00}.{ts.Milliseconds / 10:00}s";
-
-            //Console.WriteLine($"Elapsed time: {elapsedTime}");
-            //Console.SetCursorPosition(0, 0);
-            Console.ReadLine();
+            var a = new Matrix(size, size) {[0, size / 2] = 1};
+            Simulate(a, size-1, StaticData.rule126);
         }
 
-        public static List<Matrix> Simulate(Matrix start, int steps, List<IRule> rules)
+        // public static void TestLife(int size, int steps)
+        // {
+        //     var a = new Matrix(size, size)
+        //     {
+        //         [3, 5] = 1,
+        //         [3, 6] = 1,
+        //         [3, 7] = 1,
+        //         [2, 7] = 1,
+        //         [1, 6] = 1
+        //     };
+        //
+        //     Simulate(a, steps, StaticData.ruleLife);
+        // }
+
+        public static void Simulate(Matrix start, int steps, List<IRule> rules)
         {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             var h = start.Height;
             var w = start.Width;
             var matrix = new List<Matrix> { start };
@@ -62,10 +56,15 @@ namespace CellWorld.Automaton
                 matrix.Add(next);
             }
 
-            return matrix;
+            stopWatch.Stop();
+            var ts = stopWatch.Elapsed;
+            var elapsedTime = $"{ts.Minutes:00}m:{ts.Seconds:00}.{ts.Milliseconds / 10:00}s";
+
+            PrintSimulation(matrix, Pause);
+            Console.ReadLine();
         }
 
-        public static int ApplyRules(int[] neighbors, List<IRule> rules)
+        public static int ApplyRules(CellStateArea neighbors, List<IRule> rules)
         {
             foreach (var rule in rules)
             {
@@ -78,6 +77,7 @@ namespace CellWorld.Automaton
 
         public static void PrintSimulation(List<Matrix> simResult, int pause)
         {
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             foreach (var layer in simResult)
             {
                 Thread.Sleep(pause);
