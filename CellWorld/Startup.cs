@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CellWorld.Automaton;
 using Microsoft.Extensions.Logging;
 
 namespace CellWorld
@@ -30,11 +31,8 @@ namespace CellWorld
 
             app.UseRouting();
 
-            Console.WriteLine("TEST OUTPUT");
-            Thread.Sleep(5000);
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine("UPDATED TEST");
-            Console.ReadLine();
+            CAHelper.Test();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
