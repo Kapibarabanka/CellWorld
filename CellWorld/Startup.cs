@@ -4,36 +4,44 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CellWorld.Automaton;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Logging;
 
 namespace CellWorld
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+            app.UseStaticFiles();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
 
             CaHelper.Test126(40);
 
-            app.UseEndpoints(endpoints =>
+            app.UseSpa(spa =>
             {
-                endpoints.MapGet("/", async context =>
+                spa.Options.SourcePath = "client";
+
+                if (env.IsDevelopment())
                 {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
     }
