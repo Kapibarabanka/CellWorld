@@ -15,10 +15,10 @@ table {
     border:1px solid #fff;
   }
 
-  table td.highlighted {
-    background-color:#991;
+  table td.alive {
+    background-color:rgb(22, 153, 17);
   }
 
-  table td.default {
-    background-color:#919;
+  table td.dead {
+    background-color:rgb(115, 51, 199);
   }

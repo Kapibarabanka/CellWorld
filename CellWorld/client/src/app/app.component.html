@@ -1,12 +1,11 @@
-<button mat-raised-button (click)="addColumn()"> Add column </button>
-<button mat-raised-button (click)="removeColumn()"> Remove column </button>
-<button mat-raised-button (click)="shuffle()"> Shuffle </button>
+<button mat-raised-button (click)="changeState()"> Change state </button>
+<p>Current State: {{state}}</p>
 
 <table>
-    <tr *ngFor="let row of matrix">
-      <td *ngFor="let cell of row" (click)="onMouseDown()"
-      [class]="cell == 1 ? 'highlighted' : 'default'">
-    {{cell}}
-</td>
-    </tr>
-  </table>
+  <tr *ngFor="let row of matrix; let i = index">
+    <td *ngFor="let cell of row; let j = index"  (mousedown)="onMouseDown(i, j)"
+      (mouseover)="onMouseOver(i, j)" [style.background-color]="getColor(cell)">
+      {{cell}}
+    </td>
+  </tr>
+</table>

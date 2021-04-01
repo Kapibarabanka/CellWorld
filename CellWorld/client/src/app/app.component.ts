@@ -1,35 +1,63 @@
-import {Component} from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-    selector: 'app',
-    styleUrls: ['./app.component.css'],
-    templateUrl: './app.component.html'
+  selector: "app",
+  styleUrls: ["./app.component.css"],
+  templateUrl: "./app.component.html",
 })
 
-export class AppComponent { 
-  status: boolean = false;
+export class AppComponent {
+  state: number = 1;
+  isMouseDown: boolean = false;
   size: number = 5;
-  matrix = [
-    [0, 1, 0],
-    [0, 1, 0],
-    [0, 1, 0]
+  matrix = []
+
+  colors = [
+    'green', // alive
+    "purple" // dead
   ]
 
-  addColumn() {
+  constructor() {
+    for (var i = 0; i < this.size; i++) {
+      this.matrix[i] = []
+      for (var j = 0; j < this.size; j++) {
+        this.matrix[i][j] = 0;
+      }
+    }
 
+    document.onmouseup = () => {
+      console.log("global mouse up");
+      this.isMouseDown = false;
+    };
   }
 
-  removeColumn() {
-
+  changeState() {
+    this.state = this.state == 0 ? 1 : 0;
   }
 
-  shuffle() {
+  removeColumn() {}
 
+  shuffle() {}
+
+  onMouseDown(i: number, j: number) {
+    this.isMouseDown = true;
+    this.matrix[i][j] = this.state;
+    console.log(`mouse down; i = ${i} j = ${j}`);
+    return false;
   }
 
-  onMouseDown() {
-    this.status = !this.status;
-    console.log("CLICK")
-    return false; // prevent text selection
+  onMouseOver(i: number, j: number) {
+    if (this.isMouseDown) {
+      this.matrix[i][j] = this.state;
+      console.log(`mouse over; i = ${i} j = ${j} state = ${this.matrix[i][j].state}`);
+    }
+  }
+
+  getColor(state: number) {
+    if (state < this.colors.length) {
+      return this.colors[state]
+    }
+
+    return this.colors[0];
   }
 }
