@@ -1,11 +1,34 @@
-import { Component } from '@angular/core';
-      
+import {Component} from '@angular/core';
+
 @Component({
     selector: 'app',
-    template: `<label>Введите имя:</label>
-                 <input [(ngModel)]="name" placeholder="name">
-                 <h2>Добро пожаловать {{name}}!</h2>`
+    styleUrls: ['./app.component.css'],
+    templateUrl: './app.component.html'
 })
+
 export class AppComponent { 
-    name= '';
+  isMouseDown: boolean = false;
+  size: number = 5;
+  matrix = [
+    [0, 1, 0],
+    [0, 1, 0],
+    [0, 1, 0]
+  ]
+
+  addColumn() {
+
+  }
+
+  removeColumn() {
+
+  }
+
+  shuffle() {
+
+  }
+
+  onMouseDown() {
+    this.isMouseDown = true;
+    return false; // prevent text selection
+  }
 }

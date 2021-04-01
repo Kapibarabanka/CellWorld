@@ -1,0 +1,15 @@
+<button mat-raised-button (click)="addColumn()"> Add column </button>
+<button mat-raised-button (click)="removeColumn()"> Remove column </button>
+<button mat-raised-button (click)="shuffle()"> Shuffle </button>
+
+<table>
+    <ng-container *ngFor="let row of matrix">
+        <tr>
+                <ng-container *ngFor="let cell of row">
+                    <td>
+                        {{cell}}
+                </td>
+            </ng-container>
+            </tr>
+    </ng-container>
+</table>

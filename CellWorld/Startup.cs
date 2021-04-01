@@ -32,7 +32,7 @@ namespace CellWorld
                 app.UseSpaStaticFiles();
             }
 
-            CaHelper.Test126(40);
+            //CaHelper.Test126(40);
 
             app.UseSpa(spa =>
             {
