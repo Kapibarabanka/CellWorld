@@ -1,24 +1,12 @@
-table {
-    width: 100%;
-  }
-  
-  button {
-    margin: 16px 8px;
-  }
+button {
+  margin: 16px 8px;
+}
 
-  table td {
-    width:100px;
-    height:100px;
-    text-align:center;
-    vertical-align:middle;
-    background-color:#ccc;
-    border:1px solid #fff;
-  }
-
-  table td.alive {
-    background-color:rgb(22, 153, 17);
-  }
-
-  table td.dead {
-    background-color:rgb(115, 51, 199);
-  }
+table td {
+  width:3px;
+  height:3px;
+  text-align:center;
+  vertical-align:middle;
+  background-color:#ccc;
+  border:0.5px solid rgb(179, 177, 177);
+}

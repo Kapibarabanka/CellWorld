@@ -1,11 +1,13 @@
 <button mat-raised-button (click)="changeState()"> Change state </button>
+<button mat-raised-button (click)="simulate()"> Simulate </button>
+<button mat-raised-button (click)="clear()"> Clear </button>
 <p>Current State: {{state}}</p>
 
 <table>
   <tr *ngFor="let row of matrix; let i = index">
     <td *ngFor="let cell of row; let j = index"  (mousedown)="onMouseDown(i, j)"
       (mouseover)="onMouseOver(i, j)" [style.background-color]="getColor(cell)">
-      {{cell}}
+
     </td>
   </tr>
 </table>
