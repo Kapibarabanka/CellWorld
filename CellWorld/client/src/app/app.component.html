@@ -3,13 +3,10 @@
 <button mat-raised-button (click)="shuffle()"> Shuffle </button>
 
 <table>
-    <ng-container *ngFor="let row of matrix">
-        <tr>
-                <ng-container *ngFor="let cell of row">
-                    <td>
-                        {{cell}}
-                </td>
-            </ng-container>
-            </tr>
-    </ng-container>
-</table>
+    <tr *ngFor="let row of matrix">
+      <td *ngFor="let cell of row" (click)="onMouseDown()"
+      [class]="cell == 1 ? 'highlighted' : 'default'">
+    {{cell}}
+</td>
+    </tr>
+  </table>

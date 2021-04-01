@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
 })
 
 export class AppComponent { 
-  isMouseDown: boolean = false;
+  status: boolean = false;
   size: number = 5;
   matrix = [
     [0, 1, 0],
@@ -28,7 +28,8 @@ export class AppComponent {
   }
 
   onMouseDown() {
-    this.isMouseDown = true;
+    this.status = !this.status;
+    console.log("CLICK")
     return false; // prevent text selection
   }
 }

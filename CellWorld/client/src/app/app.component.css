@@ -15,15 +15,10 @@ table {
     border:1px solid #fff;
   }
 
-  table td:hover {
-    width:100px;
-    height:100px;
-    text-align:center;
-    vertical-align:middle;
-    background-color:#999;
-    border:1px solid #fff;
-  }
-  
   table td.highlighted {
-    background-color:#999;
+    background-color:#991;
+  }
+
+  table td.default {
+    background-color:#919;
   }
