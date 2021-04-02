@@ -1,3 +1,4 @@
+import { Matrix } from './Matrix';
 import { Component } from "@angular/core";
 import { timer } from "rxjs";
 import {take} from 'rxjs/operators';  
@@ -9,10 +10,12 @@ import {take} from 'rxjs/operators';
 })
 
 export class AppComponent {
+  speed: number = 10;
   state: number = 1;
   isMouseDown: boolean = false;
-  size: number = 100;
-  matrix = []
+  size: number = 40;
+  currentLayer: Matrix;
+  simulation: Array<Matrix>;
 
   colors = [
     'white', // dead
@@ -20,13 +23,7 @@ export class AppComponent {
   ]
 
   constructor() {
-    for (var i = 0; i < this.size; i++) {
-      this.matrix[i] = []
-      for (var j = 0; j < this.size; j++) {
-        this.matrix[i][j] = 0;
-      }
-    }
-
+    this.currentLayer = new Matrix(this.size);
     document.onmouseup = () => {
       this.isMouseDown = false;
     };
@@ -37,21 +34,31 @@ export class AppComponent {
   }
 
   simulate() {
-    timer(0, 1).pipe(
+    this.simulation = [];
+    for (var i = 0; i < this.size; i++){
+      let newLayer = new Matrix(this.size);
+      newLayer.matrix[i][i] = 1;
+      this.simulation[i] = newLayer;
+    }
+    const start = Date.now();
+    timer(0, this.speed).pipe(
       take(this.size)).subscribe(x=>{
-        this.matrix[x][x] = 1;
-       })
+        this.currentLayer = this.simulation[x]
+        if (x == this.size - 1){
+          console.log(`simulation time: ${Date.now() - start}`)
+        }
+       });
   }
 
   onMouseDown(i: number, j: number) {
     this.isMouseDown = true;
-    this.matrix[i][j] = this.state;
+    this.currentLayer.matrix[i][j] = this.state;
     return false;
   }
 
   onMouseOver(i: number, j: number) {
     if (this.isMouseDown) {
-      this.matrix[i][j] = this.state;
+      this.currentLayer.matrix[i][j] = this.state;
     }
   }
 
@@ -66,7 +73,7 @@ export class AppComponent {
   clear(){
     for (var i = 0; i < this.size; i++) {
       for (var j = 0; j < this.size; j++) {
-        this.matrix[i][j] = 0;
+        this.currentLayer.matrix[i][j] = 0;
       }
     }
   }

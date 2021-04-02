@@ -4,7 +4,7 @@
 <p>Current State: {{state}}</p>
 
 <table>
-  <tr *ngFor="let row of matrix; let i = index">
+  <tr *ngFor="let row of currentLayer.matrix; let i = index">
     <td *ngFor="let cell of row; let j = index"  (mousedown)="onMouseDown(i, j)"
       (mouseover)="onMouseOver(i, j)" [style.background-color]="getColor(cell)">
 
