@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using CellWorld.Neighborhood;
 using CellWorld.Rule;
@@ -11,31 +12,9 @@ namespace CellWorld.Automaton
     {
         private const int Pause = 200;
 
-        public static void Test126(int size)
+        public static int[][][] Simulate(Matrix start, List<IRule> rules, int steps)
         {
-            var a = new Matrix(size, size) {[0, size / 2] = 1};
-            Simulate(a, size-1, StaticData.rule126);
-        }
-
-        // public static void TestLife(int size, int steps)
-        // {
-        //     var a = new Matrix(size, size)
-        //     {
-        //         [3, 5] = 1,
-        //         [3, 6] = 1,
-        //         [3, 7] = 1,
-        //         [2, 7] = 1,
-        //         [1, 6] = 1
-        //     };
-        //
-        //     Simulate(a, steps, StaticData.ruleLife);
-        // }
-
-        public static void Simulate(Matrix start, int steps, List<IRule> rules)
-        {
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
-
+            var size = start.Height;
             var h = start.Height;
             var w = start.Width;
             var matrix = new List<Matrix> { start };
@@ -56,12 +35,7 @@ namespace CellWorld.Automaton
                 matrix.Add(next);
             }
 
-            stopWatch.Stop();
-            var ts = stopWatch.Elapsed;
-            var elapsedTime = $"{ts.Minutes:00}m:{ts.Seconds:00}.{ts.Milliseconds / 10:00}s";
-
-            PrintSimulation(matrix, Pause);
-            Console.ReadLine();
+            return matrix.Select(m => m.M).ToArray();
         }
 
         public static int ApplyRules(CellStateArea neighbors, List<IRule> rules)

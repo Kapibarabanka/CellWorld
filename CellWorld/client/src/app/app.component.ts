@@ -1,4 +1,4 @@
-import { Matrix } from './Matrix';
+import { DataService } from './data.service';
 import { Component } from "@angular/core";
 import { timer } from "rxjs";
 import {take} from 'rxjs/operators';  
@@ -7,6 +7,7 @@ import {take} from 'rxjs/operators';
   selector: "app",
   styleUrls: ["./app.component.css"],
   templateUrl: "./app.component.html",
+  providers: [DataService]
 })
 
 export class AppComponent {
@@ -14,16 +15,17 @@ export class AppComponent {
   state: number = 1;
   isMouseDown: boolean = false;
   size: number = 40;
-  currentLayer: Matrix;
-  simulation: Array<Matrix>;
+  currentLayer: Array<Array<number>> = [];
+  simulation: Array<Array<Array<number>>> = [];
 
   colors = [
     'white', // dead
     "black" // alive
   ]
 
-  constructor() {
-    this.currentLayer = new Matrix(this.size);
+  constructor(private dataService: DataService) {
+    this.currentLayer = this.getEmptyMatrix(this.size)
+
     document.onmouseup = () => {
       this.isMouseDown = false;
     };
@@ -34,12 +36,7 @@ export class AppComponent {
   }
 
   simulate() {
-    this.simulation = [];
-    for (var i = 0; i < this.size; i++){
-      let newLayer = new Matrix(this.size);
-      newLayer.matrix[i][i] = 1;
-      this.simulation[i] = newLayer;
-    }
+    this.currentLayer = []
     const start = Date.now();
     timer(0, this.speed).pipe(
       take(this.size)).subscribe(x=>{
@@ -50,15 +47,21 @@ export class AppComponent {
        });
   }
 
+  simulate126() {
+    this.dataService.simulate126(this.currentLayer)
+      .subscribe((simulation: number[][][]) => this.simulation = simulation);
+    this.simulate();
+  }
+
   onMouseDown(i: number, j: number) {
     this.isMouseDown = true;
-    this.currentLayer.matrix[i][j] = this.state;
+    this.currentLayer[i][j] = this.state;
     return false;
   }
 
   onMouseOver(i: number, j: number) {
     if (this.isMouseDown) {
-      this.currentLayer.matrix[i][j] = this.state;
+      this.currentLayer[i][j] = this.state;
     }
   }
 
@@ -73,8 +76,20 @@ export class AppComponent {
   clear(){
     for (var i = 0; i < this.size; i++) {
       for (var j = 0; j < this.size; j++) {
-        this.currentLayer.matrix[i][j] = 0;
+        this.currentLayer[i][j] = 0;
       }
     }
+  }
+
+  private getEmptyMatrix(size: number): Array<Array<number>> {
+    const res = [];
+    for (var i = 0; i < size; i++) {
+      res[i] = [];
+      for (var j = 0; j < size; j++) {
+        res[i][j] = 0;
+      }
+    }
+
+    return res;
   }
 }

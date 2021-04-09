@@ -1,33 +1,42 @@
 ﻿using System;
+using System.Linq;
 using CellWorld.Neighborhood;
 
 namespace CellWorld.Automaton
 {
     public class Matrix
     {
-        private int[,] matrix;
+        public int[][] M { get; }
 
         public int Height { get; }
         public int Width { get; }
-        public Matrix(int[,] m)
+        public Matrix(int[][] m)
         {
-            matrix = m;
-            Height = m.GetLength(0);
-            Width = m.GetLength(1);
+            M = m;
+            Height = m.Length;
+            Width = m[0].Length;
+            if (m.Any(row => row.Length != Width))
+            {
+                throw new ArgumentException("All rows in matrix doesn't have same length");
+            }
         }
 
         public Matrix(int height, int width)
         {
-            matrix = new int[height, width];
+            M = new int[height][];
+            for (var i = 0; i < height; i++)
+            {
+                M[i] = new int[width];
+            }
             Height = height;
             Width = width;
         }
 
         public int this[int i, int j]
         {
-            get => matrix[GetCycledI(i), GetCycledJ(j)];
+            get => M[GetCycledI(i)][GetCycledJ(j)];
 
-            set => matrix[i, j] = value;
+            set => M[i][j] = value;
         }
 
         public int[] Get1DNeighbors(int i, int j)
