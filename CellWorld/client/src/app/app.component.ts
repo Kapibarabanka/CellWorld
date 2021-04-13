@@ -2,8 +2,8 @@ import { DataService } from './data.service';
 import { Component, ElementRef, OnInit } from "@angular/core";
 import { timer } from "rxjs";
 import {take} from 'rxjs/operators';  
-import * as p5 from 'p5';
-
+import {CellGrid} from './cell-grid'
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: "app",
@@ -13,10 +13,12 @@ import * as p5 from 'p5';
 })
 
 export class AppComponent implements OnInit {
-  speed: number = 100;
+  public gridId = 'sketch-holder'
+  private cellGrid: CellGrid;
+  speed: number = 10;
   state: number = 1;
   isMouseDown: boolean = false;
-  size: number = 40;
+  size: number = 200;
   currentLayer: Array<Array<number>> = [];
   simulation: Array<Array<Array<number>>> = [];
 
@@ -33,17 +35,30 @@ export class AppComponent implements OnInit {
     };
   }
 
+  ngOnInit() {
+    this.cellGrid = new CellGrid(this.gridId, this.size);
+  }
+
   changeState() {
     this.state = this.state == 0 ? 1 : 0;
   }
 
   simulate() {
-    this.myp5.myColor = 0;
+    this.cellGrid.myColor = 0;
     //this.currentLayer = []
     const start = Date.now();
     timer(0, this.speed).pipe(
       take(this.size)).subscribe(x=>{
-        this.myp5.myColor += 10;
+        
+        if (this.cellGrid.myColor <= 100) {
+          this.cellGrid.myColor = 255;
+        } else {
+          this.cellGrid.myColor -= 10;
+        }
+        if (this.simulation.length > 0) {
+          console.log('ok'+x)
+        }
+        this.cellGrid.currentLayer = this.simulation[x]
         // this.currentLayer = this.simulation[x]
         // if (x == this.size - 1){
         //   console.log(`simulation time: ${Date.now() - start}`)
@@ -53,8 +68,10 @@ export class AppComponent implements OnInit {
 
   simulate126() {
     this.dataService.simulate126(this.currentLayer)
-      .subscribe((simulation: number[][][]) => this.simulation = simulation);
-    this.simulate();
+      .subscribe((simulation: number[][][]) => {
+        this.simulation = simulation
+        this.simulate();
+      });
   }
 
   onMouseDown(i: number, j: number) {
@@ -96,28 +113,4 @@ export class AppComponent implements OnInit {
 
     return res;
   }
-
-  private myp5: any;
-  ngOnInit() {
-    this.createCanvas();
-  }
-  
-  private createCanvas() {
-    this.myp5 = new p5(this.sketch);
-    this.myp5.myColor = 0;
-  }
-  
-  private sketch(s: any) {
-    s.setup = () => {
-      let canvas = s.createCanvas(700, 600);
-      canvas.parent('sketch-holder');
-    };
-  
-    s.draw = () => {
-      s.background(s.myColor);
-      s.fill(0);
-      s.rect(s.width / 2, s.height / 2, 50, 50);
-    };
-  }
-
 }

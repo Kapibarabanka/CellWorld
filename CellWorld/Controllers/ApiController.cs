@@ -17,7 +17,9 @@ namespace CellWorld.Controllers
         public int[][][] Simulate126(StartConditions startConditions)
         {
             var startMatrix = new Matrix(startConditions.Matrix);
-            return CaHelper.Simulate(startMatrix, StaticData.rule126, startMatrix.Height - 1);
+            startMatrix[0, startMatrix.Width / 2] = 1;
+            var res = CaHelper.Simulate(startMatrix, StaticData.rule126, startMatrix.Height - 1);
+            return res;
         }
     }
 }
