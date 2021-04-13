@@ -3,6 +3,8 @@
 <button mat-raised-button (click)="clear()"> Clear </button>
 <p>Current State: {{state}}</p>
 
+<div id= "sketch-holder"></div>
+
 <table>
   <tr *ngFor="let row of currentLayer; let i = index">
     <td *ngFor="let cell of row; let j = index"  (mousedown)="onMouseDown(i, j)"

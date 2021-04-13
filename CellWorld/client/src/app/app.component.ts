@@ -1,7 +1,9 @@
 import { DataService } from './data.service';
-import { Component } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 import { timer } from "rxjs";
 import {take} from 'rxjs/operators';  
+import * as p5 from 'p5';
+
 
 @Component({
   selector: "app",
@@ -10,8 +12,8 @@ import {take} from 'rxjs/operators';
   providers: [DataService]
 })
 
-export class AppComponent {
-  speed: number = 10;
+export class AppComponent implements OnInit {
+  speed: number = 100;
   state: number = 1;
   isMouseDown: boolean = false;
   size: number = 40;
@@ -36,14 +38,16 @@ export class AppComponent {
   }
 
   simulate() {
-    this.currentLayer = []
+    this.myp5.myColor = 0;
+    //this.currentLayer = []
     const start = Date.now();
     timer(0, this.speed).pipe(
       take(this.size)).subscribe(x=>{
-        this.currentLayer = this.simulation[x]
-        if (x == this.size - 1){
-          console.log(`simulation time: ${Date.now() - start}`)
-        }
+        this.myp5.myColor += 10;
+        // this.currentLayer = this.simulation[x]
+        // if (x == this.size - 1){
+        //   console.log(`simulation time: ${Date.now() - start}`)
+        // }
        });
   }
 
@@ -92,4 +96,28 @@ export class AppComponent {
 
     return res;
   }
+
+  private myp5: any;
+  ngOnInit() {
+    this.createCanvas();
+  }
+  
+  private createCanvas() {
+    this.myp5 = new p5(this.sketch);
+    this.myp5.myColor = 0;
+  }
+  
+  private sketch(s: any) {
+    s.setup = () => {
+      let canvas = s.createCanvas(700, 600);
+      canvas.parent('sketch-holder');
+    };
+  
+    s.draw = () => {
+      s.background(s.myColor);
+      s.fill(0);
+      s.rect(s.width / 2, s.height / 2, 50, 50);
+    };
+  }
+
 }
