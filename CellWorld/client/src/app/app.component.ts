@@ -1,9 +1,8 @@
 import { DataService } from './data.service';
-import { Component, ElementRef, OnInit } from "@angular/core";
-import { timer } from "rxjs";
-import {take} from 'rxjs/operators';  
+import { Component, OnInit } from "@angular/core";
+import { Observable, Subject, timer } from "rxjs";
+import {takeUntil} from 'rxjs/operators';  
 import {CellGrid} from './cell-grid'
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: "app",
@@ -14,12 +13,11 @@ import { threadId } from 'worker_threads';
 
 export class AppComponent implements OnInit {
   public gridId = 'sketch-holder'
-  private cellGrid: CellGrid;
-  speed: number = 10;
-  state: number = 1;
-  isMouseDown: boolean = false;
-  size: number = 200;
-  currentLayer: Array<Array<number>> = [];
+  public cellGrid: CellGrid;
+  public needsToStop = new Subject<true>();
+  public needsToSimulateLife = new Subject<true>();
+  public startLayer: Array<Array<number>>
+  isMouseDown: boolean = false
   simulation: Array<Array<Array<number>>> = [];
 
   colors = [
@@ -27,12 +25,14 @@ export class AppComponent implements OnInit {
     "black" // alive
   ]
 
-  constructor(private dataService: DataService) {
-    this.currentLayer = this.getEmptyMatrix(this.size)
+  speed: number = 40;
+  size: number = 100;
+  stepsPerRequest = 50;
 
-    document.onmouseup = () => {
-      this.isMouseDown = false;
-    };
+  constructor(private dataService: DataService) {
+    this.needsToSimulateLife.subscribe(()=>{
+      this.simulate(this.dataService.simulateLife(this.startLayer, this.stepsPerRequest))
+    })
   }
 
   ngOnInit() {
@@ -40,77 +40,40 @@ export class AppComponent implements OnInit {
   }
 
   changeState() {
-    this.state = this.state == 0 ? 1 : 0;
+    this.cellGrid.currentState = this.cellGrid.currentState == 0 ? 1 : 0;
   }
 
-  simulate() {
-    this.cellGrid.myColor = 0;
-    //this.currentLayer = []
-    const start = Date.now();
+  drawSimulation() {
+    this.simulation = [];
     timer(0, this.speed).pipe(
-      take(this.size)).subscribe(x=>{
-        
-        if (this.cellGrid.myColor <= 100) {
-          this.cellGrid.myColor = 255;
-        } else {
-          this.cellGrid.myColor -= 10;
+      takeUntil(this.needsToStop)).subscribe(x=>{
+        if (!!this.simulation[0]){
+          this.cellGrid.currentLayer = this.simulation.shift();
+          if (this.simulation.length == 20) {
+            this.startLayer = this.simulation.pop();
+            this.needsToSimulateLife.next(true);
+          }
         }
-        if (this.simulation.length > 0) {
-          console.log('ok'+x)
-        }
-        this.cellGrid.currentLayer = this.simulation[x]
-        // this.currentLayer = this.simulation[x]
-        // if (x == this.size - 1){
-        //   console.log(`simulation time: ${Date.now() - start}`)
-        // }
        });
   }
 
+  simulate(result: Observable<Object>) {
+    result.subscribe((simulation: number[][][]) => {
+      this.simulation = this.simulation.concat(simulation)
+    });
+  }
+
   simulate126() {
-    this.dataService.simulate126(this.currentLayer)
-      .subscribe((simulation: number[][][]) => {
-        this.simulation = simulation
-        this.simulate();
-      });
+    this.simulate(this.dataService.simulate126(this.cellGrid.currentLayer))
   }
 
-  onMouseDown(i: number, j: number) {
-    this.isMouseDown = true;
-    this.currentLayer[i][j] = this.state;
-    return false;
+  simulateLife() {
+    this.drawSimulation();
+    this.startLayer = this.cellGrid.currentLayer
+    this.needsToSimulateLife.next(true);
   }
 
-  onMouseOver(i: number, j: number) {
-    if (this.isMouseDown) {
-      this.currentLayer[i][j] = this.state;
-    }
-  }
-
-  getColor(state: number) {
-    if (state < this.colors.length) {
-      return this.colors[state]
-    }
-
-    return this.colors[0];
-  }
-
-  clear(){
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
-        this.currentLayer[i][j] = 0;
-      }
-    }
-  }
-
-  private getEmptyMatrix(size: number): Array<Array<number>> {
-    const res = [];
-    for (var i = 0; i < size; i++) {
-      res[i] = [];
-      for (var j = 0; j < size; j++) {
-        res[i][j] = 0;
-      }
-    }
-
-    return res;
+  stopSimulation() {
+    this.needsToStop.next(true);
   }
 }

@@ -14,7 +14,6 @@ namespace CellWorld.Automaton
 
         public static int[][][] Simulate(Matrix start, List<IRule> rules, int steps)
         {
-            var size = start.Height;
             var h = start.Height;
             var w = start.Width;
             var matrix = new List<Matrix> { start };
@@ -38,6 +37,43 @@ namespace CellWorld.Automaton
             return matrix.Select(m => m.M).ToArray();
         }
 
+        public static int[][][] SimulateLife(Matrix start, int steps)
+        {
+            var h = start.Height;
+            var w = start.Width;
+            var matrix = new List<Matrix> { start };
+            for (var step = 0; step < steps; step++)
+            {
+                var prev = matrix[step];
+                var next = new Matrix(h, w);
+                for (var i = 0; i < h; i++)
+                {
+                    for (var j = 0; j < w; j++)
+                    {
+                        var neighbors = prev.Get2DNeighborhood(i, j);
+                        next[i, j] = ApplyLifeRules(neighbors);
+                    }
+                }
+
+                matrix.Add(next);
+            }
+
+            return matrix.Select(m => m.M).ToArray();
+        }
+
+        public static int ApplyLifeRules(CellStateArea neighbors)
+        {
+            var x = neighbors[Direction.X];
+            var other = neighbors.Neighbors.Skip(1);
+            var sum = other.Sum(s => (int) s);
+            if ((x == CellState.Alive && (sum == 2 || sum == 3))
+                || (x == CellState.Dead && sum == 3))
+            {
+                return 1;
+            }
+            
+            return 0;
+        }
         public static int ApplyRules(CellStateArea neighbors, List<IRule> rules)
         {
             foreach (var rule in rules)

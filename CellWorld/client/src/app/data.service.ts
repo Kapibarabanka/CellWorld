@@ -11,11 +11,11 @@ export class DataService {
     constructor(private http: HttpClient) {
     }
 
-    simulate(startMatrix: Array<Array<number>>) {
-        return this.http.post(this.url + "simulate", new StartConditions(startMatrix, "someRule"));
+    simulateLife(startMatrix: Array<Array<number>>, steps: number) {
+        return this.http.post(this.url + "simulateLife", new StartConditions(startMatrix, "someRule", steps));
     }
 
     simulate126(startMatrix: Array<Array<number>>) {
-        return this.http.post(this.url + "simulate126", new StartConditions(startMatrix, "someRule"));
+        return this.http.post(this.url + "simulate126", new StartConditions(startMatrix, "someRule", startMatrix.length));
     }
 }

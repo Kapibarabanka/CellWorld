@@ -1,17 +1,10 @@
 <div>
   <button mat-raised-button (click)="changeState()"> Change state </button>
   <button mat-raised-button (click)="simulate126()"> Simulate 126</button>
-  <button mat-raised-button (click)="clear()"> Clear </button>
-  <p>Current State: {{state}}</p>
+  <button mat-raised-button (click)="simulateLife()"> Simulate Life</button>
+  <button mat-raised-button (click)="stopSimulation()"> Stop Simulation</button>
+  <button mat-raised-button (click)="cellGrid.clearGrid()"> Clear </button>
+  <p>Current State: {{cellGrid.currentState}}</p>
 </div>
 
-<div [id] = "gridId"></div>
-
-<!-- <table>
-  <tr *ngFor="let row of currentLayer; let i = index">
-    <td *ngFor="let cell of row; let j = index"  (mousedown)="onMouseDown(i, j)"
-      (mouseover)="onMouseOver(i, j)" [style.background-color]="getColor(cell)">
-
-    </td>
-  </tr>
-</table> -->
+<div [id] = "gridId" align="center"></div>

@@ -9,5 +9,6 @@ namespace CellWorld.Automaton
     {
         public int[][] Matrix { get; set; }
         public string Rule { get; set; }
+        public int Steps { get; set; }
     }
 }
