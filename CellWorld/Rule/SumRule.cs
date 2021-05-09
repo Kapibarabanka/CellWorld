@@ -4,39 +4,37 @@ using CellWorld.Neighborhood;
 namespace CellWorld.Rule
 {
     /// <summary>
-    /// When applied, this rule will sum cells from cell's neighborhood that are in same position as "true" in Condition.
+    /// When applied, this rule will sum cells from cell's neighborhood that are in same position as "true" in Bool.
     /// If this sum is equal to required, will return Result state to the cell.
     /// </summary>
     public class SumRule : IRule
     {
-        public ConditionArea Condition { get; }
+        public BoolArea CellsToSum { get; }
         public int RequiredSum { get; }
 
-        public CellState Result;
+        public sbyte Result { get; }
 
-        public SumRule(ConditionArea area, int requiredSum, CellState result)
+        public SumRule(BoolArea cellsToSum, int requiredSum, sbyte result)
         {
-            Condition = area;
+            CellsToSum = cellsToSum;
             RequiredSum = requiredSum;
             Result = result;
         }
 
-        public bool TryApply(CellStateArea cellNeighbors, out CellState result)
+        public sbyte? TryApply(CellStateArea cellNeighbors)
         {
-            result = CellState.Error;
             var sum = 0;
             for (var i = 0; i < StaticData.AreaSize; i++)
             {
-                if (Condition[i])
+                if (CellsToSum[i])
                 {
-                    sum += (int)cellNeighbors[i];
+                    sum += cellNeighbors[i];
                 }
             }
 
-            if (sum != RequiredSum) return false;
-
-            result = Result;
-            return true;
+            return sum == RequiredSum
+                ? (sbyte?) Result
+                : null;
         }
     }
 }

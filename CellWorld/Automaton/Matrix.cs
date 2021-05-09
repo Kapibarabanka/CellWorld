@@ -6,11 +6,11 @@ namespace CellWorld.Automaton
 {
     public class Matrix
     {
-        public int[][] M { get; }
+        public sbyte[][] M { get; }
 
         public int Height { get; }
         public int Width { get; }
-        public Matrix(int[][] m)
+        public Matrix(sbyte[][] m)
         {
             M = m;
             Height = m.Length;
@@ -23,23 +23,23 @@ namespace CellWorld.Automaton
 
         public Matrix(int height, int width)
         {
-            M = new int[height][];
+            M = new sbyte[height][];
             for (var i = 0; i < height; i++)
             {
-                M[i] = new int[width];
+                M[i] = new sbyte[width];
             }
             Height = height;
             Width = width;
         }
 
-        public int this[int i, int j]
+        public sbyte this[int i, int j]
         {
             get => M[GetCycledI(i)][GetCycledJ(j)];
 
             set => M[i][j] = value;
         }
 
-        public int[] Get1DNeighbors(int i, int j)
+        public sbyte[] Get1DNeighbors(int i, int j)
         {
             if (i == 0)
                 throw new ArgumentException();
@@ -55,15 +55,15 @@ namespace CellWorld.Automaton
         /// </summary>
         public CellStateArea Get2DNeighborhood(int i, int j)
         {
-            var x = (CellState) this[i, j];
-            var n = (CellState) this[i - 1, j];
-            var ne =(CellState) this[i - 1, j + 1];
-            var e = (CellState) this[i, j + 1];
-            var se =(CellState) this[i + 1, j + 1];
-            var s = (CellState) this[i + 1, j];
-            var sw =(CellState) this[i + 1, j - 1];
-            var w = (CellState) this[i, j - 1];
-            var nw =(CellState) this[i - 1, j - 1];
+            var x =  this[i, j];
+            var n =  this[i - 1, j];
+            var ne = this[i - 1, j + 1];
+            var e =  this[i, j + 1];
+            var se = this[i + 1, j + 1];
+            var s =  this[i + 1, j];
+            var sw = this[i + 1, j - 1];
+            var w =  this[i, j - 1];
+            var nw = this[i - 1, j - 1];
             return new CellStateArea(new[] { x, n, ne, e, se, s, sw, w, nw });
         }
 

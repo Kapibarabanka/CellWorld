@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CellWorld.Neighborhood;
 using CellWorld.Rule;
 
 namespace CellWorld.Automaton
 {
-    public static class StaticData
+    internal static class StaticData
     {
         public const int AreaSize = 9;
+        public const sbyte AnyState = -1;
 
-        public static ConditionArea AllNeighborsMustCount = new ConditionArea(new []
+        public static BoolArea AllNeighborsMustCount = new BoolArea(new []
         {
             false,
             true,
@@ -21,23 +23,39 @@ namespace CellWorld.Automaton
             true
         });
 
-        public static List<IRule> rule126 = new List<IRule> {
-            //                                                X  N  NE  E  SE   S  SW   W  NW
-            new AndRule(new ConditionStateArea(new[] {0, 1, 1, -1, -1, -1, -1, -1, 1 }), CellState.Dead),
-            new AndRule(new ConditionStateArea(new[] {0, 1, 0, -1, -1, -1, -1, -1, 1 }), CellState.Alive),
-            new AndRule(new ConditionStateArea(new[] {0, 0, 1, -1, -1, -1, -1, -1, 1 }), CellState.Alive),
-            new AndRule(new ConditionStateArea(new[] {0, 0, 0, -1, -1, -1, -1, -1, 1 }), CellState.Alive),
-            new AndRule(new ConditionStateArea(new[] {0, 1, 1, -1, -1, -1, -1, -1, 0 }), CellState.Alive),
-            new AndRule(new ConditionStateArea(new[] {0, 1, 0, -1, -1, -1, -1, -1, 0 }), CellState.Alive),
-            new AndRule(new ConditionStateArea(new[] {0, 0, 1, -1, -1, -1, -1, -1, 0 }), CellState.Alive),
-            new AndRule(new ConditionStateArea(new[] {0, 0, 0, -1, -1, -1, -1, -1, 0 }), CellState.Dead),
+        public static List<IRule> Rule126 = new List<IRule> {
+            //                                                     X  N  NE  E  SE   S  SW   W  NW
+            new DirectRule(new CellStateArea(new sbyte[] {0, 1, 1, -1, -1, -1, -1, -1, 1 }), 0),
+            new DirectRule(new CellStateArea(new sbyte[] {0, 1, 0, -1, -1, -1, -1, -1, 1 }), 1),
+            new DirectRule(new CellStateArea(new sbyte[] {0, 0, 1, -1, -1, -1, -1, -1, 1 }), 1),
+            new DirectRule(new CellStateArea(new sbyte[] {0, 0, 0, -1, -1, -1, -1, -1, 1 }), 1),
+            new DirectRule(new CellStateArea(new sbyte[] {0, 1, 1, -1, -1, -1, -1, -1, 0 }), 1),
+            new DirectRule(new CellStateArea(new sbyte[] {0, 1, 0, -1, -1, -1, -1, -1, 0 }), 1),
+            new DirectRule(new CellStateArea(new sbyte[] {0, 0, 1, -1, -1, -1, -1, -1, 0 }), 1),
+            new DirectRule(new CellStateArea(new sbyte[] {0, 0, 0, -1, -1, -1, -1, -1, 0 }), 0),
 
-            new AndRule(new ConditionStateArea(new[] {1, -1, -1, -1, -1, -1, -1, -1, -1 }), CellState.Alive)
+            new DirectRule(new CellStateArea(new sbyte[] {1, -1, -1, -1, -1, -1, -1, -1, -1 }), 1)
+        };
+
+        public static SumRule Sum3 = new SumRule(AllNeighborsMustCount, 3, 1);
+        public static SumRule Sum2 = new SumRule(AllNeighborsMustCount, 2, 1);
+
+        public static DirectRule XisDead = new DirectRule(
+            new CellStateArea(new sbyte[] {0, -1, -1, -1, -1, -1, -1, -1, -1}), 1);
+
+
+        public static DirectRule XisAlive = new DirectRule(
+            new CellStateArea(new sbyte[] { 1, -1, -1, -1, -1, -1, -1, -1, -1 }), 1);
+
+        public static List<IRule> Life = new List<IRule>
+        {
+            Sum3,
+            new ComplexRule(XisAlive, Sum2, ComplexOperator.And, 1)
         };
 
         // public static List<IRule> ruleLife = new List<IRule> {
         //     new SumRule(AllNeighborsMustCount, 3, CellState.Alive),
-        //     new SumRule(new ConditionArea(new [] ), 2, 1),
+        //     new SumRule(new BoolArea(new [] ), 2, 1),
         // };
     }
 }

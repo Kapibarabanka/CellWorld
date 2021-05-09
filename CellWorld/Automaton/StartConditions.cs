@@ -7,7 +7,7 @@ namespace CellWorld.Automaton
 {
     public class StartConditions
     {
-        public int[][] Matrix { get; set; }
+        public sbyte[][] Matrix { get; set; }
         public string Rule { get; set; }
         public int Steps { get; set; }
     }

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using CellWorld.Neighborhood;
 using CellWorld.Rule;
 
 namespace CellWorld.Automaton
 {
-    public class CaHelper
+    internal class CaHelper
     {
-        private const int Pause = 200;
-
-        public static int[][][] Simulate(Matrix start, List<IRule> rules, int steps)
+        public static sbyte[][][] Simulate(Matrix start, List<IRule> rules, int steps)
         {
             var h = start.Height;
             var w = start.Width;
@@ -21,15 +19,15 @@ namespace CellWorld.Automaton
             {
                 var prev = matrix[step];
                 var next = new Matrix(h, w);
-                for (var i = 0; i < h; i++)
+                var iRange = Enumerable.Range(0, h);
+                var jRange = Enumerable.Range(0, w);
+                var points = iRange.SelectMany(i => jRange.Select(j => (i, j)));
+                Parallel.ForEach(points, point =>
                 {
-                    for (var j = 0; j < w; j++)
-                    {
-
-                        var neighbors = prev.Get2DNeighborhood(i, j);
-                        next[i, j] = ApplyRules(neighbors, rules);
-                    }
-                }
+                    var (i, j) = point;
+                    var neighbors = prev.Get2DNeighborhood(i, j);
+                    next[i, j] = ApplyRules(neighbors, rules);
+                });
 
                 matrix.Add(next);
             }
@@ -37,51 +35,18 @@ namespace CellWorld.Automaton
             return matrix.Select(m => m.M).ToArray();
         }
 
-        public static int[][][] SimulateLife(Matrix start, int steps)
-        {
-            var h = start.Height;
-            var w = start.Width;
-            var matrix = new List<Matrix> { start };
-            for (var step = 0; step < steps; step++)
-            {
-                var prev = matrix[step];
-                var next = new Matrix(h, w);
-                for (var i = 0; i < h; i++)
-                {
-                    for (var j = 0; j < w; j++)
-                    {
-                        var neighbors = prev.Get2DNeighborhood(i, j);
-                        next[i, j] = ApplyLifeRules(neighbors);
-                    }
-                }
-
-                matrix.Add(next);
-            }
-
-            return matrix.Select(m => m.M).ToArray();
-        }
-
-        public static int ApplyLifeRules(CellStateArea neighbors)
-        {
-            var x = neighbors[Direction.X];
-            var other = neighbors.Neighbors.Skip(1);
-            var sum = other.Sum(s => (int) s);
-            if ((x == CellState.Alive && (sum == 2 || sum == 3))
-                || (x == CellState.Dead && sum == 3))
-            {
-                return 1;
-            }
-            
-            return 0;
-        }
-        public static int ApplyRules(CellStateArea neighbors, List<IRule> rules)
+        public static sbyte ApplyRules(CellStateArea neighbors, List<IRule> rules)
         {
             foreach (var rule in rules)
             {
-                if (rule.TryApply(neighbors, out var result))
-                    return (int)result;
+                var ruleResult = rule.TryApply(neighbors);
+                if (ruleResult != null)
+                {
+                    return ruleResult.Value;
+                }
             }
 
+            // TODO: add setting to switch behaviour if no rules were applied (cell doesn't change / cell dies)
             return 0;
         }
 
