@@ -55,6 +55,14 @@ export class CellGrid extends p5 {
     }
   }
 
+  public fillWithStatic(){
+    for (var i = 0; i < this.size; i++) {
+      for (var j = 0; j < this.size; j++) {
+        this.currentLayer[i][j] = this.floor(this.random() * 2);
+      }
+    }
+  }
+
   public getEmptyMatrix(size: number): Array<Array<number>> {
     const res = [];
     for (var i = 0; i < size; i++) {

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CellWorld.Automaton;
+using CellWorld.Rule;
 
 namespace CellWorld.Controllers
 {
@@ -9,12 +11,21 @@ namespace CellWorld.Controllers
     public class ApiController : ControllerBase
     {
         [HttpPost]
-        [Route("simulate126")]
-        public sbyte[][][] Simulate126(StartConditions startConditions)
+        [Route("simulate")]
+        public sbyte[][][] Simulate(StartConditions startConditions)
         {
             var startMatrix = new Matrix(startConditions.Matrix);
-            //startMatrix[0, startMatrix.Width / 2] = 1;
-            var res = CaHelper.Simulate(startMatrix, StaticData.Rule126, startMatrix.Height - 1);
+            List<IRule> rule;
+            switch (startConditions.Rule)
+            {
+                case "126":
+                    rule = StaticData.Rule126;
+                    break;
+                default:
+                    rule = StaticData.Life;
+                    break;
+            }
+            var res = CaHelper.Simulate(startMatrix, rule, startConditions.Steps);
             return res;
         }
 

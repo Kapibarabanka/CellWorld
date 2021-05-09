@@ -1,9 +1,11 @@
 <div>
-  <button mat-raised-button (click)="changeState()"> Change state </button>
-  <button mat-raised-button (click)="simulate126()"> Simulate 126</button>
-  <button mat-raised-button (click)="simulateLife()"> Simulate Life</button>
-  <button mat-raised-button (click)="stopSimulation()"> Stop Simulation</button>
-  <button mat-raised-button (click)="cellGrid.clearGrid()"> Clear </button>
+  <button (click)="changeState()"> Change state </button>
+  <button (click)="simulate126()"> Simulate 126</button>
+  <button (click)="simulateLife()"> Simulate Life</button>
+  <button  (click)="stopSimulation()"> Stop Simulation</button>
+  <button  (click)="cellGrid.clearGrid()"> Clear </button>
+  <button  (click)="cellGrid.fillWithStatic()"> Fill With Static </button>
+
   <p>Current State: {{cellGrid.currentState}}</p>
 </div>
 

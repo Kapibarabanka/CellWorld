@@ -40,10 +40,6 @@ namespace CellWorld.Automaton
         public static SumRule Sum3 = new SumRule(AllNeighborsMustCount, 3, 1);
         public static SumRule Sum2 = new SumRule(AllNeighborsMustCount, 2, 1);
 
-        public static DirectRule XisDead = new DirectRule(
-            new CellStateArea(new sbyte[] {0, -1, -1, -1, -1, -1, -1, -1, -1}), 1);
-
-
         public static DirectRule XisAlive = new DirectRule(
             new CellStateArea(new sbyte[] { 1, -1, -1, -1, -1, -1, -1, -1, -1 }), 1);
 
@@ -52,10 +48,5 @@ namespace CellWorld.Automaton
             Sum3,
             new ComplexRule(XisAlive, Sum2, ComplexOperator.And, 1)
         };
-
-        // public static List<IRule> ruleLife = new List<IRule> {
-        //     new SumRule(AllNeighborsMustCount, 3, CellState.Alive),
-        //     new SumRule(new BoolArea(new [] ), 2, 1),
-        // };
     }
 }
