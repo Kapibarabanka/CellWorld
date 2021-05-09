@@ -12,6 +12,7 @@ export class DataService {
     }
 
     fetchSimulationResults(startMatrix: Array<Array<number>>, rule: string, steps: number) {
-      return this.http.post(this.url + "simulate", new StartConditions(startMatrix, rule, steps));
+      return this.http.post(this.url + "simulate", new StartConditions(startMatrix, rule, steps, 
+        {RuleType: "test", Params: {"a":1, "b": 3}}));
   }
 }

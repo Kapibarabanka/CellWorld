@@ -1,9 +1,11 @@
-﻿using CellWorld.Automaton;
+﻿using System.Text.Json;
+using CellWorld.Automaton;
 using CellWorld.Neighborhood;
+using CellWorld.Rule.RuleModels;
 
 namespace CellWorld.Rule
 {
-    public class DirectRule : IRule
+    internal class DirectRule : IRule
     {
         public CellStateArea ConditionArea { get; }
         public sbyte Result { get; }
@@ -24,6 +26,12 @@ namespace CellWorld.Rule
             }
 
             return Result;
+        }
+
+        public static IRule GetFromModel(object model)
+        {
+            var directModel = JsonSerializer.Deserialize<DirectRuleModel>(model.ToString());
+            return new DirectRule(new CellStateArea(directModel.Condition), directModel.Result);
         }
 
     }

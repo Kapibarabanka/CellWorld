@@ -46,7 +46,7 @@ namespace CellWorld.Automaton
         public static List<IRule> Life = new List<IRule>
         {
             Sum3,
-            new ComplexRule(XisAlive, Sum2, ComplexOperator.And, 1)
+            new ComplexRule(XisAlive, Sum2, ComplexOperator.and, 1)
         };
     }
 }

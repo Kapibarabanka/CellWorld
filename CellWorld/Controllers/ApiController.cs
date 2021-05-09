@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CellWorld.Automaton;
@@ -12,9 +13,10 @@ namespace CellWorld.Controllers
     {
         [HttpPost]
         [Route("simulate")]
-        public sbyte[][][] Simulate(StartConditions startConditions)
+        public sbyte[][][] Simulate([FromBody] StartConditions startConditions)
         {
             var startMatrix = new Matrix(startConditions.Matrix);
+            var a = JsonSerializer.Deserialize<RuleRequest>(startConditions.Test.ToString());
             List<IRule> rule;
             switch (startConditions.Rule)
             {
