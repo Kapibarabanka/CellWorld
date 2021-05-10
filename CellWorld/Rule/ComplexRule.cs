@@ -43,8 +43,8 @@ namespace CellWorld.Rule
         public static IRule GetFromModel(object model)
         {
             var complexModel = JsonSerializer.Deserialize<ComplexRuleModel>(model.ToString());
-            var rightRule = RuleHelper.ConvertModel(complexModel.RightRuleName, complexModel.RightRuleModel);
-            var leftRule = RuleHelper.ConvertModel(complexModel.LeftRuleName, complexModel.LeftRuleModel);
+            var rightRule = RuleHelper.ConvertModel(complexModel.RightRule);
+            var leftRule = RuleHelper.ConvertModel(complexModel.LeftRule);
             return new ComplexRule(leftRule, rightRule, complexModel.Operator, complexModel.Result);
         }
     }

@@ -10,7 +10,7 @@ namespace CellWorld.Automaton
 {
     internal class CaHelper
     {
-        public static sbyte[][][] Simulate(Matrix start, List<IRule> rules, int steps)
+        public static sbyte[][][] Simulate(Matrix start, IEnumerable<IRule> rules, int steps)
         {
             var h = start.Height;
             var w = start.Width;
@@ -35,7 +35,7 @@ namespace CellWorld.Automaton
             return matrix.Select(m => m.M).ToArray();
         }
 
-        public static sbyte ApplyRules(CellStateArea neighbors, List<IRule> rules)
+        public static sbyte ApplyRules(CellStateArea neighbors, IEnumerable<IRule> rules)
         {
             foreach (var rule in rules)
             {

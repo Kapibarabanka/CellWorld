@@ -7,14 +7,14 @@ namespace CellWorld.Rule
 {
     internal static class RuleHelper
     {
-        public static IRule ConvertModel(string ruleType, object model)
+        public static IRule ConvertModel(RuleRequest request)
         {
-            return ruleType.ToLower() switch
+            return request.RuleType.ToLower() switch
             {
-                "direct" => DirectRule.GetFromModel(model),
-                "sum" => SumRule.GetFromModel(model),
-                "complex" => ComplexRule.GetFromModel(model),
-                _ => throw new ArgumentException($"Unknown rule type {ruleType}")
+                "direct" => DirectRule.GetFromModel(request.RuleModel),
+                "sum" => SumRule.GetFromModel(request.RuleModel),
+                "complex" => ComplexRule.GetFromModel(request.RuleModel),
+                _ => throw new ArgumentException($"Unknown rule type {request.RuleType}")
             };
         }
     }

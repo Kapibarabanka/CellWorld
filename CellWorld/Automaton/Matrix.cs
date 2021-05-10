@@ -39,16 +39,6 @@ namespace CellWorld.Automaton
             set => M[i][j] = value;
         }
 
-        public sbyte[] Get1DNeighbors(int i, int j)
-        {
-            if (i == 0)
-                throw new ArgumentException();
-            var left = this[i - 1, j - 1];
-            var central = this[i - 1, j];
-            var right = this[i - 1, j + 1];
-            return new[] { left, central, right };
-        }
-
         /// <summary>
         /// Previous cell value (X), then clockwise from N:
         /// X  N  NE  E  SE   S  SW   W  NW
