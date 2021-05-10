@@ -1,7 +1,7 @@
 ﻿using System;
 using CellWorld.Automaton;
 
-namespace CellWorld.Neighborhood
+namespace CellWorld.Moore
 {
     public class Area<T>
     {
@@ -9,7 +9,7 @@ namespace CellWorld.Neighborhood
 
         public Area(T[] neighbors)
         {
-            if (neighbors.Length != StaticData.AreaSize)
+            if (neighbors.Length != StaticData.MoorAreaSize)
             {
                 throw new ArgumentOutOfRangeException(nameof(neighbors), "Wrong number of neighbors (should be 9)");
             }

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CellWorld.Neighborhood;
-using CellWorld.Rule;
+using CellWorld.Moore;
+using CellWorld.Moore.Rules;
 
 namespace CellWorld.Automaton
 {
     internal class CaHelper
     {
-        public static sbyte[][][] Simulate(Matrix start, IEnumerable<IRule> rules, int steps)
+        public static sbyte[][][] Simulate(Matrix start, IEnumerable<IMooreRule> rules, int steps)
         {
             var h = start.Height;
             var w = start.Width;
@@ -25,7 +25,7 @@ namespace CellWorld.Automaton
                 Parallel.ForEach(points, point =>
                 {
                     var (i, j) = point;
-                    var neighbors = prev.Get2DNeighborhood(i, j);
+                    var neighbors = prev.GetMooreNeighborhood(i, j);
                     next[i, j] = ApplyRules(neighbors, rules);
                 });
 
@@ -35,7 +35,7 @@ namespace CellWorld.Automaton
             return matrix.Select(m => m.M).ToArray();
         }
 
-        public static sbyte ApplyRules(CellStateArea neighbors, IEnumerable<IRule> rules)
+        public static sbyte ApplyRules(CellStateArea neighbors, IEnumerable<IMooreRule> rules)
         {
             foreach (var rule in rules)
             {

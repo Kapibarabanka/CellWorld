@@ -1,4 +1,4 @@
-﻿namespace CellWorld.Neighborhood
+﻿namespace CellWorld.Moore
 {
     public class BoolArea : Area<bool>
     {

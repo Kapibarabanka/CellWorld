@@ -2,7 +2,7 @@
 using System.Linq;
 using CellWorld.Automaton;
 
-namespace CellWorld.Neighborhood
+namespace CellWorld.Moore
 {
     /// <summary>
     /// Represents neighborhood with its states.

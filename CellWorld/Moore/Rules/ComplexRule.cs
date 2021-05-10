@@ -1,23 +1,21 @@
-﻿using System;
-using System.Text.Json;
-using CellWorld.Neighborhood;
-using CellWorld.Rule.RuleModels;
+﻿using System.Text.Json;
+using CellWorld.Models;
 
-namespace CellWorld.Rule
+namespace CellWorld.Moore.Rules
 {
     /// <summary>
     /// Combines two rules with logical operator and returns ResultState if applied.
     /// Result states of internal rules are ignored.
     /// If operator is NOT, returns NOT(RightRule).
     /// </summary>
-    internal class ComplexRule : IRule
+    internal class ComplexRule : IMooreRule
     {
-        public IRule LeftRule { get; }
-        public IRule RightRule { get; }
+        public IMooreRule LeftRule { get; }
+        public IMooreRule RightRule { get; }
         public string Operator { get; }
         public sbyte Result { get; }
 
-        public ComplexRule(IRule leftRule, IRule rightRule, string op, sbyte resultState)
+        public ComplexRule(IMooreRule leftRule, IMooreRule rightRule, string op, sbyte resultState)
         {
             LeftRule = leftRule;
             RightRule = rightRule;
@@ -40,11 +38,11 @@ namespace CellWorld.Rule
             };
         }
 
-        public static IRule GetFromModel(object model)
+        public static IMooreRule GetFromModel(object model)
         {
             var complexModel = JsonSerializer.Deserialize<ComplexRuleModel>(model.ToString());
-            var rightRule = RuleHelper.ConvertModel(complexModel.RightRule);
-            var leftRule = RuleHelper.ConvertModel(complexModel.LeftRule);
+            var rightRule = RuleHelper.GetMooreRule(complexModel.RightRule);
+            var leftRule = RuleHelper.GetMooreRule(complexModel.LeftRule);
             return new ComplexRule(leftRule, rightRule, complexModel.Operator, complexModel.Result);
         }
     }

@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using CellWorld.Automaton;
-using CellWorld.Rule;
+using CellWorld.Models;
 
 namespace CellWorld.Controllers
 {
@@ -15,7 +14,7 @@ namespace CellWorld.Controllers
         public sbyte[][][] Simulate([FromBody] StartConditions startConditions)
         {
             var startMatrix = new Matrix(startConditions.Matrix);
-            var rules = startConditions.Rules.Select(RuleHelper.ConvertModel).ToList();
+            var rules = startConditions.Rules.Select(RuleHelper.GetMooreRule).ToList();
             var res = CaHelper.Simulate(startMatrix, rules, startConditions.Steps);
             return res;
         }

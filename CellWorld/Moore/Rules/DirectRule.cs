@@ -1,11 +1,10 @@
 ﻿using System.Text.Json;
 using CellWorld.Automaton;
-using CellWorld.Neighborhood;
-using CellWorld.Rule.RuleModels;
+using CellWorld.Models;
 
-namespace CellWorld.Rule
+namespace CellWorld.Moore.Rules
 {
-    internal class DirectRule : IRule
+    internal class DirectRule : IMooreRule
     {
         public CellStateArea ConditionArea { get; }
         public sbyte Result { get; }
@@ -18,7 +17,7 @@ namespace CellWorld.Rule
 
         public sbyte? TryApply(CellStateArea cellNeighbors)
         {
-            for (var i = 0; i < StaticData.AreaSize; i++)
+            for (var i = 0; i < StaticData.MoorAreaSize; i++)
             {
                 if (cellNeighbors[i] != ConditionArea[i]
                     && ConditionArea[i] != StaticData.AnyState)
@@ -28,7 +27,7 @@ namespace CellWorld.Rule
             return Result;
         }
 
-        public static IRule GetFromModel(object model)
+        public static IMooreRule GetFromModel(object model)
         {
             var directModel = JsonSerializer.Deserialize<DirectRuleModel>(model.ToString());
             return new DirectRule(new CellStateArea(directModel.Condition), directModel.Result);

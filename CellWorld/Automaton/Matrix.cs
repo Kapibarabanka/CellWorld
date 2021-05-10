@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using CellWorld.Neighborhood;
+using CellWorld.Moore;
 
 namespace CellWorld.Automaton
 {
@@ -43,7 +43,7 @@ namespace CellWorld.Automaton
         /// Previous cell value (X), then clockwise from N:
         /// X  N  NE  E  SE   S  SW   W  NW
         /// </summary>
-        public CellStateArea Get2DNeighborhood(int i, int j)
+        public CellStateArea GetMooreNeighborhood(int i, int j)
         {
             var x =  this[i, j];
             var n =  this[i - 1, j];

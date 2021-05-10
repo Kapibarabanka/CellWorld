@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using CellWorld.Rule;
+﻿using System.Collections.Generic;
+using CellWorld.Models;
 
 namespace CellWorld.Automaton
 {

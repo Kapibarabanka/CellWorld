@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace CellWorld.Rule.RuleModels
+﻿namespace CellWorld.Models
 {
     public class DirectRuleModel
     {

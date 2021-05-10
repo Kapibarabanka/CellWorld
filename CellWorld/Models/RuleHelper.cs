@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using CellWorld.Moore.Rules;
 
-namespace CellWorld.Rule
+namespace CellWorld.Models
 {
     internal static class RuleHelper
     {
-        public static IRule ConvertModel(RuleRequest request)
+        public static IMooreRule GetMooreRule(RuleRequest request)
         {
             return request.RuleType.ToLower() switch
             {
