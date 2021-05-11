@@ -13,58 +13,54 @@ export class CellGrid extends p5 {
   public gridHeight: number;
   public currentLayer: Array<Array<number>>;
 
-  constructor() {
-    super(CellGrid.sketch);
+  constructor(sketch = p=>{ }) {
+    super(sketch);
   }
 
-  static sketch(c: CellGrid) {
-    c.setup = () => {
-
-      c.id = "sketch-holder";
-      c.currentState = 1;
-      c.cellSize = 5;
-      c.colorMap = [
+  setup(){
+    this.id = "sketch-holder";
+    this.currentState = 1;
+    this.cellSize = 5;
+    this.colorMap = [
         'white',
         'black'
       ];
 
-      let width = c.windowWidth - 300;
-      let height = c.windowHeight - 120;
+      let width = this.windowWidth - 300;
+      let height = this.windowHeight - 120;
 
-      c.gridWidth = Math.floor(width / c.cellSize / 2) * 2;
-      c.gridHeight = Math.floor(height / c.cellSize / 2) * 2;
-      c.gridWidth = c.gridHeight;
+      this.gridWidth = Math.floor(width / this.cellSize / 2) * 2;
+      this.gridHeight = Math.floor(height / this.cellSize / 2) * 2;
+      this.gridWidth = this.gridHeight;
 
-      c.currentLayer = c.getEmptyMatrix(c.gridWidth, c.gridHeight);
-      let canvas = c.createCanvas(c.gridWidth * c.cellSize, c.gridHeight * c.cellSize);
-      canvas.parent(c.id);
-    };
-    
-    c.draw = () => {
-      c.drawBackground()
-      if (!!c.currentLayer) {
-        for (var i = 0; i < c.gridHeight; i++) {
-          for (var j = 0; j < c.gridWidth; j++) {
-            c.drawCell(i, j)
+      this.currentLayer = this.getEmptyMatrix(this.gridWidth, this.gridHeight);
+      let canvas = this.createCanvas(this.gridWidth * this.cellSize, this.gridHeight * this.cellSize);
+      canvas.parent(this.id);
+  }
+
+  draw(){
+    this.drawBackground()
+      if (!!this.currentLayer) {
+        for (var i = 0; i < this.gridHeight; i++) {
+          for (var j = 0; j < this.gridWidth; j++) {
+            this.drawCell(i, j)
           }
         }
       }
-      
-    };
+  }
 
-    c.mouseClicked = () => {
-      if (c.mouseX <= c.width && c.mouseX >= 0 && c.mouseY <= c.height && c.mouseY >= 0) {
-        c.setCell(c.mouseX, c.mouseY)
-      }
-      return false;
+  mouseClicked(){
+    if (this.mouseX <= this.width && this.mouseX >= 0 && this.mouseY <= this.height && this.mouseY >= 0) {
+      this.setCell(this.mouseX, this.mouseY)
     }
+    return false;
+  }
 
-    c.mouseDragged = () => {
-      if (c.mouseX <= c.width && c.mouseX >= 0 && c.mouseY <= c.height && c.mouseY >= 0) {
-        c.setCell(c.mouseX, c.mouseY)
-      }
-      return false;
+  mouseDragged(){
+    if (this.mouseX <= this.width && this.mouseX >= 0 && this.mouseY <= this.height && this.mouseY >= 0) {
+      this.setCell(this.mouseX, this.mouseY)
     }
+    return false;
   }
 
   public clearGrid(){

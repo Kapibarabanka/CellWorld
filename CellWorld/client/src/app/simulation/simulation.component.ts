@@ -1,7 +1,6 @@
 import { BlockRuleModel } from './../rules/rule-models/block-rule-model';
 import { ConstantRules } from './../constants/constant-rules';
 import { SimulationType } from './../constants/simulation-type';
-import { StartConditions } from './start-conditions';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, timer, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,14 +13,13 @@ import { RuleRequest } from '../rules/rule-request';
   templateUrl: './simulation.component.html',
   styleUrls: ['./simulation.component.css']
 })
-export class SimulationComponent implements OnInit, OnDestroy {
+export class SimulationComponent implements OnInit, OnDestroy{
 
   public static GridId = "sketch-holder";
   public get GridId() {
     return SimulationComponent.GridId;
   }
 
-  public 
   public cellGrid: CellGrid;
   public needsToStop = new Subject<true>();
   public needsToSimulate = new Subject<true>();
@@ -55,7 +53,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.cellGrid = null;
+    this.cellGrid.remove();
   }
 
   public changeState() {
