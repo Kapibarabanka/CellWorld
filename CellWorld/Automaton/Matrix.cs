@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CellWorld.Margolus;
 using CellWorld.Moore;
 
 namespace CellWorld.Automaton
@@ -36,7 +37,7 @@ namespace CellWorld.Automaton
         {
             get => M[GetCycledI(i)][GetCycledJ(j)];
 
-            set => M[i][j] = value;
+            set => M[GetCycledI(i)][GetCycledJ(j)] = value;
         }
 
         /// <summary>
@@ -55,6 +56,25 @@ namespace CellWorld.Automaton
             var w =  this[i, j - 1];
             var nw = this[i - 1, j - 1];
             return new CellStateArea(new[] { x, n, ne, e, se, s, sw, w, nw });
+        }
+
+        public Block GetMargolusBlock((int, int) blockCorner)
+        {
+            var (i, j) = blockCorner;
+            var ul = this[i, j];
+            var ur = this[i, j + 1];
+            var dr = this[i + 1, j + 1];
+            var dl = this[i + 1, j];
+            return new Block(new[] { ul, ur, dr, dl});
+        }
+
+        public void UpdateMargolusBlock((int i, int j) blockCorner, Block blockToInsert)
+        {
+            var (i, j) = blockCorner;
+            this[i, j] = blockToInsert[0];
+            this[i, j + 1] = blockToInsert[1];
+            this[i + 1, j + 1] = blockToInsert[2];
+            this[i + 1, j] = blockToInsert[3];
         }
 
         private int GetCycledI(int i)

@@ -85,7 +85,7 @@ export class CellGrid extends p5 {
         this.line(0, i*this.cellSize, this.size*this.cellSize, i*this.cellSize)
       }
       for (var j = 0; j < this.size; j++) {
-        this.line(j*this.cellSize, 0, j*this.cellSize,this.height)
+        this.line(j*this.cellSize, 0, j*this.cellSize, this.size*this.cellSize)
       }
   }
 

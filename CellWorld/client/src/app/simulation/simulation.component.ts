@@ -1,3 +1,6 @@
+import { BlockRuleModel } from './../rules/rule-models/block-rule-model';
+import { ConstantRules } from './../constants/constant-rules';
+import { SimulationType } from './../constants/simulation-type';
 import { StartConditions } from './start-conditions';
 import { Component, OnInit } from '@angular/core';
 import { Subject, timer, Observable } from 'rxjs';
@@ -19,6 +22,7 @@ export class SimulationComponent implements OnInit {
   public needsToSimulate = new Subject<true>();
   public startLayer: Array<Array<number>>;
   public rulesToSimulate: Array<RuleRequest>;
+  public simType: SimulationType = SimulationType.Moore;
 
   isMouseDown: boolean = false;
   simulation: Array<Array<Array<number>>> = [];
@@ -38,7 +42,8 @@ export class SimulationComponent implements OnInit {
         this.dataService.fetchSimulationResults(
           this.startLayer,
           this.rulesToSimulate,
-          this.stepsPerRequest
+          this.stepsPerRequest,
+          this.simType
         )
       );
     });
@@ -53,20 +58,25 @@ export class SimulationComponent implements OnInit {
   }
 
   public simulate126() {
-    this.startSimulation(StartConditions.Rule126);
+    this.startSimulation(ConstantRules.Rule126, SimulationType.Moore);
   }
 
   public simulateLife() {
-    this.startSimulation(StartConditions.RuleLife);
+    this.startSimulation(ConstantRules.RuleLife, SimulationType.Moore);
+  }
+
+  public simulateHpp() {
+    this.startSimulation(ConstantRules.HppGasRule, SimulationType.Block);
   }
 
   public stopSimulation() {
     this.needsToStop.next(true);
   }
 
-  private startSimulation(rules: Array<RuleRequest>) {
+  private startSimulation(rules: Array<RuleRequest>, simType: SimulationType) {
     this.simulation = [];
     this.rulesToSimulate = rules;
+    this.simType = simType;
     timer(0, this.speed)
       .pipe(takeUntil(this.needsToStop))
       .subscribe((x) => {

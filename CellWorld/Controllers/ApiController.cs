@@ -10,12 +10,22 @@ namespace CellWorld.Controllers
     public class ApiController : ControllerBase
     {
         [HttpPost]
-        [Route("simulate")]
-        public sbyte[][][] Simulate([FromBody] StartConditions startConditions)
+        [Route("simulateMoore")]
+        public sbyte[][][] Simulatemoore([FromBody] StartConditions startConditions)
         {
             var startMatrix = new Matrix(startConditions.Matrix);
             var rules = startConditions.Rules.Select(RuleHelper.GetMooreRule).ToList();
-            var res = CaHelper.Simulate(startMatrix, rules, startConditions.Steps);
+            var res = CaHelper.SimulateMoore(startMatrix, rules, startConditions.Steps);
+            return res;
+        }
+
+        [HttpPost]
+        [Route("simulateBlock")]
+        public sbyte[][][] SimulateBlock([FromBody] StartConditions startConditions)
+        {
+            var startMatrix = new Matrix(startConditions.Matrix);
+            var rules = startConditions.Rules.Select(RuleHelper.GetBlockRule).ToList();
+            var res = CaHelper.SimulateBlock(startMatrix, rules, startConditions.Steps);
             return res;
         }
     }

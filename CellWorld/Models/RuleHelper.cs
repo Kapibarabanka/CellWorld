@@ -1,4 +1,5 @@
 ﻿using System;
+using CellWorld.Margolus;
 using CellWorld.Moore.Rules;
 
 namespace CellWorld.Models
@@ -14,6 +15,11 @@ namespace CellWorld.Models
                 "complex" => ComplexRule.GetFromModel(request.RuleModel),
                 _ => throw new ArgumentException($"Unknown rule type {request.RuleType}")
             };
+        }
+
+        public static BlockRule GetBlockRule(RuleRequest request)
+        {
+            return BlockRule.GetFromModel(request.RuleModel);
         }
     }
 }
