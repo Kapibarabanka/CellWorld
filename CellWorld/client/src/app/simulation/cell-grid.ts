@@ -1,30 +1,50 @@
+import { SimulationComponent } from './simulation.component';
 import * as p5 from "p5";
 
 export class CellGrid extends p5 {
+  public id: string;
   public colorMap = [
     'white',
     'black'
   ]
   public currentState = 1;
   public cellSize = 5;
-  currentLayer: Array<Array<number>> = [];
+  public gridWidth: number;
+  public gridHeight: number;
+  public currentLayer: Array<Array<number>>;
 
-  constructor(private id: string, private size: number) {
+  constructor() {
     super(CellGrid.sketch);
-    this.currentLayer = this.getEmptyMatrix(size);
   }
 
   static sketch(c: CellGrid) {
     c.setup = () => {
-      let canvas = c.createCanvas(c.windowWidth - 300, c.windowHeight - 120);
+
+      c.id = "sketch-holder";
+      c.currentState = 1;
+      c.cellSize = 5;
+      c.colorMap = [
+        'white',
+        'black'
+      ];
+
+      let width = c.windowWidth - 300;
+      let height = c.windowHeight - 120;
+
+      c.gridWidth = Math.floor(width / c.cellSize / 2) * 2;
+      c.gridHeight = Math.floor(height / c.cellSize / 2) * 2;
+      c.gridWidth = c.gridHeight;
+
+      c.currentLayer = c.getEmptyMatrix(c.gridWidth, c.gridHeight);
+      let canvas = c.createCanvas(c.gridWidth * c.cellSize, c.gridHeight * c.cellSize);
       canvas.parent(c.id);
     };
     
     c.draw = () => {
       c.drawBackground()
       if (!!c.currentLayer) {
-        for (var i = 0; i < c.size; i++) {
-          for (var j = 0; j < c.size; j++) {
+        for (var i = 0; i < c.gridHeight; i++) {
+          for (var j = 0; j < c.gridWidth; j++) {
             c.drawCell(i, j)
           }
         }
@@ -48,26 +68,26 @@ export class CellGrid extends p5 {
   }
 
   public clearGrid(){
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
+    for (var i = 0; i < this.gridHeight; i++) {
+      for (var j = 0; j < this.gridWidth; j++) {
         this.currentLayer[i][j] = 0;
       }
     }
   }
 
   public fillWithStatic(){
-    for (var i = 0; i < this.size; i++) {
-      for (var j = 0; j < this.size; j++) {
+    for (var i = 0; i < this.gridHeight; i++) {
+      for (var j = 0; j < this.gridWidth; j++) {
         this.currentLayer[i][j] = this.floor(this.random() * 2);
       }
     }
   }
 
-  public getEmptyMatrix(size: number): Array<Array<number>> {
+  public getEmptyMatrix(width: number, height: number): Array<Array<number>> {
     const res = [];
-    for (var i = 0; i < size; i++) {
+    for (var i = 0; i < height; i++) {
       res[i] = [];
-      for (var j = 0; j < size; j++) {
+      for (var j = 0; j < width; j++) {
         res[i][j] = 0;
       }
     }
@@ -81,11 +101,11 @@ export class CellGrid extends p5 {
     this.noFill();
     this.rect(0, 0, this.width, this.height)
     this.stroke('#b3b3b3');
-      for (var i = 0; i < this.size; i++) {
-        this.line(0, i*this.cellSize, this.size*this.cellSize, i*this.cellSize)
+      for (var i = 0; i < this.gridHeight; i++) {
+        this.line(0, i*this.cellSize, this.gridWidth * this.cellSize, i*this.cellSize)
       }
-      for (var j = 0; j < this.size; j++) {
-        this.line(j*this.cellSize, 0, j*this.cellSize, this.size*this.cellSize)
+      for (var j = 0; j < this.gridWidth; j++) {
+        this.line(j*this.cellSize, 0, j*this.cellSize, this.gridHeight *this.cellSize)
       }
   }
 

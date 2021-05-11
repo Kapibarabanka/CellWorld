@@ -2,7 +2,7 @@ import { BlockRuleModel } from './../rules/rule-models/block-rule-model';
 import { ConstantRules } from './../constants/constant-rules';
 import { SimulationType } from './../constants/simulation-type';
 import { StartConditions } from './start-conditions';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, timer, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CellGrid } from './cell-grid';
@@ -14,9 +14,14 @@ import { RuleRequest } from '../rules/rule-request';
   templateUrl: './simulation.component.html',
   styleUrls: ['./simulation.component.css']
 })
-export class SimulationComponent implements OnInit {
+export class SimulationComponent implements OnInit, OnDestroy {
 
-  public gridId = "sketch-holder";
+  public static GridId = "sketch-holder";
+  public get GridId() {
+    return SimulationComponent.GridId;
+  }
+
+  public 
   public cellGrid: CellGrid;
   public needsToStop = new Subject<true>();
   public needsToSimulate = new Subject<true>();
@@ -24,16 +29,10 @@ export class SimulationComponent implements OnInit {
   public rulesToSimulate: Array<RuleRequest>;
   public simType: SimulationType = SimulationType.Moore;
 
-  isMouseDown: boolean = false;
   simulation: Array<Array<Array<number>>> = [];
 
-  colors = [
-    "white", // dead
-    "black", // alive
-  ];
-
   speed: number = 40;
-  size: number = 100;
+  size: number = 150;
   stepsPerRequest = 50;
 
   constructor(private dataService: DataService) {
@@ -50,7 +49,13 @@ export class SimulationComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.cellGrid = new CellGrid(this.gridId, this.size);
+    if (!this.cellGrid) {
+      this.cellGrid = new CellGrid();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.cellGrid = null;
   }
 
   public changeState() {
