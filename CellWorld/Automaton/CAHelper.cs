@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using CellWorld.Margolus;
 using CellWorld.Moore;
-using CellWorld.Moore.Rules;
 
 namespace CellWorld.Automaton
 {
     internal class CaHelper
     {
-        public static sbyte[][][] SimulateMoore(Matrix start, IEnumerable<IMooreRule> rules, int steps)
+        public static sbyte[][][] SimulateMoore(Matrix start, IEnumerable<MooreRule> rules, int steps, sbyte defaultValue)
         {
             var h = start.Height;
             var w = start.Width;
@@ -27,7 +25,16 @@ namespace CellWorld.Automaton
                 {
                     var (i, j) = point;
                     var neighbors = prev.GetMooreNeighborhood(i, j);
-                    next[i, j] = ApplyMooreRules(neighbors, rules);
+                    var newValue = ApplyMooreRules(neighbors, rules);
+                    if (newValue != null)
+                    {
+                        next[i, j] = newValue.Value;
+                    }
+                    else if (defaultValue != -1)
+                    {
+                        next[i, j] = defaultValue;
+                    }
+                        
                 });
 
                 matrix.Add(next);
@@ -70,7 +77,7 @@ namespace CellWorld.Automaton
             return matrix.Select(m => m.M).ToArray();
         }
 
-        private static sbyte ApplyMooreRules(CellStateArea neighbors, IEnumerable<IMooreRule> rules)
+        private static sbyte? ApplyMooreRules(CellStateArea neighbors, IEnumerable<MooreRule> rules)
         {
             foreach (var rule in rules)
             {
@@ -81,32 +88,7 @@ namespace CellWorld.Automaton
                 }
             }
 
-            // TODO: add setting to switch behaviour if no rules were applied (cell doesn't change / cell dies)
-            return 0;
-        }
-
-        public static void PrintSimulation(List<Matrix> simResult, int pause)
-        {
-            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-            foreach (var layer in simResult)
-            {
-                Thread.Sleep(pause);
-                Console.SetCursorPosition(0, 0);
-                PrintMatrix(layer);
-            }
-        }
-
-        public static void PrintMatrix(Matrix m)
-        {
-            for (var i = 0; i < m.Height; i++)
-            {
-                for (var j = 0; j < m.Width; j++)
-                {
-                    var value = m[i, j];
-                    Console.Write(value == 0 ? "  " : "**");
-                }
-                Console.WriteLine();
-            }
+            return null;
         }
     }
 }

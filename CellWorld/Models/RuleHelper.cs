@@ -1,25 +1,26 @@
 ﻿using System;
-using CellWorld.Margolus;
-using CellWorld.Moore.Rules;
+using CellWorld.Moore;
+using CellWorld.Moore.Conditions;
 
 namespace CellWorld.Models
 {
     internal static class RuleHelper
     {
-        public static IMooreRule GetMooreRule(RuleRequest request)
+        public static MooreRule GetMooreRule(MooreRuleModel model)
         {
-            return request.RuleType.ToLower() switch
-            {
-                "direct" => DirectRule.GetFromModel(request.RuleModel),
-                "sum" => SumRule.GetFromModel(request.RuleModel),
-                "complex" => ComplexRule.GetFromModel(request.RuleModel),
-                _ => throw new ArgumentException($"Unknown rule type {request.RuleType}")
-            };
+            var condition = GetCondition(model.ConditionModel);
+            return new MooreRule(condition, model.Result);
         }
 
-        public static BlockRule GetBlockRule(RuleRequest request)
+        public static IMooreCondition GetCondition(ConditionModel model)
         {
-            return BlockRule.GetFromModel(request.RuleModel);
+            return model.ConditionType.ToLower() switch
+            {
+                "direct" => DirectCondition.GetFromModel(model.Condition),
+                "sum" => SumCondition.GetFromModel(model.Condition),
+                "complex" => ComplexCondition.GetFromModel(model.Condition),
+                _ => throw new ArgumentException($"Unknown rule type {model.ConditionType}")
+            };
         }
     }
 }

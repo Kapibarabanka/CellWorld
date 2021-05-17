@@ -1,4 +1,3 @@
-import { SimulationComponent } from './simulation.component';
 import * as p5 from "p5";
 
 export class CellGrid extends p5 {
@@ -95,7 +94,6 @@ export class CellGrid extends p5 {
     this.background(255);
     this.stroke('black');
     this.noFill();
-    this.rect(0, 0, this.width, this.height)
     this.stroke('#b3b3b3');
       for (var i = 0; i < this.gridHeight; i++) {
         this.line(0, i*this.cellSize, this.gridWidth * this.cellSize, i*this.cellSize)

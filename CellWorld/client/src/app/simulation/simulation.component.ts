@@ -1,12 +1,9 @@
-import { BlockRuleModel } from './../rules/rule-models/block-rule-model';
-import { ConstantRules } from './../constants/constant-rules';
-import { SimulationType } from './../constants/simulation-type';
+import { RulesService } from './../services/rules.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, timer, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CellGrid } from './cell-grid';
-import { DataService } from '../data.service';
-import { RuleRequest } from '../rules/rule-request';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'simulation',
@@ -26,24 +23,22 @@ export class SimulationComponent implements OnInit, OnDestroy{
   public startLayer: Array<Array<number>>;
   public rulesNames: string[];
   public ruleToSimulate: string;
-  public simType: SimulationType;
+  public isSimulating = false;
 
   simulation: Array<Array<Array<number>>> = [];
 
   speed: number = 40;
-  size: number = 150;
   stepsPerRequest = 50;
 
-  constructor(private dataService: DataService) {
-    this.rulesNames = dataService.getRulesNames();
+  constructor(private dataService: DataService, private rulesService: RulesService) {
+    this.rulesNames = rulesService.getRulesNames();
     this.ruleToSimulate = this.rulesNames[0];
     this.needsToSimulate.subscribe(() => {
       this.simulate(
         this.dataService.fetchSimulationResults(
           this.startLayer,
           this.ruleToSimulate,
-          this.stepsPerRequest,
-          this.simType
+          this.stepsPerRequest
         )
       );
     });
@@ -64,15 +59,13 @@ export class SimulationComponent implements OnInit, OnDestroy{
   }
   
   public stopSimulation() {
+    this.isSimulating = false;
     this.needsToStop.next(true);
   }
 
   public startSimulation() {
     this.simulation = [];
-    this.simType = SimulationType.Moore;
-    if (this.ruleToSimulate == "hpp"){
-      this.simType = SimulationType.Block;
-    }
+    this.isSimulating = true;
     timer(0, this.speed)
       .pipe(takeUntil(this.needsToStop))
       .subscribe((x) => {

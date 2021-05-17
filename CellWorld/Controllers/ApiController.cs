@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using CellWorld.Automaton;
+using CellWorld.Margolus;
 using CellWorld.Models;
+using CellWorld.Moore;
 
 namespace CellWorld.Controllers
 {
@@ -11,21 +13,21 @@ namespace CellWorld.Controllers
     {
         [HttpPost]
         [Route("simulateMoore")]
-        public sbyte[][][] Simulatemoore([FromBody] StartConditions startConditions)
+        public sbyte[][][] SimulateMoore([FromBody] MooreStartConditions mooreStartConditions)
         {
-            var startMatrix = new Matrix(startConditions.Matrix);
-            var rules = startConditions.Rules.Select(RuleHelper.GetMooreRule).ToList();
-            var res = CaHelper.SimulateMoore(startMatrix, rules, startConditions.Steps);
+            var startMatrix = new Matrix(mooreStartConditions.Matrix);
+            var rules = mooreStartConditions.Rules.Select(RuleHelper.GetMooreRule).ToList();
+            var res = CaHelper.SimulateMoore(startMatrix, rules, mooreStartConditions.Steps, mooreStartConditions.DefaultValue);
             return res;
         }
 
         [HttpPost]
         [Route("simulateBlock")]
-        public sbyte[][][] SimulateBlock([FromBody] StartConditions startConditions)
+        public sbyte[][][] SimulateBlock([FromBody] BlockStartConditions blockStartConditions)
         {
-            var startMatrix = new Matrix(startConditions.Matrix);
-            var rules = startConditions.Rules.Select(RuleHelper.GetBlockRule).ToList();
-            var res = CaHelper.SimulateBlock(startMatrix, rules, startConditions.Steps);
+            var startMatrix = new Matrix(blockStartConditions.Matrix);
+            var rules = blockStartConditions.Rules.Select(m => new BlockRule(m)).ToList();
+            var res = CaHelper.SimulateBlock(startMatrix, rules, blockStartConditions.Steps);
             return res;
         }
     }

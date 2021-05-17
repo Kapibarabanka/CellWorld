@@ -2,27 +2,24 @@
 using CellWorld.Automaton;
 using CellWorld.Models;
 
-namespace CellWorld.Moore.Rules
+namespace CellWorld.Moore.Conditions
 {
     /// <summary>
     /// When applied, this rule will sum cells from cell's neighborhood that are in same position as "true" in Bool.
     /// If this sum is equal to required, will return Result state to the cell.
     /// </summary>
-    internal class SumRule : IMooreRule
+    internal class SumCondition : IMooreCondition
     {
         public BoolArea CellsToSum { get; }
         public int RequiredSum { get; }
 
-        public sbyte Result { get; }
-
-        public SumRule(BoolArea cellsToSum, int requiredSum, sbyte result)
+        public SumCondition(BoolArea cellsToSum, int requiredSum)
         {
             CellsToSum = cellsToSum;
             RequiredSum = requiredSum;
-            Result = result;
         }
 
-        public sbyte? TryApply(CellStateArea cellNeighbors)
+        public bool IsApplicable(CellStateArea cellNeighbors)
         {
             var sum = 0;
             for (var i = 0; i < StaticData.MoorAreaSize; i++)
@@ -33,15 +30,13 @@ namespace CellWorld.Moore.Rules
                 }
             }
 
-            return sum == RequiredSum
-                ? (sbyte?) Result
-                : null;
+            return sum == RequiredSum;
         }
 
-        public static IMooreRule GetFromModel(object model)
+        public static IMooreCondition GetFromModel(object model)
         {
-            var sumModel = JsonSerializer.Deserialize<SumRuleModel>(model.ToString());
-            return new SumRule(new BoolArea(sumModel.CellsToSum), sumModel.RequiredSum, sumModel.Result);
+            var sumModel = JsonSerializer.Deserialize<SumConditionModel>(model.ToString());
+            return new SumCondition(new BoolArea(sumModel.CellsToSum), sumModel.RequiredSum);
         }
     }
 }

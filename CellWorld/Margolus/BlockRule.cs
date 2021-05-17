@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using CellWorld.Models;
 
 
@@ -24,13 +20,11 @@ namespace CellWorld.Margolus
             To = to;
         }
 
-        public static BlockRule GetFromModel(object model)
+        public BlockRule(BlockRuleModel model)
         {
-            var blockModel = JsonSerializer.Deserialize<BlockRuleModel>(model.ToString());
-            var fromBlock = new Block(blockModel.FromBlock);
-            var toBlock = new Block(blockModel.ToBlock);
-
-            return new BlockRule(blockModel.Phase, fromBlock, toBlock);
+            Phase = model.Phase;
+            From = new Block(model.FromBlock);
+            To = new Block(model.ToBlock);
         }
     }
 }

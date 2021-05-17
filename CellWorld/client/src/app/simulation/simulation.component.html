@@ -1,10 +1,11 @@
 <div>
-  <button (click)="changeState()"> Change state </button>
-  <button (click)="startSimulation()">Start</button>
-  <button  (click)="stopSimulation()"> Stop</button>
-  <button  (click)="cellGrid.clearGrid()"> Clear </button>
-  <button  (click)="cellGrid.fillWithStatic()"> Fill With Static </button>
-  <select required [(ngModel)]="ruleToSimulate">
+  <button [disabled] = "isSimulating" (click)="changeState()"> Change state </button>
+  <button [disabled] = "isSimulating" (click)="startSimulation()">Start</button>
+  <button [disabled] = "!isSimulating" (click)="stopSimulation()"> Stop</button>
+  <button [disabled] = "isSimulating" (click)="cellGrid.clearGrid()"> Clear </button>
+  <button [disabled] = "isSimulating" (click)="cellGrid.fillWithStatic()"> Fill With Static </button>
+  
+  <select [disabled] = "isSimulating" required [(ngModel)]="ruleToSimulate">
     <option *ngFor="let ruleName of rulesNames" [value]="ruleName">
       {{ruleName}}
     </option>
