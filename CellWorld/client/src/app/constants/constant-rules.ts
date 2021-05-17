@@ -1,9 +1,9 @@
-import { BlockRuleModel } from '../rules/block-rule-model';
-import { ConditionModel } from '../rules/condition-model';
-import { ComplexConditionModel } from '../rules/condition-models/complex-condition-model';
-import { DirectConditionModel } from '../rules/condition-models/direct-condition-model';
-import { SumConditionModel } from '../rules/condition-models/sum-condition-model';
-import { MooreRuleModel } from '../rules/moore-rule-model';
+import { BlockRuleModel } from '../rules/block-rule/block-rule-model';
+import { ConditionModel } from '../rules/moore-rule/condition-model';
+import { ComplexConditionModel } from '../rules/moore-rule/condition-models/complex-condition-model';
+import { DirectConditionModel } from '../rules//moore-rule/condition-models/direct-condition-model';
+import { SumConditionModel } from '../rules//moore-rule/condition-models/sum-condition-model';
+import { MooreRuleModel } from '../rules//moore-rule/moore-rule-model';
 
 export class ConstantRules {
   private static Rule126 = [

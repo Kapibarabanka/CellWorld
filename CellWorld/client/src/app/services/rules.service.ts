@@ -1,8 +1,8 @@
 import { SimulationType } from './../constants/simulation-type';
 import { ConstantRules } from './../constants/constant-rules';
 import { Injectable } from '@angular/core';
-import { BlockRuleModel } from '../rules/block-rule-model';
-import { MooreRuleModel } from '../rules/moore-rule-model';
+import { BlockRuleModel } from '../rules/block-rule/block-rule-model';
+import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,9 @@
-<button (click)="select126()">126</button>
-<button (click)="selectLife()">Life</button>
-<button (click)="selectHpp()">Hpp gas</button>
+<button *ngFor="let ruleName of ruleNames" [value]="ruleName" (click)="selectRule(ruleName)">
+  {{ruleName}}
+</button>
+<p>Current rule: {{currentRuleName}}</p>
+<div >
+  <moore-rule *ngFor="let rule of currentMooreRule" [rule]="rule"></moore-rule>
+  <block-rule *ngFor="let rule of currentBlockRule" [rule]="rule"></block-rule>
+</div>
 
-<p>Current rule: {{currentRule}}</p>

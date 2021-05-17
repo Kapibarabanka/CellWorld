@@ -1,4 +1,8 @@
+import { RulesService } from './../services/rules.service';
 import { Component, OnInit } from '@angular/core';
+import { SimulationType } from '../constants/simulation-type';
+import { BlockRuleModel } from '../rules/block-rule/block-rule-model';
+import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
 
 @Component({
   selector: 'rules-editor',
@@ -7,23 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RulesEditorComponent implements OnInit {
 
-  public currentRule: string = "life"
+  public ruleNames: string[];
+  public currentRuleName: string;
 
-  constructor() { }
+  public currentMooreRule: MooreRuleModel[];
+  public currentBlockRule: BlockRuleModel[];
+
+  constructor(private rulesService: RulesService) {
+    this.ruleNames = rulesService.getRulesNames();
+    this.selectRule(this.ruleNames[0]);
+  }
 
   ngOnInit(): void {
   }
 
-  public selectLife(){
-    this.currentRule = "life"
+  public selectRule(ruleName: string) {
+    this.currentRuleName = ruleName;
+    const ruleType = this.rulesService.getRuleType(ruleName);
+    if (ruleType == SimulationType.Moore){
+      this.currentMooreRule = this.rulesService.getMooreRule(ruleName);
+      this.currentBlockRule = []
+    } else {
+      this.currentBlockRule = this.rulesService.getBlockRule(ruleName);
+      this.currentMooreRule = []
+    }
   }
-
-  public select126(){
-    this.currentRule = "126"
-  }
-
-  public selectHpp(){
-    this.currentRule = "hpp"
-  }
-
 }

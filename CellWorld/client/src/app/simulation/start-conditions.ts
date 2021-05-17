@@ -1,5 +1,5 @@
-import { BlockRuleModel } from '../rules/block-rule-model';
-import { MooreRuleModel } from '../rules/moore-rule-model';
+import { BlockRuleModel } from '../rules/block-rule/block-rule-model';
+import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
 export class MooreStartConditions {
     constructor (
         public matrix: Array<Array<number>>,
