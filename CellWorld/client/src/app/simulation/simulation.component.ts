@@ -46,11 +46,18 @@ export class SimulationComponent implements OnInit, OnDestroy{
 
   public ngOnInit() {
     if (!this.cellGrid) {
-      setTimeout(() => {  this.cellGrid = new CellGrid()}, 10); //to prevent filling before init
+      setTimeout(() => { 
+        this.cellGrid = new CellGrid();
+        const savedState = this.dataService.getSavedState();
+        if (savedState != null){
+          this.cellGrid.currentLayer = savedState;
+        }
+      }, 10); //to prevent filling before init
     }
   }
 
   ngOnDestroy(): void {
+    this.dataService.saveState(this.cellGrid.currentLayer);
     this.cellGrid.remove();
   }
 

@@ -9,10 +9,11 @@ import { HttpClient} from '@angular/common/http';
 })
 export class DataService {
     private url = "/api/";
+    private savedState: Array<Array<number>> = null;
   
     constructor(private http: HttpClient, private rulesService: RulesService) {}
 
-    fetchSimulationResults(startMatrix: Array<Array<number>>, ruleName: string, steps: number) {
+    public fetchSimulationResults(startMatrix: Array<Array<number>>, ruleName: string, steps: number) {
       const simType = this.rulesService.getRuleType(ruleName);
       if (simType == SimulationType.Block) {
         const rule = this.rulesService.getBlockRule(ruleName);
@@ -20,5 +21,13 @@ export class DataService {
       }
       const rule = this.rulesService.getMooreRule(ruleName);
       return this.http.post(this.url + "simulateMoore", new MooreStartConditions(startMatrix, rule, steps, 0));
+    }
+
+    public saveState(matrix: Array<Array<number>>){
+      this.savedState = matrix;
+    }
+
+    public getSavedState() : Array<Array<number>> {
+      return this.savedState;
     }
 }
