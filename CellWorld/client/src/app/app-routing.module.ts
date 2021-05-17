@@ -1,4 +1,4 @@
-import { RulesSettingsComponent } from './rules-settings/rules-settings.component';
+import { RulesEditorComponent } from './rules-editor/rules-editor.component';
 import { SimulationComponent } from './simulation/simulation.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'simulation', component: SimulationComponent },
-  { path: 'rules-settings', component: RulesSettingsComponent },
+  { path: 'rules-editor', component: RulesEditorComponent },
   { path: '', redirectTo: '/simulation', pathMatch: 'full' }
 
 ];

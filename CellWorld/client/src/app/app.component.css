@@ -2,6 +2,10 @@ button {
   margin: 16px 8px;
 }
 
+a {
+  margin: 16px 8px;
+} 
+
 table td {
   width:10px;
   height:10px;

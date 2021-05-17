@@ -27,7 +27,7 @@ export class CellGrid extends p5 {
       ];
 
       let width = this.windowWidth - 300;
-      let height = this.windowHeight - 120;
+      let height = this.windowHeight - 200;
 
       this.gridWidth = Math.floor(width / this.cellSize / 2) * 2;
       this.gridHeight = Math.floor(height / this.cellSize / 2) * 2;

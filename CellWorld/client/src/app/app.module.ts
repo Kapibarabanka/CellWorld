@@ -6,11 +6,11 @@ import { MatButtonModule} from '@angular/material/button'
 import { HttpClientModule } from '@angular/common/http';
 import { SimulationComponent } from './simulation/simulation.component';
 import { AppRoutingModule } from './app-routing.module';
-import { RulesSettingsComponent } from './rules-settings/rules-settings.component';
+import { RulesEditorComponent } from './rules-editor/rules-editor.component';
 
 @NgModule({
     imports:      [ BrowserModule, FormsModule, MatButtonModule, HttpClientModule, AppRoutingModule],
-    declarations: [ AppComponent, SimulationComponent, RulesSettingsComponent ],
+    declarations: [ AppComponent, SimulationComponent, RulesEditorComponent ],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

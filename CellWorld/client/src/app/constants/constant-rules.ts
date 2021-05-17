@@ -5,7 +5,7 @@ import { SumRuleModel } from './../rules/rule-models/sum-rule-model';
 import { RuleRequest } from './../rules/rule-request';
 
 export class ConstantRules {
-  public static Rule126 = [
+  private static Rule126 = [
     new RuleRequest("direct", new DirectRuleModel([0, 1, 1, -1, -1, -1, -1, -1, 1], 0)),
     new RuleRequest("direct", new DirectRuleModel([0, 1, 0, -1, -1, -1, -1, -1, 1], 1)),
     new RuleRequest("direct", new DirectRuleModel([0, 0, 1, -1, -1, -1, -1, -1, 1], 1)),
@@ -34,13 +34,13 @@ export class ConstantRules {
   private static Sum3 = new RuleRequest("sum", new SumRuleModel(ConstantRules.AllNeighborsMustCount, 3, 1))
   private static XisAlive = new RuleRequest("direct", new DirectRuleModel([1, -1, -1, -1, -1, -1, -1, -1, -1], 1))
 
-  public static RuleLife = [
+  private static RuleLife = [
     ConstantRules.Sum3,
     new RuleRequest("complex",
       new ComplexRuleModel(ConstantRules.XisAlive, ConstantRules.Sum2, "and", 1))
   ]
 
-  public static HppGasRule = [
+  private static HppGasRule = [
     new RuleRequest("block", new BlockRuleModel(-1, [0, 0, 0, 0], [0, 0, 0, 0])),
 
     new RuleRequest("block", new BlockRuleModel(-1, [1, 0, 0, 0], [0, 0, 1, 0])),
@@ -63,4 +63,10 @@ export class ConstantRules {
 
     new RuleRequest("block", new BlockRuleModel(-1, [1, 1, 1, 1], [1, 1, 1, 1]))
   ]
+
+  public static Rules: Map<string, RuleRequest[]> = new Map<string, RuleRequest[]>([
+    ["life", ConstantRules.RuleLife],
+    ["126", ConstantRules.Rule126],
+    ["hpp", ConstantRules.HppGasRule]
+  ])
 }

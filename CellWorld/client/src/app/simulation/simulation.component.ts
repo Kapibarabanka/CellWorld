@@ -24,8 +24,9 @@ export class SimulationComponent implements OnInit, OnDestroy{
   public needsToStop = new Subject<true>();
   public needsToSimulate = new Subject<true>();
   public startLayer: Array<Array<number>>;
-  public rulesToSimulate: Array<RuleRequest>;
-  public simType: SimulationType = SimulationType.Moore;
+  public rulesNames: string[];
+  public ruleToSimulate: string;
+  public simType: SimulationType;
 
   simulation: Array<Array<Array<number>>> = [];
 
@@ -34,11 +35,13 @@ export class SimulationComponent implements OnInit, OnDestroy{
   stepsPerRequest = 50;
 
   constructor(private dataService: DataService) {
+    this.rulesNames = dataService.getRulesNames();
+    this.ruleToSimulate = this.rulesNames[0];
     this.needsToSimulate.subscribe(() => {
       this.simulate(
         this.dataService.fetchSimulationResults(
           this.startLayer,
-          this.rulesToSimulate,
+          this.ruleToSimulate,
           this.stepsPerRequest,
           this.simType
         )
@@ -59,27 +62,17 @@ export class SimulationComponent implements OnInit, OnDestroy{
   public changeState() {
     this.cellGrid.currentState = this.cellGrid.currentState == 0 ? 1 : 0;
   }
-
-  public simulate126() {
-    this.startSimulation(ConstantRules.Rule126, SimulationType.Moore);
-  }
-
-  public simulateLife() {
-    this.startSimulation(ConstantRules.RuleLife, SimulationType.Moore);
-  }
-
-  public simulateHpp() {
-    this.startSimulation(ConstantRules.HppGasRule, SimulationType.Block);
-  }
-
+  
   public stopSimulation() {
     this.needsToStop.next(true);
   }
 
-  private startSimulation(rules: Array<RuleRequest>, simType: SimulationType) {
+  public startSimulation() {
     this.simulation = [];
-    this.rulesToSimulate = rules;
-    this.simType = simType;
+    this.simType = SimulationType.Moore;
+    if (this.ruleToSimulate == "hpp"){
+      this.simType = SimulationType.Block;
+    }
     timer(0, this.speed)
       .pipe(takeUntil(this.needsToStop))
       .subscribe((x) => {
