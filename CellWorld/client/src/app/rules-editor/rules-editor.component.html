@@ -1,9 +1,17 @@
-<button *ngFor="let ruleName of ruleNames" [value]="ruleName" (click)="selectRule(ruleName)">
-  {{ruleName}}
-</button>
-<p>Current rule: {{currentRuleName}}</p>
-<div >
-  <moore-rule *ngFor="let rule of currentMooreRule" [rule]="rule"></moore-rule>
-  <block-rule *ngFor="let rule of currentBlockRule" [rule]="rule"></block-rule>
+<div id="wrapper">
+  <div id="sidebar">
+    <div class="btn-group-vertical">
+      <button class="btn btn-default rule-button" *ngFor="let ruleName of ruleNames" [value]="ruleName" (click)="selectRule(ruleName)">
+        {{ruleName}}
+      </button>
+    </div>
+  </div>
+  
+  <div id="editor">
+    <p>Current rule: {{currentRuleName}}</p>
+    <div>
+      <moore-rule *ngFor="let rule of currentMooreRule" [rule]="rule"></moore-rule>
+      <block-rule *ngFor="let rule of currentBlockRule" [rule]="rule"></block-rule>
+    </div>
+  </div>
 </div>
-

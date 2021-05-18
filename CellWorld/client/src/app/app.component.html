@@ -1,5 +1,10 @@
-<nav>
-  <a routerLink="/simulation">Simulation</a>
-  <a routerLink="/rules-editor">Rules Editor</a>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <a class="navbar-brand">Cell World</a>
+    <ul class="nav navbar-nav" routerLinkActive="active">
+      <li class="nav-item"><a class="nav-link" routerLink="/simulation">Simulation</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/rules-editor">Rules Editor</a></li>
+    </ul>
+  </div>
 </nav>
 <router-outlet></router-outlet>

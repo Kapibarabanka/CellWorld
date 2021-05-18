@@ -1,3 +1,23 @@
-button {
-  margin: 16px 8px;
+#sidebar{
+  float: left;
+    width: 150px;
+}
+
+#editor{
+  background-color: #eee;
+  margin-left: 170px; /* 150px (ширина сайдбара) + 10px + 10px (2 отступа) */
+}
+
+#wrapper{
+  background-color: #ddd;
+}
+
+.rule-button{
+  margin: 3px 0px;
+  width: 100px;
+}
+
+.btn-group-vertical{
+  align-content: center;
+  margin-left: 25px;
 }
