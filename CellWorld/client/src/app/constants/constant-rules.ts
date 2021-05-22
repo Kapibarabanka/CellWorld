@@ -44,10 +44,10 @@ export class ConstantRules {
   private static HppGasRule = [
     new BlockRuleModel(-1, [0, 0, 0, 0], [0, 0, 0, 0]),
 
-    new BlockRuleModel(-1, [1, 0, 0, 0], [0, 0, 1, 0]),
-    new BlockRuleModel(-1, [0, 1, 0, 0], [0, 0, 0, 1]),
-    new BlockRuleModel(-1, [0, 0, 1, 0], [1, 0, 0, 0]),
-    new BlockRuleModel(-1, [0, 0, 0, 1], [0, 1, 0, 0]),
+    new BlockRuleModel(-1, [1, 0, 0, 0], [0, 0, 0, 1]),
+    new BlockRuleModel(-1, [0, 1, 0, 0], [0, 0, 1, 0]),
+    new BlockRuleModel(-1, [0, 0, 1, 0], [0, 1, 0, 0]),
+    new BlockRuleModel(-1, [0, 0, 0, 1], [1, 0, 0, 0]),
 
     new BlockRuleModel(-1, [1, 0, 1, 0], [0, 1, 0, 1]),
     new BlockRuleModel(-1, [0, 1, 0, 1], [1, 0, 1, 0]),
@@ -57,12 +57,13 @@ export class ConstantRules {
     new BlockRuleModel(-1, [0, 1, 1, 0], [1, 0, 0, 1]),
     new BlockRuleModel(-1, [0, 0, 1, 1], [1, 1, 0, 0]),
 
-    new BlockRuleModel(-1, [1, 1, 0, 1], [0, 1, 1, 1]),
-    new BlockRuleModel(-1, [1, 1, 1, 0], [1, 0, 1, 1]),
-    new BlockRuleModel(-1, [0, 1, 1, 1], [1, 1, 0, 1]),
-    new BlockRuleModel(-1, [1, 0, 1, 1], [1, 1, 1, 0]),
+    new BlockRuleModel(-1, [1, 1, 0, 1], [1, 0, 1, 1]),
+    new BlockRuleModel(-1, [1, 1, 1, 0], [0, 1, 1, 1]),
+    new BlockRuleModel(-1, [0, 1, 1, 1], [1, 1, 1, 0]),
+    new BlockRuleModel(-1, [1, 0, 1, 1], [1, 1, 0, 1]),
 
     new BlockRuleModel(-1, [1, 1, 1, 1], [1, 1, 1, 1])
+    //new BlockRuleModel(-1, [1, 1, 1, 1], [0, 0, 0, 0])
   ]
 
   public static MooreRules: Map<string, MooreRuleModel[]> = new Map<string, MooreRuleModel[]>([

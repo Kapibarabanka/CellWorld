@@ -65,7 +65,7 @@ namespace CellWorld.Automaton
             var ur = this[i, j + 1];
             var dr = this[i + 1, j + 1];
             var dl = this[i + 1, j];
-            return new Block(new[] { ul, ur, dr, dl});
+            return new Block(new[] { ul, ur, dl, dr});
         }
 
         public void UpdateMargolusBlock((int i, int j) blockCorner, Block blockToInsert)
@@ -73,8 +73,8 @@ namespace CellWorld.Automaton
             var (i, j) = blockCorner;
             this[i, j] = blockToInsert[0];
             this[i, j + 1] = blockToInsert[1];
-            this[i + 1, j + 1] = blockToInsert[2];
-            this[i + 1, j] = blockToInsert[3];
+            this[i + 1, j] = blockToInsert[2];
+            this[i + 1, j + 1] = blockToInsert[3];
         }
 
         private int GetCycledI(int i)

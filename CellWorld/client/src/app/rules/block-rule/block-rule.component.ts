@@ -1,5 +1,5 @@
 import { BlockRuleModel } from './block-rule-model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'block-rule',
@@ -8,9 +8,21 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BlockRuleComponent implements OnInit {
   @Input() rule: BlockRuleModel;
+  @Input() state: number;
+  @Output() ruleOutput = new EventEmitter<BlockRuleModel>();
   
-  public fromBlock: number[][] = []
-  public toBlock: number[][] = []
+  public get FromBlock(): number[][] {
+    return [
+      [this.rule.FromBlock[0], this.rule.FromBlock[1]],
+      [this.rule.FromBlock[2], this.rule.FromBlock[3]]
+    ]
+  }
+  public get ToBlock(): number[][] {
+    return [
+      [this.rule.ToBlock[0], this.rule.ToBlock[1]],
+      [this.rule.ToBlock[2], this.rule.ToBlock[3]]
+    ]
+  }
 
   colors = [
     'white', // dead
@@ -21,19 +33,12 @@ export class BlockRuleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fromBlock = [
-      [this.rule.FromBlock[0], this.rule.FromBlock[1]],
-      [this.rule.FromBlock[2], this.rule.FromBlock[3]]
-    ]
-    this.toBlock = [
-      [this.rule.ToBlock[0], this.rule.ToBlock[1]],
-      [this.rule.ToBlock[2], this.rule.ToBlock[3]]
-    ]
   }
 
   public onMouseDown(i: number, j: number) {
-    // this.toBlock[i][j] = this.state;
-    // return false;
+    //this.toBlock[i][j] = this.state;
+    //this.ruleOutput.emit(this.rule)
+    return false;
   }
 
   public getColor(state: number) {

@@ -18,7 +18,7 @@ namespace CellWorld.Margolus
 
         /// <summary>
         /// 0 1
-        /// 3 2
+        /// 2 3
         /// </summary>
         public sbyte this[int idx]
         {

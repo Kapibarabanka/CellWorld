@@ -35,4 +35,7 @@ export class RulesService {
     return this.blockRules.get(ruleName);
   }
 
+  public setBlockRule(ruleName: string, rule: BlockRuleModel[]) {
+    this.blockRules.set(ruleName, rule);
+  }
 }
