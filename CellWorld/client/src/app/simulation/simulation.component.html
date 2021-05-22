@@ -1,18 +1,24 @@
 <div>
-  <button class="btn btn-sm btn-default" [disabled] = "isSimulating" (click)="changeState()"> Change state </button>
+  <button type="button" class="btn btn-outline-secondary" [disabled]="isSimulating" (click)="changeState()"> Change
+    state </button>
   <label>Current State: {{cellGrid.currentState}}</label>
 
-  <button class="btn btn-sm btn-success" [disabled] = "isSimulating" (click)="startSimulation()">Start</button>
-  <button class="btn btn-sm btn-warning" [disabled] = "!isSimulating" (click)="stopSimulation()"> Stop</button>
-  <button class="btn btn-sm btn-danger" [disabled] = "isSimulating" (click)="cellGrid.clearGrid()"> Clear </button>
-  <button class="btn btn-sm btn-default" [disabled] = "isSimulating" (click)="cellGrid.fillWithStatic()"> Fill With Static </button>
+  <button type="button" class="btn btn-outline-success" [disabled]="isSimulating"
+    (click)="startSimulation()">Start</button>
+  <button type="button" class="btn btn-outline-warning" [disabled]="!isSimulating" (click)="stopSimulation()">
+    Stop</button>
+  <button type="button" class="btn btn-outline-danger" [disabled]="isSimulating" (click)="cellGrid.clearGrid()"> Clear
+  </button>
+  <button type="button" class="btn btn-outline-secondary" [disabled]="isSimulating" (click)="cellGrid.fillWithStatic()">
+    Fill With Static </button>
 
   <label>Select rule:</label>
-  <select class="btn btn-sm btn-default" [disabled] = "isSimulating" required [(ngModel)]="ruleToSimulate">
+  <select type="button" class="btn btn-outline-secondary" [disabled]="isSimulating" required
+    [(ngModel)]="ruleToSimulate">
     <option *ngFor="let ruleName of rulesNames" [value]="ruleName">
       {{ruleName}}
     </option>
   </select>
 </div>
 
-<div id = "sketch-holder" align="center"></div>
+<div id="sketch-holder" align="center"></div>
