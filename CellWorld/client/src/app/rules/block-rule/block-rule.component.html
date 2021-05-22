@@ -1,3 +1,22 @@
-<p>From: {{rule.FromBlock}}</p>
-<p>To: {{rule.ToBlock}}</p>
-
+<div class="container">
+  <div class="row">
+    <div class="col-4" id="from">
+      <table>
+        <tr *ngFor="let row of fromBlock">
+          <td *ngFor="let cell of row" [style.background-color]="getColor(cell)">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col">-></div>
+    <div class="col-4" id="to">
+      <table>
+        <tr *ngFor="let row of toBlock; let i = index">
+          <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeToBlock(i, j)"
+            [style.background-color]="getColor(cell)">
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

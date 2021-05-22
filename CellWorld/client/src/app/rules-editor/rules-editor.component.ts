@@ -19,7 +19,7 @@ export class RulesEditorComponent implements OnInit {
 
   constructor(private rulesService: RulesService) {
     this.ruleNames = rulesService.getRulesNames();
-    this.selectRule(this.ruleNames[0]);
+    this.selectRule(this.ruleNames[2]);
   }
 
   ngOnInit(): void {

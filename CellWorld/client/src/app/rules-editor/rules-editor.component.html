@@ -1,17 +1,22 @@
-<div id="wrapper">
-  <div id="sidebar">
-    <div class="btn-group-vertical">
-      <button class="btn btn-default rule-button" *ngFor="let ruleName of ruleNames" [value]="ruleName" (click)="selectRule(ruleName)">
-        {{ruleName}}
-      </button>
+<div class="container-fluid">
+  <div class="row">
+    <div id="sidebar" class="col">
+      <div class="btn-group-vertical">
+        <button type="button" class="btn btn-outline-secondary rule-button" *ngFor="let ruleName of ruleNames"
+          [value]="ruleName" (click)="selectRule(ruleName)">
+          {{ruleName}}
+        </button>
+      </div>
     </div>
-  </div>
-  
-  <div id="editor">
-    <p>Current rule: {{currentRuleName}}</p>
-    <div>
-      <moore-rule *ngFor="let rule of currentMooreRule" [rule]="rule"></moore-rule>
-      <block-rule *ngFor="let rule of currentBlockRule" [rule]="rule"></block-rule>
+
+    <div id="editor" class="col-10">
+      <p>Current rule: {{currentRuleName}}</p>
+      <div class="container">
+        <div class="row">
+          <moore-rule *ngFor="let rule of currentMooreRule" [rule]="rule"></moore-rule>
+          <block-rule class="col-md-3" *ngFor="let rule of currentBlockRule" [rule]="rule"></block-rule>
+        </div>
+      </div>
     </div>
   </div>
 </div>
