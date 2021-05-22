@@ -16,6 +16,9 @@ export class RulesEditorComponent implements OnInit {
 
   public currentMooreRule: MooreRuleModel[];
   public currentBlockRule: BlockRuleModel[];
+  private isMooreMode: boolean;
+
+  public currentState: number = 1;
 
   constructor(private rulesService: RulesService) {
     this.ruleNames = rulesService.getRulesNames();
@@ -31,9 +34,35 @@ export class RulesEditorComponent implements OnInit {
     if (ruleType == SimulationType.Moore){
       this.currentMooreRule = this.rulesService.getMooreRule(ruleName);
       this.currentBlockRule = []
+      this.isMooreMode = true;
     } else {
       this.currentBlockRule = this.rulesService.getBlockRule(ruleName);
       this.currentMooreRule = []
+      this.isMooreMode = false;
+    }
+  }
+
+  public changeState() {
+    this.currentState = this.currentState == 0 ? 1 : 0;
+  }
+
+  public updateRule(idx: number, rule: BlockRuleModel){
+    this.currentBlockRule[idx] = rule;
+  }
+
+  public save(){
+    if (this.isMooreMode){
+    //  this.rulesService.setMooreRule(this.currentRuleName, this.currentMooreRule);
+    } else {
+      this.rulesService.setBlockRule(this.currentRuleName, this.currentBlockRule);
+    }
+  }
+
+  public addTransition(){
+    if (this.isMooreMode){
+
+    } else {
+      //this.currentBlockRule.push(new BlockRuleModel())
     }
   }
 }

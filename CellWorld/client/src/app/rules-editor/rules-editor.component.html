@@ -11,12 +11,14 @@
 
     <div id="editor" class="col-10">
       <label>Current rule: {{currentRuleName}}</label>
+      <button type="button" class="btn btn-outline-secondary" (click)="changeState()">Change state</button>
+      <label>Current State: {{currentState}}</label>
       <button type="button" class="btn btn-outline-success">Save</button>
       <div class="container">
         <div class="row">
           <moore-rule *ngFor="let rule of currentMooreRule; let i = index" [rule]="rule"></moore-rule>
           <block-rule class="col-md-3" *ngFor="let rule of currentBlockRule; let i = index" 
-          [rule]="rule"></block-rule>
+          [rule]="rule" [state]="currentState" (ruleOutput)="updateRule(i, $event)"></block-rule>
         </div>
       </div>
     </div>

@@ -35,9 +35,9 @@ export class BlockRuleComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onMouseDown(i: number, j: number) {
-    //this.toBlock[i][j] = this.state;
-    //this.ruleOutput.emit(this.rule)
+  public onChangeToBlock(i: number, j: number) {
+    this.rule.setTo(i, j, this.state);
+    this.ruleOutput.emit(this.rule)
     return false;
   }
 
