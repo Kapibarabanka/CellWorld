@@ -7,7 +7,10 @@ import { MooreRuleModel } from './moore-rule-model';
   styleUrls: ['./moore-rule.component.css']
 })
 export class MooreRuleComponent implements OnInit {
-  @Input() rule: MooreRuleModel
+  @Input() rule: MooreRuleModel;
+  @Input() state: number;
+  @Output() ruleOutput = new EventEmitter<MooreRuleModel>();
+  @Output() toDelete = new EventEmitter<boolean>();
 
   constructor() {
 

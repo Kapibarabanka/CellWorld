@@ -1,15 +1,16 @@
 <div class="container">
   <div class="row">
-    <div class="col-4" id="from">
+    <div class="col-sm-4 rule" id="from">
       <table>
-        <tr *ngFor="let row of FromBlock">
-          <td *ngFor="let cell of row" [style.background-color]="getColor(cell)">
+        <tr *ngFor="let row of FromBlock; let i = index">
+          <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeFromBlock(i, j)"
+            [style.background-color]="getColor(cell)">
           </td>
         </tr>
       </table>
     </div>
-    <div class="col">-></div>
-    <div class="col-4" id="to">
+    <div class="col-sm-2 rule">-></div>
+    <div class="col-sm-4 rule" id="to">
       <table>
         <tr *ngFor="let row of ToBlock; let i = index">
           <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeToBlock(i, j)"
@@ -18,5 +19,8 @@
         </tr>
       </table>
     </div>
+    <button type="button" class="col-sm-2 rule btn btn-sm btn-outline-danger" (click)="onDelete()">
+      <i class="fa fa-trash"></i>
+    </button>
   </div>
 </div>

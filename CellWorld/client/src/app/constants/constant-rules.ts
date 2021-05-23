@@ -6,19 +6,6 @@ import { SumConditionModel } from '../rules//moore-rule/condition-models/sum-con
 import { MooreRuleModel } from '../rules//moore-rule/moore-rule-model';
 
 export class ConstantRules {
-  // private static Rule126 = [
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([0, 1, 1, -1, -1, -1, -1, -1, 1])), 0),
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([0, 1, 0, -1, -1, -1, -1, -1, 1])), 1),
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([0, 0, 1, -1, -1, -1, -1, -1, 1])), 1),
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([0, 0, 0, -1, -1, -1, -1, -1, 1])), 1),
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([0, 1, 1, -1, -1, -1, -1, -1, 0])), 1),
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([0, 1, 0, -1, -1, -1, -1, -1, 0])), 1),
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([0, 0, 1, -1, -1, -1, -1, -1, 0])), 1),
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([0, 0, 0, -1, -1, -1, -1, -1, 0])), 0),
-
-  //   new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([1, -1, -1, -1, -1, -1, -1, -1, -1])), 1),
-  // ]
-
   private static Rule126 = [
     //                                                                        ne	n	  nw 	e	  x	   w	se	 s	sw
     new MooreRuleModel(new ConditionModel("direct", new DirectConditionModel([1,	1,	1,	-1,	0,	-1,	-1,	-1,	-1])), 0),
@@ -46,7 +33,6 @@ export class ConstantRules {
 
   private static IfSum3TheAlive = new MooreRuleModel(new ConditionModel("sum", new SumConditionModel(ConstantRules.AllNeighborsMustCount, 3)), 1)
   private static Sum2 = new ConditionModel("sum", new SumConditionModel(ConstantRules.AllNeighborsMustCount, 2))
-  //private static XisAlive = new ConditionModel("direct", new DirectConditionModel([1, -1, -1, -1, -1, -1, -1, -1, -1]))
   private static XisAlive = new ConditionModel("direct", new DirectConditionModel([-1, -1, -1, -1, 1, -1, -1, -1, -1]))
 
   private static RuleLife = [

@@ -1,0 +1,8 @@
+table td {
+  width:15px;
+  height:15px;
+  text-align:center;
+  vertical-align:middle;
+  background-color:#ccc;
+  border:0.5px solid rgb(179, 177, 177);
+}

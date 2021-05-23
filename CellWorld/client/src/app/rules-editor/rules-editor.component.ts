@@ -1,5 +1,6 @@
+import { BlockEditorComponent } from './block-editor/block-editor.component';
 import { RulesService } from './../services/rules.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SimulationType } from '../constants/simulation-type';
 import { BlockRuleModel } from '../rules/block-rule/block-rule-model';
 import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
@@ -10,15 +11,12 @@ import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
   styleUrls: ['./rules-editor.component.css']
 })
 export class RulesEditorComponent implements OnInit {
-
   public ruleNames: string[];
   public currentRuleName: string;
 
   public currentMooreRule: MooreRuleModel[];
   public currentBlockRule: BlockRuleModel[];
-  private isMooreMode: boolean;
-
-  public currentState: number = 1;
+  public isMooreMode: boolean;
 
   constructor(private rulesService: RulesService) {
     this.ruleNames = rulesService.getRulesNames();
@@ -42,27 +40,8 @@ export class RulesEditorComponent implements OnInit {
     }
   }
 
-  public changeState() {
-    this.currentState = this.currentState == 0 ? 1 : 0;
+  public saveBlockRule(){
+    this.rulesService.setBlockRule(this.currentRuleName, this.currentBlockRule);
   }
-
-  public updateRule(idx: number, rule: BlockRuleModel){
-    this.currentBlockRule[idx] = rule;
-  }
-
-  public save(){
-    if (this.isMooreMode){
-    //  this.rulesService.setMooreRule(this.currentRuleName, this.currentMooreRule);
-    } else {
-      this.rulesService.setBlockRule(this.currentRuleName, this.currentBlockRule);
-    }
-  }
-
-  public addTransition(){
-    if (this.isMooreMode){
-
-    } else {
-      //this.currentBlockRule.push(new BlockRuleModel())
-    }
-  }
+  
 }

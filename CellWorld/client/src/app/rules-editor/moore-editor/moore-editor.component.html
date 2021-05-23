@@ -1,0 +1,13 @@
+<button type="button" class="btn btn-outline-secondary" (click)="changeState()">Change state</button>
+<label>Current State: {{currentState}}</label>
+<!-- <button type="button" class="btn btn-outline-secondary" (click)="addTransition()">Add transition</button> -->
+<button type="button" class="btn btn-outline-success">Save</button>
+<div class="container">
+  <div class="row">
+      <ng-container *ngFor="let rule of ruleModels">
+        <direct-rule  *ngIf="rule.isDirect()" class="col-4" [conditionModel]="rule.ConditionModel.Condition" 
+        [result]="rule.Result"></direct-rule>
+        <sum-rule  *ngIf="rule.isSum()" class="col"></sum-rule>
+      </ng-container>
+  </div>
+</div>

@@ -6,3 +6,7 @@ table td {
   background-color:#ccc;
   border:0.5px solid rgb(179, 177, 177);
 }
+
+.rule{
+  padding: 0px;
+}

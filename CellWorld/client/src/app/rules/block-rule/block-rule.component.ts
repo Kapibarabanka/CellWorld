@@ -10,6 +10,7 @@ export class BlockRuleComponent implements OnInit {
   @Input() rule: BlockRuleModel;
   @Input() state: number;
   @Output() ruleOutput = new EventEmitter<BlockRuleModel>();
+  @Output() toDelete = new EventEmitter<boolean>();
   
   public get FromBlock(): number[][] {
     return [
@@ -41,10 +42,20 @@ export class BlockRuleComponent implements OnInit {
     return false;
   }
 
+  public onChangeFromBlock(i: number, j: number) {
+    this.rule.setFrom(i, j, this.state);
+    this.ruleOutput.emit(this.rule)
+    return false;
+  }
+
   public getColor(state: number) {
     if (state < this.colors.length) {
       return this.colors[state]
     }
     return this.colors[0];
   } 
+
+  public onDelete(){
+    this.toDelete.emit(true);
+  }
 }
