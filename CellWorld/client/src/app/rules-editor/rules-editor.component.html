@@ -12,7 +12,7 @@
     <div id="editor" class="col-10">
       <label>Current rule: {{currentRuleName}}</label>
       <moore-editor *ngIf="isMooreMode" [ruleModels]="currentMooreRule"></moore-editor>
-      <block-editor *ngIf="!isMooreMode" [ruleModels]="currentBlockRule" (saveRule)="saveBlockRule()"></block-editor>
+      <block-editor *ngIf="!isMooreMode" [rulesSet]="currentBlockRule" (saveRule)="saveBlockRule()"></block-editor>
     </div>
   </div>
 </div>

@@ -16,8 +16,8 @@ export class DataService {
     public fetchSimulationResults(startMatrix: Array<Array<number>>, ruleName: string, steps: number) {
       const simType = this.rulesService.getRuleType(ruleName);
       if (simType == SimulationType.Block) {
-        const rule = this.rulesService.getBlockRule(ruleName);
-        return this.http.post(this.url + "simulateBlock", new BlockStartConditions(startMatrix, rule, steps));
+        const rulesSet = this.rulesService.getBlockRulesSet(ruleName);
+        return this.http.post(this.url + "simulateBlock", new BlockStartConditions(startMatrix, rulesSet.Rules, steps));
       }
       const rule = this.rulesService.getMooreRule(ruleName);
       return this.http.post(this.url + "simulateMoore", new MooreStartConditions(startMatrix, rule, steps, 0));

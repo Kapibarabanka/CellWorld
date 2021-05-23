@@ -1,5 +1,6 @@
 import { BlockRuleModel } from './block-rule-model';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ColorMap } from 'src/app/colors/color-map';
 
 @Component({
   selector: 'block-rule',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class BlockRuleComponent implements OnInit {
   @Input() rule: BlockRuleModel;
-  @Input() state: number;
+  @Input() colorMap: ColorMap;
   @Output() ruleOutput = new EventEmitter<BlockRuleModel>();
   @Output() toDelete = new EventEmitter<boolean>();
   
@@ -25,11 +26,6 @@ export class BlockRuleComponent implements OnInit {
     ]
   }
 
-  colors = [
-    'white', // dead
-    "black" // alive
-  ]
-
   constructor() { 
   }
 
@@ -37,22 +33,19 @@ export class BlockRuleComponent implements OnInit {
   }
 
   public onChangeToBlock(i: number, j: number) {
-    this.rule.setTo(i, j, this.state);
+    this.rule.setTo(i, j, this.colorMap.currentState);
     this.ruleOutput.emit(this.rule)
     return false;
   }
 
   public onChangeFromBlock(i: number, j: number) {
-    this.rule.setFrom(i, j, this.state);
+    this.rule.setFrom(i, j, this.colorMap.currentState);
     this.ruleOutput.emit(this.rule)
     return false;
   }
 
   public getColor(state: number) {
-    if (state < this.colors.length) {
-      return this.colors[state]
-    }
-    return this.colors[0];
+    return this.colorMap.getColor(state)
   } 
 
   public onDelete(){

@@ -1,9 +1,12 @@
+import { BlockRulesSet } from './../rules/block-rule/block-rules-set';
+import { ConstantColorMaps } from './constant-color-maps';
 import { BlockRuleModel } from '../rules/block-rule/block-rule-model';
 import { ConditionModel } from '../rules/moore-rule/condition-model';
 import { ComplexConditionModel } from '../rules/moore-rule/condition-models/complex-condition-model';
 import { DirectConditionModel } from '../rules//moore-rule/condition-models/direct-condition-model';
 import { SumConditionModel } from '../rules//moore-rule/condition-models/sum-condition-model';
 import { MooreRuleModel } from '../rules//moore-rule/moore-rule-model';
+import { ColorMap } from '../colors/color-map';
 
 export class ConstantRules {
   private static Rule126 = [
@@ -63,7 +66,6 @@ export class ConstantRules {
     new BlockRuleModel(-1, [1, 0, 1, 1], [1, 1, 0, 1]),
 
     new BlockRuleModel(-1, [1, 1, 1, 1], [1, 1, 1, 1])
-    //new BlockRuleModel(-1, [1, 1, 1, 1], [0, 0, 0, 0])
   ]
 
   public static MooreRules: Map<string, MooreRuleModel[]> = new Map<string, MooreRuleModel[]>([
@@ -71,7 +73,7 @@ export class ConstantRules {
     ["126", ConstantRules.Rule126]
   ])
 
-  public static BlockRules: Map<string, BlockRuleModel[]> = new Map<string, BlockRuleModel[]>([
-    ["hpp", ConstantRules.HppGasRule]
+  public static BlockRules: Map<string, BlockRulesSet> = new Map<string, BlockRulesSet>([
+    ["hpp", new BlockRulesSet(ConstantRules.HppGasRule, new ColorMap(ConstantColorMaps.WhiteBlack))]
   ])
 }

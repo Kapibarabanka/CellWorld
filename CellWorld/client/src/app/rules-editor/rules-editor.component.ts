@@ -1,8 +1,7 @@
-import { BlockEditorComponent } from './block-editor/block-editor.component';
+import { BlockRulesSet } from './../rules/block-rule/block-rules-set';
 import { RulesService } from './../services/rules.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SimulationType } from '../constants/simulation-type';
-import { BlockRuleModel } from '../rules/block-rule/block-rule-model';
 import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
 
 @Component({
@@ -15,7 +14,7 @@ export class RulesEditorComponent implements OnInit {
   public currentRuleName: string;
 
   public currentMooreRule: MooreRuleModel[];
-  public currentBlockRule: BlockRuleModel[];
+  public currentBlockRule: BlockRulesSet;
   public isMooreMode: boolean;
 
   constructor(private rulesService: RulesService) {
@@ -31,10 +30,10 @@ export class RulesEditorComponent implements OnInit {
     const ruleType = this.rulesService.getRuleType(ruleName);
     if (ruleType == SimulationType.Moore){
       this.currentMooreRule = this.rulesService.getMooreRule(ruleName);
-      this.currentBlockRule = []
+      this.currentBlockRule = null
       this.isMooreMode = true;
     } else {
-      this.currentBlockRule = this.rulesService.getBlockRule(ruleName);
+      this.currentBlockRule = this.rulesService.getBlockRulesSet(ruleName);
       this.currentMooreRule = []
       this.isMooreMode = false;
     }

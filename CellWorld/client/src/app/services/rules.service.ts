@@ -1,3 +1,4 @@
+import { BlockRulesSet } from './../rules/block-rule/block-rules-set';
 import { SimulationType } from './../constants/simulation-type';
 import { ConstantRules } from './../constants/constant-rules';
 import { Injectable } from '@angular/core';
@@ -9,7 +10,7 @@ import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
 })
 export class RulesService {
   private mooreRules: Map<string, MooreRuleModel[]>;
-  private blockRules: Map<string, BlockRuleModel[]>;
+  private blockRules: Map<string, BlockRulesSet>;
 
   constructor() {
     this.mooreRules = ConstantRules.MooreRules;
@@ -31,11 +32,11 @@ export class RulesService {
     return this.mooreRules.get(ruleName);
   }
 
-  public getBlockRule(ruleName: string): BlockRuleModel[]{
+  public getBlockRulesSet(ruleName: string): BlockRulesSet{
     return this.blockRules.get(ruleName);
   }
 
-  public setBlockRule(ruleName: string, rule: BlockRuleModel[]) {
+  public setBlockRule(ruleName: string, rule: BlockRulesSet) {
     this.blockRules.set(ruleName, rule);
   }
 }

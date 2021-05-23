@@ -1,5 +1,7 @@
+import { ColorMap } from './../../colors/color-map';
 import { BlockRuleModel } from './../../rules/block-rule/block-rule-model';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { BlockRulesSet } from 'src/app/rules/block-rule/block-rules-set';
 
 @Component({
   selector: 'block-editor',
@@ -7,17 +9,21 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./block-editor.component.css']
 })
 export class BlockEditorComponent implements OnInit {
-  @Input() ruleModels: BlockRuleModel[];
+  @Input() rulesSet: BlockRulesSet;
   @Output() saveRule = new EventEmitter<boolean>();
-  public currentState: number = 1;
+  
+  public ColorMap: ColorMap;
+  public RuleModels: BlockRuleModel[];
 
   constructor() { }
 
   ngOnInit(): void {
+    this.ColorMap = this.rulesSet.ColorMap;
+    this.RuleModels = this.rulesSet.Rules;
   }
 
   public changeState() {
-    this.currentState = this.currentState == 0 ? 1 : 0;
+    this.ColorMap.toggleState();
   }
 
   public save(){
@@ -25,14 +31,14 @@ export class BlockEditorComponent implements OnInit {
   }
 
   public updateRule(idx: number, rule: BlockRuleModel){
-    this.ruleModels[idx] = rule;
+    this.RuleModels[idx] = rule;
   }
 
   public deleteRule(idx: number){
-    this.ruleModels.splice(idx, 1);
+    this.RuleModels.splice(idx, 1);
   }
 
   public addTransition(){
-    this.ruleModels.push(new BlockRuleModel())
+    this.RuleModels.push(new BlockRuleModel())
   }
 }
