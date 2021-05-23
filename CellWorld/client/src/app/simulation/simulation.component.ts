@@ -4,6 +4,7 @@ import { Subject, timer, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CellGrid } from './cell-grid';
 import { DataService } from '../services/data.service';
+import { ColorMap } from '../colors/color-map';
 
 @Component({
   selector: 'simulation',
@@ -21,9 +22,10 @@ export class SimulationComponent implements OnInit, OnDestroy{
   public needsToStop = new Subject<true>();
   public needsToSimulate = new Subject<true>();
   public startLayer: Array<Array<number>>;
+  public isSimulating = false;
+
   public rulesNames: string[];
   public ruleToSimulate: string;
-  public isSimulating = false;
 
   simulation: Array<Array<Array<number>>> = [];
 

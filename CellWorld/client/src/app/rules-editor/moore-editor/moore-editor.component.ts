@@ -1,5 +1,7 @@
 import { MooreRuleModel } from './../../rules/moore-rule/moore-rule-model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MooreRulesSet } from 'src/app/rules/moore-rule/moore-rules-set';
+import { ColorMap } from 'src/app/colors/color-map';
 
 @Component({
   selector: 'moore-editor',
@@ -7,16 +9,21 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./moore-editor.component.css']
 })
 export class MooreEditorComponent implements OnInit {
-  @Input() ruleModels: MooreRuleModel[];
+  @Input() RulesSet: MooreRulesSet;
   @Output() saveRule = new EventEmitter<boolean>();
-  public currentState: number = 1;
+  
+  public ColorMap: ColorMap;
+  public RuleModels: MooreRuleModel[];
+
   constructor() { }
 
   ngOnInit(): void {
+    this.ColorMap = this.RulesSet.ColorMap;
+    this.RuleModels = this.RulesSet.Rules;
   }
 
   public changeState() {
-    this.currentState = this.currentState == 0 ? 1 : 0;
+    this.ColorMap.toggleState();
   }
 
   public save(){
@@ -24,11 +31,11 @@ export class MooreEditorComponent implements OnInit {
   }
 
   public updateRule(idx: number, rule: MooreRuleModel){
-    this.ruleModels[idx] = rule;
+    this.RuleModels[idx] = rule;
   }
 
   public deleteRule(idx: number){
-    this.ruleModels.splice(idx, 1);
+    this.RuleModels.splice(idx, 1);
   }
 
   // public addTransition(){

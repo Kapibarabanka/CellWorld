@@ -19,8 +19,8 @@ export class DataService {
         const rulesSet = this.rulesService.getBlockRulesSet(ruleName);
         return this.http.post(this.url + "simulateBlock", new BlockStartConditions(startMatrix, rulesSet.Rules, steps));
       }
-      const rule = this.rulesService.getMooreRule(ruleName);
-      return this.http.post(this.url + "simulateMoore", new MooreStartConditions(startMatrix, rule, steps, 0));
+      const rulesSet = this.rulesService.getMooreRulesSet(ruleName);
+      return this.http.post(this.url + "simulateMoore", new MooreStartConditions(startMatrix, rulesSet.Rules, steps, 0));
     }
 
     public saveState(matrix: Array<Array<number>>){

@@ -1,6 +1,7 @@
 import { MooreRuleModel } from './../moore-rule-model';
 import { DirectConditionModel } from './../condition-models/direct-condition-model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ColorMap } from 'src/app/colors/color-map';
 
 @Component({
   selector: 'direct-rule',
@@ -8,15 +9,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./direct-rule.component.css']
 })
 export class DirectRuleComponent implements OnInit {
-  @Input() conditionModel: DirectConditionModel
-  @Input() result: number
-  @Input() state: number
+  @Input() conditionModel: DirectConditionModel;
+  @Input() result: number;
+  @Input() ColorMap: ColorMap;
   @Output() deleteModel = new EventEmitter<boolean>();
-
-  colors = [
-    'white', // dead
-    "black" // alive
-  ]
 
   public get Condition(): number[][] {
     return [
@@ -32,15 +28,12 @@ export class DirectRuleComponent implements OnInit {
   }
 
   public onChangeCondition(i: number, j: number) {
-    this.conditionModel.set(i, j, this.state);
+    this.conditionModel.set(i, j, this.ColorMap.currentState);
     return false;
   }
 
   public getColor(state: number) {
-    if (state < this.colors.length) {
-      return this.colors[state]
-    }
-    return this.colors[0];
+    return this.ColorMap.getColor(state)
   } 
 
   public onDelete(){

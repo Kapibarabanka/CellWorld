@@ -1,3 +1,4 @@
+import { MooreRulesSet } from './../rules/moore-rule/moore-rules-set';
 import { BlockRulesSet } from './../rules/block-rule/block-rules-set';
 import { ConstantColorMaps } from './constant-color-maps';
 import { BlockRuleModel } from '../rules/block-rule/block-rule-model';
@@ -68,9 +69,9 @@ export class ConstantRules {
     new BlockRuleModel(-1, [1, 1, 1, 1], [1, 1, 1, 1])
   ]
 
-  public static MooreRules: Map<string, MooreRuleModel[]> = new Map<string, MooreRuleModel[]>([
-    ["life", ConstantRules.RuleLife],
-    ["126", ConstantRules.Rule126]
+  public static MooreRules: Map<string, MooreRulesSet> = new Map<string, MooreRulesSet>([
+    ["life", new MooreRulesSet(ConstantRules.RuleLife, new ColorMap(ConstantColorMaps.OptionalWhiteBlack))],
+    ["126",new MooreRulesSet(ConstantRules.Rule126, new ColorMap(ConstantColorMaps.OptionalWhiteBlack))]
   ])
 
   public static BlockRules: Map<string, BlockRulesSet> = new Map<string, BlockRulesSet>([

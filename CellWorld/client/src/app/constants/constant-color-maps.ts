@@ -5,7 +5,7 @@ export class ConstantColorMaps{
   ])
 
   public static OptionalWhiteBlack = new Map<number, string>([
-    [-1, 'grey'],
+    [-1, '#ccc'],
     [0, 'white'],
     [1, 'black']
   ])
