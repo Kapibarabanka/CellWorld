@@ -22,25 +22,5 @@ namespace CellWorld.Moore
 
             set => Neighbors[idx] = value;
         }
-
-        public T this[Direction dir]
-        {
-            get => Neighbors[(int) dir];
-
-            set => Neighbors[(int)dir] = value;
-        }
-    }
-
-    public enum Direction
-    {
-        X = 0,
-        N,
-        NE,
-        E,
-        SE,
-        S,
-        SW,
-        W,
-        NW
     }
 }

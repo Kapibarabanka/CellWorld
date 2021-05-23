@@ -55,7 +55,7 @@ namespace CellWorld.Automaton
             var sw = this[i + 1, j - 1];
             var w =  this[i, j - 1];
             var nw = this[i - 1, j - 1];
-            return new CellStateArea(new[] { x, n, ne, e, se, s, sw, w, nw });
+            return new CellStateArea(new[] { ne, n, nw, e, x, w, se, s, sw});
         }
 
         public Block GetMargolusBlock((int, int) blockCorner)
