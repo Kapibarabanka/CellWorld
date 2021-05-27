@@ -1,8 +1,6 @@
-﻿using System.Text.Json;
-using CellWorld.Models;
+﻿using CellWorld.Models;
 
-
-namespace CellWorld.Margolus
+namespace CellWorld.Block
 {
     public class BlockRule
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using CellWorld.Automaton;
 
-namespace CellWorld.Margolus
+namespace CellWorld.Block
 {
     public class Block: IEquatable<Block>
     {

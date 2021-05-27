@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using CellWorld.Automaton;
-using CellWorld.Margolus;
+using CellWorld.Block;
 using CellWorld.Models;
 using CellWorld.Moore;
 
