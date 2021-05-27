@@ -1,6 +1,6 @@
 import { RulesService } from './rules.service';
 import { SimulationType } from '../constants/simulation-type';
-import { MooreStartConditions, BlockStartConditions } from '../simulation/start-conditions';
+import { MooreStartConditions, BlockStartConditions } from './start-conditions';
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 

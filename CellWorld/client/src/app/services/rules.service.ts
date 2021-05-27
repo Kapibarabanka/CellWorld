@@ -2,7 +2,6 @@ import { BlockRulesSet } from './../rules/block-rule/block-rules-set';
 import { SimulationType } from './../constants/simulation-type';
 import { ConstantRules } from './../constants/constant-rules';
 import { Injectable } from '@angular/core';
-import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
 import { MooreRulesSet } from '../rules/moore-rule/moore-rules-set';
 
 @Injectable({

@@ -3,7 +3,7 @@ import { MooreRuleModel } from '../rules/moore-rule/moore-rule-model';
 export class MooreStartConditions {
     constructor (
         public matrix: Array<Array<number>>,
-        public rules: Array<MooreRuleModel>,
+        public ruleSet: Array<MooreRuleModel>,
         public steps: number,
         public defaultValue: number
     ) {
@@ -13,7 +13,7 @@ export class MooreStartConditions {
 export class BlockStartConditions {
   constructor (
       public matrix: Array<Array<number>>,
-      public rules: Array<BlockRuleModel>,
+      public ruleSet: Array<BlockRuleModel>,
       public steps: number
   ) {
   }
