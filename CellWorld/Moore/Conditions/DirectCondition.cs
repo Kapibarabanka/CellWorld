@@ -13,6 +13,12 @@ namespace CellWorld.Moore.Conditions
             ConditionArea = conditionArea;
         }
 
+        public DirectCondition(object model)
+        {
+            var directModel = JsonSerializer.Deserialize<DirectConditionModel>(model.ToString());
+            ConditionArea = new CellStateArea(directModel.Condition);
+        }
+
         public bool IsApplicable(CellStateArea cellNeighbors)
         {
             for (var i = 0; i < StaticData.MoorAreaSize; i++)
@@ -23,12 +29,6 @@ namespace CellWorld.Moore.Conditions
             }
 
             return true;
-        }
-
-        public static IMooreCondition GetFromModel(object model)
-        {
-            var directModel = JsonSerializer.Deserialize<DirectConditionModel>(model.ToString());
-            return new DirectCondition(new CellStateArea(directModel.Condition));
         }
     }
 }

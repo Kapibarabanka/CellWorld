@@ -19,6 +19,14 @@ namespace CellWorld.Moore.Conditions
             Operator = op.ToLower();
         }
 
+        public ComplexCondition(object model)
+        {
+            var complexModel = JsonSerializer.Deserialize<ComplexConditionModel>(model.ToString());
+            LeftCondition = RuleHelper.GetCondition(complexModel.LeftCondition);
+            RightCondition = RuleHelper.GetCondition(complexModel.RightCondition);
+            Operator = complexModel.Operator.ToLower();
+        }
+
         public bool IsApplicable(CellStateArea cellNeighbors)
         {
             return Operator switch
@@ -29,14 +37,6 @@ namespace CellWorld.Moore.Conditions
                 "xor" => LeftCondition.IsApplicable(cellNeighbors) ^ RightCondition.IsApplicable(cellNeighbors),
                 _ => false
             };
-        }
-
-        public static IMooreCondition GetFromModel(object model)
-        {
-            var complexModel = JsonSerializer.Deserialize<ComplexConditionModel>(model.ToString());
-            var leftCondition = RuleHelper.GetCondition(complexModel.LeftCondition);
-            var rightCondition = RuleHelper.GetCondition(complexModel.RightCondition);
-            return new ComplexCondition(leftCondition, rightCondition, complexModel.Operator);
         }
     }
 }

@@ -16,9 +16,9 @@ namespace CellWorld.Models
         {
             return model.ConditionType.ToLower() switch
             {
-                "direct" => DirectCondition.GetFromModel(model.Condition),
-                "sum" => SumCondition.GetFromModel(model.Condition),
-                "complex" => ComplexCondition.GetFromModel(model.Condition),
+                "direct" => new DirectCondition(model.Condition),
+                "sum" => new SumCondition(model.Condition),
+                "complex" => new ComplexCondition(model.Condition),
                 _ => throw new ArgumentException($"Unknown rule type {model.ConditionType}")
             };
         }

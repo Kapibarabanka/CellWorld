@@ -19,6 +19,13 @@ namespace CellWorld.Moore.Conditions
             RequiredSum = requiredSum;
         }
 
+        public SumCondition(object model)
+        {
+            var sumModel = JsonSerializer.Deserialize<SumConditionModel>(model.ToString());
+            CellsToSum = new BoolArea(sumModel.CellsToSum);
+            RequiredSum = sumModel.RequiredSum;
+        }
+
         public bool IsApplicable(CellStateArea cellNeighbors)
         {
             var sum = 0;
@@ -31,12 +38,6 @@ namespace CellWorld.Moore.Conditions
             }
 
             return sum == RequiredSum;
-        }
-
-        public static IMooreCondition GetFromModel(object model)
-        {
-            var sumModel = JsonSerializer.Deserialize<SumConditionModel>(model.ToString());
-            return new SumCondition(new BoolArea(sumModel.CellsToSum), sumModel.RequiredSum);
         }
     }
 }
