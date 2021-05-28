@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CellWorld.Block;
+using CellWorld.Margolus;
 using CellWorld.Moore;
 
 namespace CellWorld.Automaton

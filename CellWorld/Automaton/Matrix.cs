@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CellWorld.Margolus;
 using CellWorld.Moore;
 
 namespace CellWorld.Automaton

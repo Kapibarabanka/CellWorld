@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CellWorld.Models;
 
-namespace CellWorld.Block
+namespace CellWorld.Margolus
 {
     public class BlockStartConditions
     {
