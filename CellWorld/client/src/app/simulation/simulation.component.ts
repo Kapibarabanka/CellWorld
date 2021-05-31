@@ -1,24 +1,29 @@
-import { RulesService } from './../services/rules.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, timer, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { CellGrid } from './cell-grid';
-import { DataService } from '../services/data.service';
-import { ColorMap } from '../colors/color-map';
+import { RulesService } from "./../services/rules.service";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subject, timer, Observable } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { CellGrid } from "./cell-grid";
+import { DataService } from "../services/data.service";
+import { ColorMap } from "../colors/color-map";
 
 @Component({
-  selector: 'simulation',
-  templateUrl: './simulation.component.html',
-  styleUrls: ['./simulation.component.css']
+  selector: "simulation",
+  templateUrl: "./simulation.component.html",
+  styleUrls: ["./simulation.component.css"],
 })
-export class SimulationComponent implements OnInit, OnDestroy{
-
+export class SimulationComponent implements OnInit, OnDestroy {
   public static GridId = "sketch-holder";
   public get GridId() {
     return SimulationComponent.GridId;
   }
 
   public cellGrid: CellGrid;
+  public get GridColorMap() {
+    if (!!this.cellGrid) {
+      return this.cellGrid.ColorMap;
+    }
+    return new ColorMap();
+  }
   public needsToStop = new Subject<true>();
   public needsToSimulate = new Subject<true>();
   public startLayer: Array<Array<number>>;
@@ -32,9 +37,11 @@ export class SimulationComponent implements OnInit, OnDestroy{
   speed: number = 40;
   stepsPerRequest = 50;
 
-  constructor(private dataService: DataService, private rulesService: RulesService) {
+  constructor(
+    private dataService: DataService,
+    private rulesService: RulesService
+  ) {
     this.rulesNames = rulesService.getRuleSetsNames();
-    this.ruleToSimulate = this.rulesNames[0];
     this.needsToSimulate.subscribe(() => {
       this.simulate(
         this.dataService.fetchSimulationResults(
@@ -48,10 +55,11 @@ export class SimulationComponent implements OnInit, OnDestroy{
 
   public ngOnInit() {
     if (!this.cellGrid) {
-      setTimeout(() => { 
+      setTimeout(() => {
         this.cellGrid = new CellGrid();
+        this.selectRule(this.rulesNames[0]);
         const savedState = this.dataService.getSavedState();
-        if (savedState != null){
+        if (savedState != null) {
           this.cellGrid.currentLayer = savedState;
         }
       }, 10); //to prevent filling before init
@@ -63,12 +71,17 @@ export class SimulationComponent implements OnInit, OnDestroy{
     this.cellGrid.remove();
   }
 
-  public changeState() {
-    this.cellGrid.currentState = this.cellGrid.currentState == 0 ? 1 : 0;
+  // public changeState() {
+  //   this.cellGrid.currentState = this.cellGrid.currentState == 0 ? 1 : 0;
+  // }
+
+  public selectState(state: number) {
+    this.cellGrid.ColorMap.currentState = state;
   }
-  
-  public selectRule(rule: string){
+
+  public selectRule(rule: string) {
     this.ruleToSimulate = rule;
+    this.cellGrid.ColorMap = this.rulesService.getRuleSetColorMap(rule);
   }
 
   public stopSimulation() {

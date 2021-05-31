@@ -1,3 +1,4 @@
+import { ColorMap } from './../colors/color-map';
 import { BlockRulesSet } from './../rules/block-rule/block-rules-set';
 import { SimulationType } from './../constants/simulation-type';
 import { ConstantRules } from './../constants/constant-rules';
@@ -49,5 +50,14 @@ export class RulesService {
   
   public setMooreRuleSet(ruleSetName: string, rule: MooreRulesSet) {
     this.mooreRuleSets.set(ruleSetName, rule);
+  }
+
+  public getRuleSetColorMap(ruleSetName: string): ColorMap {
+    let type = this.getRuleSetType(ruleSetName);
+    if (type == SimulationType.Block) {
+      return this.getBlockRulesSet(ruleSetName).ColorMap;
+    }
+    return this.getMooreRulesSet(ruleSetName).ColorMap;
+
   }
 }

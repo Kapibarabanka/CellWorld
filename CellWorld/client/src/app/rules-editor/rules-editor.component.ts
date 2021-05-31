@@ -1,7 +1,7 @@
 import { ColorMap } from './../colors/color-map';
 import { BlockRulesSet } from "./../rules/block-rule/block-rules-set";
 import { RulesService } from "./../services/rules.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { SimulationType } from "../constants/simulation-type";
 import { MooreRulesSet } from "../rules/moore-rule/moore-rules-set";
 
@@ -10,7 +10,7 @@ import { MooreRulesSet } from "../rules/moore-rule/moore-rules-set";
   templateUrl: "./rules-editor.component.html",
   styleUrls: ["./rules-editor.component.css"],
 })
-export class RulesEditorComponent implements OnInit {
+export class RulesEditorComponent implements OnInit, OnDestroy {
   public mooreRuleSetsNames: string[];
   public blockRuleSetsNames: string[];
   public currentRuleSetName: string;
@@ -29,14 +29,19 @@ export class RulesEditorComponent implements OnInit {
   constructor(private rulesService: RulesService) {
     this.mooreRuleSetsNames = rulesService.getMooreRuleSetsNames();
     this.blockRuleSetsNames = rulesService.getBlockRuleSetsNames();
-    this.selectRule(this.mooreRuleSetsNames[0]);
   }
 
   ngOnInit(): void {
-    
+    this.selectRule(this.mooreRuleSetsNames[0]);
+  }
+  ngOnDestroy(): void {
+    this.ColorMap.statesToColors.delete(-1)
   }
 
   public selectRule(ruleName: string) {
+    if (!!this.currentRuleSetName && !!this.ColorMap) {
+      this.ColorMap.statesToColors.delete(-1)
+    }
     this.currentRuleSetName = ruleName;
     const ruleType = this.rulesService.getRuleSetType(ruleName);
     if (ruleType == SimulationType.Moore) {
@@ -48,6 +53,7 @@ export class RulesEditorComponent implements OnInit {
       this.currentMooreRuleSet = null;
       this.isMooreMode = false;
     }
+    this.ColorMap.statesToColors.set(-1, '#ccc')
   }
 
   public selectState(state: number){

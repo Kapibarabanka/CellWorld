@@ -17,6 +17,9 @@ export class ColorMap{
   }
 
   public getColor(state: number): string {
+    if (state === -1) {
+      return '#ccc'
+    }
     return this.statesToColors.get(state);
   }
 

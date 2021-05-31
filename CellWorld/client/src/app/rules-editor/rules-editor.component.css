@@ -15,8 +15,13 @@
 
 .rule-button{
   margin: 3px 0px;
-  
 }
+
+.allign{
+  width: 100%;
+  display: block;
+}
+
 
 .btn-group-vertical{
   align-content: center;

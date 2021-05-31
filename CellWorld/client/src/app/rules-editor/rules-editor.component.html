@@ -29,20 +29,24 @@
     <div id="color-panel" class="col-2">
       <div>Colors:</div>
       <div class="btn-group-vertical" role="group">
-        <div *ngFor="let state of ColorMap.States">
-          <input type="radio" class="btn-check" id="btnradio{{state}}" name="state_radio" (click)="selectState(state)">
-          <label class="btn btn-outline-secondary rule-button" for="btnradio{{state}}">
+        <div *ngFor="let state of ColorMap.States" class="allign">
+          <input type="radio" class="btn-check" id="btnradio{{state}}" name="state_radio" 
+          (click)="selectState(state)">
+          <label class="btn btn-outline-secondary rule-button allign" for="btnradio{{state}}">
             <span>{{state}}:</span>
             <span class="small-box">
               <table>
                 <td [style.background-color]="ColorMap.getColor(state)"></td>
               </table>
             </span>
+            <button type="button" class="btn btn-sm btn-outline-danger small-box">
+              <i class="fa fa-trash"></i>
+            </button>
           </label>
         </div>
 
       </div>
-      <button type="button" class="btn btn-outline-success rule-button">Add color</button>
+      <button type="button" class="btn btn-outline-success allign">Add color</button>
     </div>
   </div>
 </div>
