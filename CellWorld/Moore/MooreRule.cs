@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CellWorld.Moore.Conditions;
+﻿using CellWorld.Moore.Conditions;
 
 namespace CellWorld.Moore
 {

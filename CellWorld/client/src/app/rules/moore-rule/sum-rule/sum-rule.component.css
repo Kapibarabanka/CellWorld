@@ -1,0 +1,22 @@
+table td {
+  width:15px;
+  height:15px;
+  text-align:center;
+  vertical-align:middle;
+  background-color:#ccc;
+  border:0.5px solid rgb(179, 177, 177);
+  padding: 0px;
+}
+.small-text {
+  font-size: 15px;
+  padding: 8px 0px 0px 0px;
+  margin: 0px;
+}
+
+.req-sum {
+  margin: 5px 5px 5px 0px;
+}
+
+.cond{
+  padding: 0px;
+}

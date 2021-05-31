@@ -33,7 +33,7 @@ export class SimulationComponent implements OnInit, OnDestroy{
   stepsPerRequest = 50;
 
   constructor(private dataService: DataService, private rulesService: RulesService) {
-    this.rulesNames = rulesService.getRulesNames();
+    this.rulesNames = rulesService.getRuleSetsNames();
     this.ruleToSimulate = this.rulesNames[0];
     this.needsToSimulate.subscribe(() => {
       this.simulate(

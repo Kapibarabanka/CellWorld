@@ -1,0 +1,35 @@
+/* direct-rule {
+  margin: 2px 8px;
+  padding: 5px 5px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+} */
+
+.sum {
+  margin: 2px 0px;
+  padding: 0px;
+}
+table td {
+  width:15px;
+  height:15px;
+  text-align:center;
+  vertical-align:middle;
+  background-color:#ccc;
+  border:0.5px solid rgb(179, 177, 177);
+}
+.rule {
+  margin: 2px 8px;
+  padding: 5px 5px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+}
+
+.arrow {
+  font-size: 15px;
+  padding: 8px 0px 0px 0px;
+  margin: 0px;
+}
+
+.result {
+  padding: 12px 0px 0px 0px;
+}

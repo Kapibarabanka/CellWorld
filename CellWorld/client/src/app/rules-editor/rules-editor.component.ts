@@ -18,15 +18,15 @@ export class RulesEditorComponent implements OnInit {
   public isMooreMode: boolean;
 
   constructor(private rulesService: RulesService) {
-    this.ruleNames = rulesService.getRulesNames();
-    this.selectRule(this.ruleNames[1]);
+    this.ruleNames = rulesService.getRuleSetsNames();
+    this.selectRule(this.ruleNames[0]);
   }
 
   ngOnInit(): void {}
 
   public selectRule(ruleName: string) {
     this.currentRuleName = ruleName;
-    const ruleType = this.rulesService.getRuleType(ruleName);
+    const ruleType = this.rulesService.getRuleSetType(ruleName);
     if (ruleType == SimulationType.Moore) {
       this.currentMooreRule = this.rulesService.getMooreRulesSet(ruleName);
       this.currentBlockRule = null;
@@ -39,6 +39,6 @@ export class RulesEditorComponent implements OnInit {
   }
 
   public saveBlockRule() {
-    this.rulesService.setBlockRule(this.currentRuleName, this.currentBlockRule);
+    this.rulesService.setBlockRuleSet(this.currentRuleName, this.currentBlockRule);
   }
 }

@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row">
+
+    <direct-rule class="col-2" *ngIf="left.isDirect()" [conditionModel]="left.Condition" [ColorMap]="ColorMap"></direct-rule>
+    <sum-rule class="col-5" *ngIf="left.isSum()" [conditionModel]="left.Condition" [ColorMap]="ColorMap"></sum-rule>
+
+    <div class="col-2">{{conditionModel.Operator}}</div>
+
+    <direct-rule class="col-2" *ngIf="right.isDirect()" [conditionModel]="right.Condition" [ColorMap]="ColorMap"></direct-rule>
+    <sum-rule class="col-5" *ngIf="right.isSum()" [conditionModel]="right.Condition" [ColorMap]="ColorMap"></sum-rule>
+  </div>
+</div>

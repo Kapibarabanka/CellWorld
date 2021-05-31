@@ -4,6 +4,7 @@
 
 #editor{
   background-color: #eee;
+  height: calc(100vh);
 }
 
 .rule-button{

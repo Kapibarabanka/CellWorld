@@ -12,6 +12,7 @@ import { BlockEditorComponent } from "./rules-editor/block-editor/block-editor.c
 import { MooreEditorComponent } from "./rules-editor/moore-editor/moore-editor.component";
 import { DirectRuleComponent } from "./rules/moore-rule/direct-rule/direct-rule.component";
 import { SumRuleComponent } from "./rules/moore-rule/sum-rule/sum-rule.component";
+import { ComplexConditionComponent } from './rules/moore-rule/complex-condition/complex-condition.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { SumRuleComponent } from "./rules/moore-rule/sum-rule/sum-rule.component
     MooreEditorComponent,
     DirectRuleComponent,
     SumRuleComponent,
+    ComplexConditionComponent,
   ],
   bootstrap: [AppComponent],
 })

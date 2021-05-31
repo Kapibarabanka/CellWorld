@@ -4,10 +4,27 @@
 <button type="button" class="btn btn-outline-success">Save</button>
 <div class="container">
   <div class="row">
-      <ng-container *ngFor="let rule of RuleModels">
-        <direct-rule  *ngIf="rule.isDirect()" class="col-4" [conditionModel]="rule.ConditionModel.Condition" 
-        [result]="rule.Result" [ColorMap]="ColorMap"></direct-rule>
-        <sum-rule  *ngIf="rule.isSum()" class="col"></sum-rule>
-      </ng-container>
+    <ng-container *ngFor="let rule of RuleModels; let i = index">
+      <div [ngClass]="{'col-3': rule.isDirect(),
+                       'col-6': rule.isSum(),
+                       'col-12': rule.isComplex()}" class="row rule">
+        <direct-rule class="col-5" *ngIf="rule.isDirect()" [conditionModel]="rule.ConditionModel.Condition"
+          [ColorMap]="ColorMap"></direct-rule>
+        <sum-rule class="col-7 sum" *ngIf="rule.isSum()" [conditionModel]="rule.ConditionModel.Condition"
+          [ColorMap]="ColorMap"></sum-rule>
+        <complex-condition class="col-7" *ngIf="rule.isComplex()" [conditionModel]="rule.ConditionModel.Condition"
+          [ColorMap]="ColorMap"></complex-condition>
+
+        <div class="col-1 arrow">-></div>
+        <div class="col-1 result">
+          <table>
+            <td [style.background-color]="getColor(rule.Result)"></td>
+          </table>
+        </div>
+        <button type="button" class="col-2 rule btn btn-sm btn-outline-danger" (click)="deleteRule(i)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+    </ng-container>
   </div>
 </div>

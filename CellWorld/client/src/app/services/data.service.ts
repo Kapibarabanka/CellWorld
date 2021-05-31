@@ -14,7 +14,7 @@ export class DataService {
     constructor(private http: HttpClient, private rulesService: RulesService) {}
 
     public fetchSimulationResults(startMatrix: Array<Array<number>>, ruleName: string, steps: number) {
-      const simType = this.rulesService.getRuleType(ruleName);
+      const simType = this.rulesService.getRuleSetType(ruleName);
       if (simType == SimulationType.Block) {
         const rulesSet = this.rulesService.getBlockRulesSet(ruleName);
         return this.http.post(this.url + "simulateBlock", new BlockStartConditions(startMatrix, rulesSet.Rules, steps));

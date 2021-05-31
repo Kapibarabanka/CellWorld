@@ -1,7 +1,7 @@
 export class BlockRuleModel {
   public Phase: number;
-  public FromBlock: Array<number>;
-  public ToBlock: Array<number>;
+  public FromBlock: number[];
+  public ToBlock: number[];
 
   constructor();
   constructor(phase: number, fromBlock: Array<number>, toBlock: Array<number>);

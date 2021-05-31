@@ -38,6 +38,10 @@ export class MooreEditorComponent implements OnInit {
     this.RuleModels.splice(idx, 1);
   }
 
+  public getColor(state: number) {
+    return this.ColorMap.getColor(state)
+  } 
+
   // public addTransition(){
   //   this.ruleModels.push(new BlockRuleModel())
   // }
