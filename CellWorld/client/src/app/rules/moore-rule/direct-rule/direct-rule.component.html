@@ -1,4 +1,4 @@
-<table>
+<table class="small-box">
   <tr *ngFor="let row of Condition; let i = index">
     <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeCondition(i, j)"
       [style.background-color]="getColor(cell)">

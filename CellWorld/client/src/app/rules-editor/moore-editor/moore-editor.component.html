@@ -1,30 +1,26 @@
+<p></p>
 <button type="button" class="btn btn-outline-secondary" (click)="changeState()">Change state</button>
 <label>Current State: {{ColorMap.currentState}}</label>
 <!-- <button type="button" class="btn btn-outline-secondary" (click)="addTransition()">Add transition</button> -->
 <button type="button" class="btn btn-outline-success">Save</button>
-<div class="container">
-  <div class="row">
-    <ng-container *ngFor="let rule of RuleModels; let i = index">
-      <div [ngClass]="{'col-3': rule.isDirect(),
-                       'col-6': rule.isSum(),
-                       'col-12': rule.isComplex()}" class="row rule">
-        <direct-rule class="col-5" *ngIf="rule.isDirect()" [conditionModel]="rule.ConditionModel.Condition"
-          [ColorMap]="ColorMap"></direct-rule>
-        <sum-rule class="col-7 sum" *ngIf="rule.isSum()" [conditionModel]="rule.ConditionModel.Condition"
-          [ColorMap]="ColorMap"></sum-rule>
-        <complex-condition class="col-7" *ngIf="rule.isComplex()" [conditionModel]="rule.ConditionModel.Condition"
-          [ColorMap]="ColorMap"></complex-condition>
+<p></p>
+<ng-container *ngFor="let rule of RuleModels; let i = index">
+  <div class="rule">
+    <direct-rule class="condition" *ngIf="rule.isDirect()" [conditionModel]="rule.ConditionModel.Condition"
+      [ColorMap]="ColorMap"></direct-rule>
+    <sum-rule class="condition" *ngIf="rule.isSum()" [conditionModel]="rule.ConditionModel.Condition"
+      [ColorMap]="ColorMap"></sum-rule>
+    <complex-condition class="condition" *ngIf="rule.isComplex()" [conditionModel]="rule.ConditionModel.Condition"
+      [ColorMap]="ColorMap"></complex-condition>
 
-        <div class="col-1 arrow">-></div>
-        <div class="col-1 result">
-          <table>
-            <td [style.background-color]="getColor(rule.Result)"></td>
-          </table>
-        </div>
-        <button type="button" class="col-2 rule btn btn-sm btn-outline-danger" (click)="deleteRule(i)">
-          <i class="fa fa-trash"></i>
-        </button>
-      </div>
-    </ng-container>
+    <span class="small-box">-></span>
+    <span class="small-box">
+      <table>
+        <td [style.background-color]="getColor(rule.Result)"></td>
+      </table>
+    </span>
+    <button type="button" class="btn btn-sm btn-outline-danger small-box" (click)="deleteRule(i)">
+      <i class="fa fa-trash"></i>
+    </button>
   </div>
-</div>
+</ng-container>

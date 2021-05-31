@@ -16,6 +16,10 @@ export class ComplexConditionComponent implements OnInit {
     return this.conditionModel.LeftCondition
   }
 
+  public get op(): string {
+    return this.conditionModel.Operator.toUpperCase();
+  }
+
   public get right(): ConditionModel {
     return this.conditionModel.RightCondition
   }

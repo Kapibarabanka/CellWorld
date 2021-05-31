@@ -1,22 +1,29 @@
 table td {
-  width:15px;
-  height:15px;
+  width:15px !important;
+  height:15px !important;
   text-align:center;
   vertical-align:middle;
   background-color:#ccc;
   border:0.5px solid rgb(179, 177, 177);
   padding: 0px;
 }
-.small-text {
+.small-box {
   font-size: 15px;
-  padding: 8px 0px 0px 0px;
-  margin: 0px;
+  display: inline-block;
+  margin: 0px 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle; 
 }
-
-.req-sum {
-  margin: 5px 5px 5px 0px;
+.inp{
+  width: 30px;
 }
-
-.cond{
+.dot {
+  height: 7px;
+  width: 7px;
+  background-color: rgb(0, 0, 0);
+  border-radius: 50%;
+  display:block;
   padding: 0px;
+  margin: 0px 3px;
 }

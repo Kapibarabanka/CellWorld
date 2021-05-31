@@ -1,16 +1,11 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-3 small-text">Sum of</div>
-    <div class="col-sm-3 cond">
-      <table>
-        <tr *ngFor="let row of CellsToSum; let i = index">
-          <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeCellsToSum(i, j)"
-            [style.background-color]="getBoolColor(cell)">
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-sm-2 small-text">==</div>
-    <input mdbInput type="text" name="text" [(ngModel)]="conditionModel.RequiredSum"
-      class="col-sm-3 req-sum">
-</div>
+<div class="small-box" >SUM OF</div>
+<table class="small-box">
+  <tr *ngFor="let row of CellsToSum; let i = index">
+    <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeCellsToSum(i, j)">
+      <span *ngIf="cell" class="dot"></span>
+    </td>
+  </tr>
+</table>
+<div class="small-box" >==</div>
+<input mdbInput type="text" name="text" [(ngModel)]="conditionModel.RequiredSum"
+class="small-box inp" >
