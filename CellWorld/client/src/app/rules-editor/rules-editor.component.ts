@@ -1,3 +1,4 @@
+import { ColorMap } from './../colors/color-map';
 import { BlockRulesSet } from "./../rules/block-rule/block-rules-set";
 import { RulesService } from "./../services/rules.service";
 import { Component, OnInit } from "@angular/core";
@@ -10,35 +11,50 @@ import { MooreRulesSet } from "../rules/moore-rule/moore-rules-set";
   styleUrls: ["./rules-editor.component.css"],
 })
 export class RulesEditorComponent implements OnInit {
-  public ruleNames: string[];
-  public currentRuleName: string;
+  public mooreRuleSetsNames: string[];
+  public blockRuleSetsNames: string[];
+  public currentRuleSetName: string;
 
-  public currentMooreRule: MooreRulesSet;
-  public currentBlockRule: BlockRulesSet;
+  public currentMooreRuleSet: MooreRulesSet;
+  public currentBlockRuleSet: BlockRulesSet;
   public isMooreMode: boolean;
 
-  constructor(private rulesService: RulesService) {
-    this.ruleNames = rulesService.getRuleSetsNames();
-    this.selectRule(this.ruleNames[0]);
+  public get ColorMap(): ColorMap{
+    if (this.isMooreMode){
+      return this.currentMooreRuleSet.ColorMap;
+    }
+    return this.currentBlockRuleSet.ColorMap;
   }
 
-  ngOnInit(): void {}
+  constructor(private rulesService: RulesService) {
+    this.mooreRuleSetsNames = rulesService.getMooreRuleSetsNames();
+    this.blockRuleSetsNames = rulesService.getBlockRuleSetsNames();
+    this.selectRule(this.mooreRuleSetsNames[0]);
+  }
+
+  ngOnInit(): void {
+    
+  }
 
   public selectRule(ruleName: string) {
-    this.currentRuleName = ruleName;
+    this.currentRuleSetName = ruleName;
     const ruleType = this.rulesService.getRuleSetType(ruleName);
     if (ruleType == SimulationType.Moore) {
-      this.currentMooreRule = this.rulesService.getMooreRulesSet(ruleName);
-      this.currentBlockRule = null;
+      this.currentMooreRuleSet = this.rulesService.getMooreRulesSet(ruleName);
+      this.currentBlockRuleSet = null;
       this.isMooreMode = true;
     } else {
-      this.currentBlockRule = this.rulesService.getBlockRulesSet(ruleName);
-      this.currentMooreRule = null;
+      this.currentBlockRuleSet = this.rulesService.getBlockRulesSet(ruleName);
+      this.currentMooreRuleSet = null;
       this.isMooreMode = false;
     }
   }
 
+  public selectState(state: number){
+    this.ColorMap.currentState = state;
+  }
+
   public saveBlockRule() {
-    this.rulesService.setBlockRuleSet(this.currentRuleName, this.currentBlockRule);
+    this.rulesService.setBlockRuleSet(this.currentRuleSetName, this.currentBlockRuleSet);
   }
 }

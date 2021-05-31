@@ -20,6 +20,14 @@ export class RulesService {
     return Array.from(this.mooreRuleSets.keys()).concat(Array.from(this.blockRuleSets.keys()))
   }
 
+  public getMooreRuleSetsNames(): string[] {
+    return Array.from(this.mooreRuleSets.keys())
+  }
+
+  public getBlockRuleSetsNames(): string[] {
+    return Array.from(this.blockRuleSets.keys())
+  }
+
   public getRuleSetType(ruleSetName: string): SimulationType {
     if (this.blockRuleSets.has(ruleSetName)) {
       return SimulationType.Block;

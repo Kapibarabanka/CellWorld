@@ -1,10 +1,5 @@
-<button type="button" class="btn btn-outline-secondary" (click)="changeState()">Change state</button>
-<label>Current State: {{ColorMap.currentState}}</label>
-<button type="button" class="btn btn-outline-secondary" (click)="addTransition()">Add transition</button>
+<button type="button" class="btn btn-outline-secondary" (click)="addRule()">Add rule</button>
 <button type="button" class="btn btn-outline-success">Save</button>
-<div class="container">
-  <div class="row">
-    <block-rule class="col-md-2" *ngFor="let rule of RuleModels; let i = index" [rule]="rule"
-      [colorMap]="ColorMap" (ruleOutput)="updateRule(i, $event)" (toDelete)="deleteRule(i)"></block-rule>
-  </div>
-</div>
+<p></p>
+<block-rule *ngFor="let rule of RuleModels; let i = index" [rule]="rule" [colorMap]="ColorMap"
+  (ruleOutput)="updateRule(i, $event)" (toDelete)="deleteRule(i)"></block-rule>

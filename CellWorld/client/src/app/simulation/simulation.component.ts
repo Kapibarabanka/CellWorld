@@ -67,6 +67,10 @@ export class SimulationComponent implements OnInit, OnDestroy{
     this.cellGrid.currentState = this.cellGrid.currentState == 0 ? 1 : 0;
   }
   
+  public selectRule(rule: string){
+    this.ruleToSimulate = rule;
+  }
+
   public stopSimulation() {
     this.isSimulating = false;
     this.needsToStop.next(true);

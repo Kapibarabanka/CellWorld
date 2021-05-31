@@ -1,26 +1,22 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4 rule" id="from">
-      <table>
-        <tr *ngFor="let row of FromBlock; let i = index">
-          <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeFromBlock(i, j)"
-            [style.background-color]="getColor(cell)">
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-sm-2 rule">-></div>
-    <div class="col-sm-4 rule" id="to">
-      <table>
-        <tr *ngFor="let row of ToBlock; let i = index">
-          <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeToBlock(i, j)"
-            [style.background-color]="getColor(cell)">
-          </td>
-        </tr>
-      </table>
-    </div>
-    <button type="button" class="col-sm-2 rule btn btn-sm btn-outline-danger" (click)="onDelete()">
-      <i class="fa fa-trash"></i>
-    </button>
-  </div>
+<div class="small-box">
+  <table>
+    <tr *ngFor="let row of FromBlock; let i = index">
+      <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeFromBlock(i, j)"
+        [style.background-color]="getColor(cell)">
+      </td>
+    </tr>
+  </table>
 </div>
+<div class="small-box">-></div>
+<div class="small-box" id="to">
+  <table>
+    <tr *ngFor="let row of ToBlock; let i = index">
+      <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeToBlock(i, j)"
+        [style.background-color]="getColor(cell)">
+      </td>
+    </tr>
+  </table>
+</div>
+<button type="button" class="btn btn-sm btn-outline-danger small-box" (click)="onDelete()">
+  <i class="fa fa-trash"></i>
+</button>

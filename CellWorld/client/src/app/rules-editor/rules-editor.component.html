@@ -1,18 +1,48 @@
 <div class="container-fluid">
   <div class="row">
     <div id="sidebar" class="col">
+      <div>Moore rules:</div>
       <div class="btn-group-vertical">
-        <button type="button" class="btn btn-outline-secondary rule-button" *ngFor="let ruleName of ruleNames"
+        <button type="button" class="btn btn-outline-secondary rule-button" *ngFor="let ruleName of mooreRuleSetsNames"
           [value]="ruleName" (click)="selectRule(ruleName)">
           {{ruleName}}
         </button>
+        <button type="button" class="btn btn-outline-success rule-button">Add rule set</button>
+      </div>
+      <div>Block rules:</div>
+      <div class="btn-group-vertical">
+        <button type="button" class="btn btn-outline-secondary rule-button" *ngFor="let ruleName of blockRuleSetsNames"
+          [value]="ruleName" (click)="selectRule(ruleName)">
+          {{ruleName}}
+        </button>
+        <button type="button" class="btn btn-outline-success rule-button">Add rule set</button>
       </div>
     </div>
 
-    <div id="editor" class="col-10">
-      <label>Current rule: {{currentRuleName}}</label>
-      <moore-editor *ngIf="isMooreMode" [RulesSet]="currentMooreRule"></moore-editor>
-      <block-editor *ngIf="!isMooreMode" [rulesSet]="currentBlockRule" (saveRule)="saveBlockRule()"></block-editor>
+    <div id="editor" class="col-8">
+      <label>Current rule: {{currentRuleSetName}}</label>
+      <p></p>
+      <moore-editor *ngIf="isMooreMode" [RulesSet]="currentMooreRuleSet"></moore-editor>
+      <block-editor *ngIf="!isMooreMode" [rulesSet]="currentBlockRuleSet" (saveRule)="saveBlockRule()"></block-editor>
+    </div>
+
+    <div id="color-panel" class="col-2">
+      <div>Colors:</div>
+      <div class="btn-group-vertical" role="group">
+        <div *ngFor="let state of ColorMap.States">
+          <input type="radio" class="btn-check" id="btnradio{{state}}" name="state_radio" (click)="selectState(state)">
+          <label class="btn btn-outline-secondary rule-button" for="btnradio{{state}}">
+            <span>{{state}}:</span>
+            <span class="small-box">
+              <table>
+                <td [style.background-color]="ColorMap.getColor(state)"></td>
+              </table>
+            </span>
+          </label>
+        </div>
+
+      </div>
+      <button type="button" class="btn btn-outline-success rule-button">Add color</button>
     </div>
   </div>
 </div>

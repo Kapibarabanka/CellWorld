@@ -14,6 +14,10 @@ table td {
   margin: 7px 7px;
 }
 
+.dropdown {
+  display: inline-block;
+}
+
 .small-box {
   font-size: 15px;
   display: inline-block;
@@ -31,3 +35,6 @@ table td {
   margin-left: 7px;
 }
 
+.btn {
+  margin: 0px 7px;
+}

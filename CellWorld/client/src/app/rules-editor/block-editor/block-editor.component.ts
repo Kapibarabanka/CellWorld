@@ -10,7 +10,6 @@ import { BlockRulesSet } from 'src/app/rules/block-rule/block-rules-set';
 })
 export class BlockEditorComponent implements OnInit {
   @Input() rulesSet: BlockRulesSet;
-  @Output() saveRule = new EventEmitter<boolean>();
   
   public ColorMap: ColorMap;
   public RuleModels: BlockRuleModel[];
@@ -26,10 +25,6 @@ export class BlockEditorComponent implements OnInit {
     this.ColorMap.toggleState();
   }
 
-  public save(){
-    this.saveRule.emit(true);
-  }
-
   public updateRule(idx: number, rule: BlockRuleModel){
     this.RuleModels[idx] = rule;
   }
@@ -38,7 +33,7 @@ export class BlockEditorComponent implements OnInit {
     this.RuleModels.splice(idx, 1);
   }
 
-  public addTransition(){
+  public addRule(){
     this.RuleModels.push(new BlockRuleModel())
   }
 }

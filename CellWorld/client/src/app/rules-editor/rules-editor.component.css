@@ -1,17 +1,42 @@
 #sidebar{
-  background-color: #ddd;
+  background-color: #f8f9fa;
+  border-right:0.5px solid #BDBDBDFF;
 }
 
 #editor{
-  background-color: #eee;
-  height: calc(100vh);
+  background-color: #f8f9fa;
+  height: calc(100vh - 56px);
+}
+
+#color-panel{
+  background-color: #f8f9fa;
+  border-left:0.5px solid #BDBDBDFF;
 }
 
 .rule-button{
   margin: 3px 0px;
-  width: 100px;
+  
 }
 
 .btn-group-vertical{
   align-content: center;
+  width: 100%;
+}
+
+table td {
+  width:15px;
+  height:15px;
+  text-align:center;
+  vertical-align:middle;
+  background-color:#ccc;
+  border:0.5px solid rgb(179, 177, 177);
+}
+
+.small-box {
+  font-size: 15px;
+  display: inline-block;
+  margin: 0px 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
 }

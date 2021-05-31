@@ -12,13 +12,17 @@
   <button type="button" class="btn btn-outline-secondary" [disabled]="isSimulating" (click)="cellGrid.fillWithStatic()">
     Fill With Static </button>
 
-  <label>Select rule:</label>
-  <select type="button" class="btn btn-outline-secondary" [disabled]="isSimulating" required
-    [(ngModel)]="ruleToSimulate">
-    <option *ngFor="let ruleName of rulesNames" [value]="ruleName">
-      {{ruleName}}
-    </option>
-  </select>
+  <label>Select rule set:</label>
+  <div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="addRuleButton" data-bs-toggle="dropdown"
+      aria-expanded="false">
+      {{ruleToSimulate}}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="addRuleButton">
+      <li><a *ngFor="let ruleName of rulesNames" class="dropdown-item" 
+        (click)="selectRule(ruleName)">{{ruleName}}</a></li>
+    </ul>
+  </div>
 </div>
 
 <div id="sketch-holder" align="center"></div>

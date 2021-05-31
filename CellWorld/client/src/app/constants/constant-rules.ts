@@ -70,11 +70,11 @@ export class ConstantRules {
   ]
 
   public static MooreRules: Map<string, MooreRulesSet> = new Map<string, MooreRulesSet>([
-    ["life", new MooreRulesSet(ConstantRules.RuleLife, new ColorMap(ConstantColorMaps.OptionalWhiteBlack))],
-    ["126",new MooreRulesSet(ConstantRules.Rule126, new ColorMap(ConstantColorMaps.OptionalWhiteBlack))]
+    ["Life", new MooreRulesSet(ConstantRules.RuleLife, new ColorMap(ConstantColorMaps.WhiteBlack))],
+    ["126",new MooreRulesSet(ConstantRules.Rule126, new ColorMap(ConstantColorMaps.WhiteBlack))]
   ])
 
   public static BlockRules: Map<string, BlockRulesSet> = new Map<string, BlockRulesSet>([
-    ["hpp", new BlockRulesSet(ConstantRules.HppGasRule, new ColorMap(ConstantColorMaps.WhiteBlack))]
+    ["HPP", new BlockRulesSet(ConstantRules.HppGasRule, new ColorMap(ConstantColorMaps.WhiteBlack))]
   ])
 }
