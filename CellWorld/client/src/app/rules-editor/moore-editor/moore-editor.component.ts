@@ -1,5 +1,5 @@
 import { MooreRuleModel } from './../../rules/moore-rule/moore-rule-model';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MooreRulesSet } from 'src/app/rules/moore-rule/moore-rules-set';
 import { ColorMap } from 'src/app/colors/color-map';
 
@@ -8,18 +8,22 @@ import { ColorMap } from 'src/app/colors/color-map';
   templateUrl: './moore-editor.component.html',
   styleUrls: ['./moore-editor.component.css']
 })
-export class MooreEditorComponent implements OnInit {
+export class MooreEditorComponent implements OnInit, OnChanges {
   @Input() RulesSet: MooreRulesSet;
   @Output() saveRule = new EventEmitter<boolean>();
   
-  public ColorMap: ColorMap;
-  public RuleModels: MooreRuleModel[];
+  public get ColorMap(): ColorMap {
+    return this.RulesSet.ColorMap;
+  };
+  public get RuleModels(): MooreRuleModel[]{
+    return this.RulesSet.Rules;
+  }
 
   constructor() { }
-
   ngOnInit(): void {
-    this.ColorMap = this.RulesSet.ColorMap;
-    this.RuleModels = this.RulesSet.Rules;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {   
   }
 
   public changeState() {

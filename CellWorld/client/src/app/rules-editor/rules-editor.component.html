@@ -23,7 +23,7 @@
       <label>Current rule: {{currentRuleSetName}}</label>
       <p></p>
       <moore-editor *ngIf="isMooreMode" [RulesSet]="currentMooreRuleSet"></moore-editor>
-      <block-editor *ngIf="!isMooreMode" [rulesSet]="currentBlockRuleSet" (saveRule)="saveBlockRule()"></block-editor>
+      <block-editor *ngIf="!isMooreMode" [RulesSet]="currentBlockRuleSet" (saveRule)="saveBlockRule()"></block-editor>
     </div>
 
     <div id="color-panel" class="col-2">
