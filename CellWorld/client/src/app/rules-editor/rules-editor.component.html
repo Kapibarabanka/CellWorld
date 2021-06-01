@@ -20,29 +20,30 @@
     </div>
 
     <div id="editor" class="col-8">
-      <label>Current rule: {{currentRuleSetName}}</label>
-      <p></p>
+      <label>Current rule:</label>
+      <input type="text" class="small-box" [(ngModel)]="inputRuleSetName">
+      <button type="button" class="btn btn-outline-success small-box" (click)="saveRuleSet()">Save</button>
+      <button type="button" class="btn btn-outline-danger small-box" (click)="deleteRuleSet()">Delete</button>
       <moore-editor *ngIf="isMooreMode" [RulesSet]="currentMooreRuleSet"></moore-editor>
-      <block-editor *ngIf="!isMooreMode" [RulesSet]="currentBlockRuleSet" (saveRule)="saveBlockRule()"></block-editor>
+      <block-editor *ngIf="!isMooreMode" [RulesSet]="currentBlockRuleSet"></block-editor>
     </div>
 
     <div id="color-panel" class="col-2">
-      <div>Colors:</div>
+      <div>States to colors:</div>
       <div class="btn-group-vertical" role="group">
         <div *ngFor="let state of ColorMap.States" class="allign">
           <input type="radio" class="btn-check" id="btnradio{{state}}" name="state_radio" 
           (click)="selectState(state)">
           <label class="btn btn-outline-secondary rule-button allign" for="btnradio{{state}}">
-            <span>{{state}}:</span>
+            <input class="inp small-box" [value]="state" [disabled]="state==-1">:
             <input ejs-colorpicker type="color" [value]="ColorMap.getColor(state)" (change)="updateColorMap($event, state)"/>
-            <button type="button" class="btn btn-sm btn-outline-danger small-box">
+            <button type="button" class="btn btn-sm btn-outline-danger small-box" [disabled]="state==-1">
               <i class="fa fa-trash"></i>
             </button>
           </label>
         </div>
-
       </div>
-      <button type="button" class="btn btn-outline-success allign">Add color</button>
+      <button type="button" class="btn btn-outline-success rule-button allign">Add color</button>
     </div>
   </div>
 </div>

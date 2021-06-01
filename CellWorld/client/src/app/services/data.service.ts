@@ -1,3 +1,4 @@
+import { SavedState } from './saved-state';
 import { RulesService } from './rules.service';
 import { SimulationType } from '../constants/simulation-type';
 import { MooreStartConditions, BlockStartConditions } from './start-conditions';
@@ -9,7 +10,7 @@ import { HttpClient} from '@angular/common/http';
 })
 export class DataService {
     private url = "/api/";
-    private savedState: Array<Array<number>> = null;
+    private savedState: SavedState = null;
   
     constructor(private http: HttpClient, private rulesService: RulesService) {}
 
@@ -23,11 +24,11 @@ export class DataService {
       return this.http.post(this.url + "simulateMoore", new MooreStartConditions(startMatrix, rulesSet.Rules, steps, 0));
     }
 
-    public saveState(matrix: Array<Array<number>>){
-      this.savedState = matrix;
+    public saveState(state: SavedState){
+      this.savedState = state;
     }
 
-    public getSavedState() : Array<Array<number>> {
+    public getSavedState() : SavedState {
       return this.savedState;
     }
 }

@@ -47,9 +47,17 @@ export class RulesService {
   public setBlockRuleSet(ruleSetName: string, rule: BlockRulesSet) {
     this.blockRuleSets.set(ruleSetName, rule);
   }
+
+  public deleteBlockRuleSet(ruleSetName: string) {
+    this.blockRuleSets.delete(ruleSetName);
+  }
   
   public setMooreRuleSet(ruleSetName: string, rule: MooreRulesSet) {
     this.mooreRuleSets.set(ruleSetName, rule);
+  }
+
+  public deleteMooreRuleSet(ruleSetName: string) {
+    this.mooreRuleSets.delete(ruleSetName);
   }
 
   public getRuleSetColorMap(ruleSetName: string): ColorMap {

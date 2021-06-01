@@ -29,7 +29,6 @@
   display: block;
 }
 
-
 .btn-group-vertical{
   align-content: center;
   width: 100%;
@@ -42,6 +41,16 @@ table td {
   vertical-align:middle;
   background-color:#ccc;
   border:0.5px solid rgb(179, 177, 177);
+}
+
+.state-button{
+  margin: 3px 0px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.inp{
+  width: 30px;
 }
 
 .small-box {

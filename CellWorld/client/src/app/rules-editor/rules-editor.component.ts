@@ -15,6 +15,7 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
   public mooreRuleSetsNames: string[];
   public blockRuleSetsNames: string[];
   public currentRuleSetName: string;
+  public inputRuleSetName: string;
 
   public currentMooreRuleSet: MooreRulesSet;
   public currentBlockRuleSet: BlockRulesSet;
@@ -28,8 +29,7 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
   }
 
   constructor(private rulesService: RulesService) {
-    this.mooreRuleSetsNames = rulesService.getMooreRuleSetsNames();
-    this.blockRuleSetsNames = rulesService.getBlockRuleSetsNames();
+    this.updateRuleSetLists();
   }
 
   ngOnInit(): void {
@@ -44,6 +44,7 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
       this.ColorMap.statesToColors.delete(-1);
     }
     this.currentRuleSetName = ruleName;
+    this.inputRuleSetName = ruleName;
     const ruleType = this.rulesService.getRuleSetType(ruleName);
     if (ruleType == SimulationType.Moore) {
       this.currentMooreRuleSet = this.rulesService.getMooreRulesSet(ruleName);
@@ -65,10 +66,42 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
     this.ColorMap.statesToColors.set(state, args.currentValue.hex);
   }
 
-  public saveBlockRule() {
-    this.rulesService.setBlockRuleSet(
-      this.currentRuleSetName,
-      this.currentBlockRuleSet
-    );
+  public saveRuleSet() {
+    if (this.isMooreMode) {
+      this.rulesService.setMooreRuleSet(
+        this.inputRuleSetName,
+        this.currentMooreRuleSet
+      );
+      if (this.inputRuleSetName != this.currentRuleSetName) {
+        this.rulesService.deleteMooreRuleSet(this.currentRuleSetName);
+        this.currentRuleSetName = this.inputRuleSetName;
+        this.updateRuleSetLists();
+      }
+    } else {
+      this.rulesService.setBlockRuleSet(
+        this.inputRuleSetName,
+        this.currentBlockRuleSet
+      );
+      if (this.inputRuleSetName != this.currentRuleSetName) {
+        this.rulesService.deleteBlockRuleSet(this.currentRuleSetName);
+        this.currentRuleSetName = this.inputRuleSetName;
+        this.updateRuleSetLists();
+      }
+      console.log(JSON.stringify(this.currentBlockRuleSet ));
+    }
+  }
+
+  public deleteRuleSet() {
+    if (this.isMooreMode) {
+      this.rulesService.deleteMooreRuleSet(this.currentRuleSetName);
+    } else {
+      this.rulesService.deleteBlockRuleSet(this.currentRuleSetName);
+    }
+    this.updateRuleSetLists();
+  }
+
+  private updateRuleSetLists() {
+    this.blockRuleSetsNames = this.rulesService.getBlockRuleSetsNames();
+    this.mooreRuleSetsNames = this.rulesService.getMooreRuleSetsNames();
   }
 }

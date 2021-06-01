@@ -66,7 +66,13 @@ export class ConstantRules {
     new BlockRuleModel(-1, [0, 1, 1, 1], [1, 1, 1, 0]),
     new BlockRuleModel(-1, [1, 0, 1, 1], [1, 1, 0, 1]),
 
-    new BlockRuleModel(-1, [1, 1, 1, 1], [1, 1, 1, 1])
+    new BlockRuleModel(-1, [1, 1, 1, 1], [1, 1, 1, 1]),
+
+    new BlockRuleModel(-1, [1, -1, -1, 2], [1, -1, -1, 2]),
+    new BlockRuleModel(-1, [2, -1, -1, 1], [2, -1, -1, 1]),
+    new BlockRuleModel(-1, [-1, 2, 1, -1], [-1, 2, 1, -1]),
+    new BlockRuleModel(-1, [-1, 1, 2, -1], [-1, 1, 2, -1]),
+    
   ]
 
   public static MooreRules: Map<string, MooreRulesSet> = new Map<string, MooreRulesSet>([

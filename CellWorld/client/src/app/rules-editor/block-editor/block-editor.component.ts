@@ -1,6 +1,6 @@
 import { ColorMap } from './../../colors/color-map';
 import { BlockRuleModel } from './../../rules/block-rule/block-rule-model';
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { BlockRulesSet } from 'src/app/rules/block-rule/block-rules-set';
 
 @Component({

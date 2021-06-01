@@ -5,6 +5,7 @@ import { takeUntil } from "rxjs/operators";
 import { CellGrid } from "./cell-grid";
 import { DataService } from "../services/data.service";
 import { ColorMap } from "../colors/color-map";
+import { SavedState } from "../services/saved-state";
 
 @Component({
   selector: "simulation",
@@ -57,23 +58,29 @@ export class SimulationComponent implements OnInit, OnDestroy {
     if (!this.cellGrid) {
       setTimeout(() => {
         this.cellGrid = new CellGrid();
-        this.selectRule(this.rulesNames[0]);
         const savedState = this.dataService.getSavedState();
-        if (savedState != null) {
-          this.cellGrid.currentLayer = savedState;
+        if (
+          savedState != null &&
+          !!savedState.ruleSetName &&
+          this.rulesNames.includes(savedState.ruleSetName)
+        ) {
+          this.selectRule(savedState.ruleSetName);
+          if (!!savedState.matrix) {
+            this.cellGrid.currentLayer = savedState.matrix;
+          }
+        } else {
+          this.selectRule(this.rulesNames[0]);
         }
       }, 10); //to prevent filling before init
     }
   }
 
   ngOnDestroy(): void {
-    this.dataService.saveState(this.cellGrid.currentLayer);
+    this.dataService.saveState(
+      new SavedState(this.cellGrid.currentLayer, this.ruleToSimulate)
+    );
     this.cellGrid.remove();
   }
-
-  // public changeState() {
-  //   this.cellGrid.currentState = this.cellGrid.currentState == 0 ? 1 : 0;
-  // }
 
   public selectState(state: number) {
     this.cellGrid.ColorMap.currentState = state;
