@@ -34,11 +34,7 @@
           (click)="selectState(state)">
           <label class="btn btn-outline-secondary rule-button allign" for="btnradio{{state}}">
             <span>{{state}}:</span>
-            <span class="small-box">
-              <table>
-                <td [style.background-color]="ColorMap.getColor(state)"></td>
-              </table>
-            </span>
+            <input ejs-colorpicker type="color" [value]="ColorMap.getColor(state)" (change)="updateColorMap($event, state)"/>
             <button type="button" class="btn btn-sm btn-outline-danger small-box">
               <i class="fa fa-trash"></i>
             </button>

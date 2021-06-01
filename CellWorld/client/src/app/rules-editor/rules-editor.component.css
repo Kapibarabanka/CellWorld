@@ -1,3 +1,10 @@
+@import "../../../node_modules/@syncfusion/ej2-base/styles/bootstrap.css";
+@import "../../../node_modules/@syncfusion/ej2-buttons/styles/bootstrap.css";
+@import "../../../node_modules/@syncfusion/ej2-popups/styles/bootstrap.css";
+@import "../../../node_modules/@syncfusion/ej2-splitbuttons/styles/bootstrap.css";
+@import "../../../node_modules/@syncfusion/ej2-inputs/styles/bootstrap.css";
+
+
 #sidebar{
   background-color: #f8f9fa;
   border-right:0.5px solid #BDBDBDFF;

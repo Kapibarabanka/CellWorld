@@ -1,9 +1,10 @@
-import { ColorMap } from './../colors/color-map';
+import { ColorMap } from "./../colors/color-map";
 import { BlockRulesSet } from "./../rules/block-rule/block-rules-set";
 import { RulesService } from "./../services/rules.service";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { SimulationType } from "../constants/simulation-type";
 import { MooreRulesSet } from "../rules/moore-rule/moore-rules-set";
+import { ColorPickerEventArgs } from "@syncfusion/ej2-angular-inputs";
 
 @Component({
   selector: "rules-editor",
@@ -19,8 +20,8 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
   public currentBlockRuleSet: BlockRulesSet;
   public isMooreMode: boolean;
 
-  public get ColorMap(): ColorMap{
-    if (this.isMooreMode){
+  public get ColorMap(): ColorMap {
+    if (this.isMooreMode) {
       return this.currentMooreRuleSet.ColorMap;
     }
     return this.currentBlockRuleSet.ColorMap;
@@ -35,12 +36,12 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
     this.selectRule(this.mooreRuleSetsNames[0]);
   }
   ngOnDestroy(): void {
-    this.ColorMap.statesToColors.delete(-1)
+    this.ColorMap.statesToColors.delete(-1);
   }
 
   public selectRule(ruleName: string) {
     if (!!this.currentRuleSetName && !!this.ColorMap) {
-      this.ColorMap.statesToColors.delete(-1)
+      this.ColorMap.statesToColors.delete(-1);
     }
     this.currentRuleSetName = ruleName;
     const ruleType = this.rulesService.getRuleSetType(ruleName);
@@ -53,14 +54,21 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
       this.currentMooreRuleSet = null;
       this.isMooreMode = false;
     }
-    this.ColorMap.statesToColors.set(-1, '#ccc')
+    this.ColorMap.statesToColors.set(-1, "#ccc");
   }
 
-  public selectState(state: number){
+  public selectState(state: number) {
     this.ColorMap.currentState = state;
   }
 
+  public updateColorMap(args: ColorPickerEventArgs, state: number): void {
+    this.ColorMap.statesToColors.set(state, args.currentValue.hex);
+  }
+
   public saveBlockRule() {
-    this.rulesService.setBlockRuleSet(this.currentRuleSetName, this.currentBlockRuleSet);
+    this.rulesService.setBlockRuleSet(
+      this.currentRuleSetName,
+      this.currentBlockRuleSet
+    );
   }
 }
