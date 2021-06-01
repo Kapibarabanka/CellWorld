@@ -26,7 +26,7 @@ export class CellGrid extends p5 {
 
     this.gridWidth = Math.floor(width / this.cellSize / 2) * 2;
     this.gridHeight = Math.floor(height / this.cellSize / 2) * 2;
-    this.gridWidth = this.gridHeight;
+    //this.gridWidth = this.gridHeight;
 
     this.currentLayer = this.getEmptyMatrix(this.gridWidth, this.gridHeight);
     let canvas = this.createCanvas(

@@ -35,7 +35,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
 
   simulation: Array<Array<Array<number>>> = [];
 
-  speed: number = 40;
+  speed: number = 200;
   stepsPerRequest = 50;
 
   constructor(
