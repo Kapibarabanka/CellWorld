@@ -1,0 +1,9 @@
+<direct-rule class="small-box" *ngIf="left.isDirect()" [conditionModel]="left.Condition" [ColorMap]="ColorMap">
+</direct-rule>
+<sum-rule class="small-box" *ngIf="left.isSum()" [conditionModel]="left.Condition" [ColorMap]="ColorMap"></sum-rule>
+
+<div class="small-box">{{op}}</div>
+
+<direct-rule class="small-box" *ngIf="right.isDirect()" [conditionModel]="right.Condition" [ColorMap]="ColorMap">
+</direct-rule>
+<sum-rule class="small-box" *ngIf="right.isSum()" [conditionModel]="right.Condition" [ColorMap]="ColorMap"></sum-rule>

@@ -8,7 +8,10 @@ export class ColorMap{
   constructor();
   constructor(map: Map<number, string>)
   constructor(map?: Map<number, string>){
-    this.statesToColors = map || ConstantColorMaps.WhiteBlack;
+    this.statesToColors = map || new Map<number, string>([
+      [0, '#ffffff'],
+      [1, '#000000']
+    ]);
     if (this.States.length > 0){
       this.currentState = this.States[0]
     } else {
@@ -17,6 +20,9 @@ export class ColorMap{
   }
 
   public getColor(state: number): string {
+    if (state === -1) {
+      return '#ccc'
+    }
     return this.statesToColors.get(state);
   }
 

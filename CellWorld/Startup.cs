@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using CellWorld.Automaton;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.Extensions.Logging;
 
 namespace CellWorld
 {
@@ -47,8 +44,6 @@ namespace CellWorld
             {
                 endpoints.MapControllers();
             });
-
-            //CaHelper.Test126(40);
 
             app.UseSpa(spa =>
             {

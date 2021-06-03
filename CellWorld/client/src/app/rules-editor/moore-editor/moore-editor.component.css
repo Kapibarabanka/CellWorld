@@ -1,0 +1,40 @@
+table td {
+  width:15px;
+  height:15px;
+  text-align:center;
+  vertical-align:middle;
+  background-color:#ccc;
+  border:0.5px solid rgb(179, 177, 177);
+}
+.rule {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  height: 70px;
+  margin: 7px 7px;
+}
+
+.dropdown {
+  display: inline-block;
+}
+
+.small-box {
+  font-size: 15px;
+  display: inline-block;
+  margin: 0px 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
+}
+
+.condition{
+  display: inline-block;
+  vertical-align: middle;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: 7px;
+}
+
+.btn {
+  margin: 0px 7px;
+}

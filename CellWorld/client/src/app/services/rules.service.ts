@@ -1,3 +1,4 @@
+import { ColorMap } from './../colors/color-map';
 import { BlockRulesSet } from './../rules/block-rule/block-rules-set';
 import { SimulationType } from './../constants/simulation-type';
 import { ConstantRules } from './../constants/constant-rules';
@@ -8,34 +9,63 @@ import { MooreRulesSet } from '../rules/moore-rule/moore-rules-set';
   providedIn: 'root'
 })
 export class RulesService {
-  private mooreRules: Map<string, MooreRulesSet>;
-  private blockRules: Map<string, BlockRulesSet>;
+  private mooreRuleSets: Map<string, MooreRulesSet>;
+  private blockRuleSets: Map<string, BlockRulesSet>;
 
   constructor() {
-    this.mooreRules = ConstantRules.MooreRules;
-    this.blockRules = ConstantRules.BlockRules;
+    this.mooreRuleSets = ConstantRules.MooreRules;
+    this.blockRuleSets = ConstantRules.BlockRules;
   }
 
-  public getRulesNames(): string[] {
-    return Array.from(this.mooreRules.keys()).concat(Array.from(this.blockRules.keys()))
+  public getRuleSetsNames(): string[] {
+    return Array.from(this.mooreRuleSets.keys()).concat(Array.from(this.blockRuleSets.keys()))
   }
 
-  public getRuleType(ruleName: string): SimulationType {
-    if (this.blockRules.has(ruleName)) {
+  public getMooreRuleSetsNames(): string[] {
+    return Array.from(this.mooreRuleSets.keys())
+  }
+
+  public getBlockRuleSetsNames(): string[] {
+    return Array.from(this.blockRuleSets.keys())
+  }
+
+  public getRuleSetType(ruleSetName: string): SimulationType {
+    if (this.blockRuleSets.has(ruleSetName)) {
       return SimulationType.Block;
     }
     return SimulationType.Moore;
   }
 
-  public getMooreRulesSet(ruleName: string): MooreRulesSet{
-    return this.mooreRules.get(ruleName);
+  public getMooreRulesSet(ruleSetName: string): MooreRulesSet{
+    return this.mooreRuleSets.get(ruleSetName);
   }
 
-  public getBlockRulesSet(ruleName: string): BlockRulesSet{
-    return this.blockRules.get(ruleName);
+  public getBlockRulesSet(ruleSetName: string): BlockRulesSet{
+    return this.blockRuleSets.get(ruleSetName);
   }
 
-  public setBlockRule(ruleName: string, rule: BlockRulesSet) {
-    this.blockRules.set(ruleName, rule);
+  public setBlockRuleSet(ruleSetName: string, rule: BlockRulesSet) {
+    this.blockRuleSets.set(ruleSetName, rule);
+  }
+
+  public deleteBlockRuleSet(ruleSetName: string) {
+    this.blockRuleSets.delete(ruleSetName);
+  }
+  
+  public setMooreRuleSet(ruleSetName: string, rule: MooreRulesSet) {
+    this.mooreRuleSets.set(ruleSetName, rule);
+  }
+
+  public deleteMooreRuleSet(ruleSetName: string) {
+    this.mooreRuleSets.delete(ruleSetName);
+  }
+
+  public getRuleSetColorMap(ruleSetName: string): ColorMap {
+    let type = this.getRuleSetType(ruleSetName);
+    if (type == SimulationType.Block) {
+      return this.getBlockRulesSet(ruleSetName).ColorMap;
+    }
+    return this.getMooreRulesSet(ruleSetName).ColorMap;
+
   }
 }

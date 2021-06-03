@@ -66,15 +66,21 @@ export class ConstantRules {
     new BlockRuleModel(-1, [0, 1, 1, 1], [1, 1, 1, 0]),
     new BlockRuleModel(-1, [1, 0, 1, 1], [1, 1, 0, 1]),
 
-    new BlockRuleModel(-1, [1, 1, 1, 1], [1, 1, 1, 1])
+    new BlockRuleModel(-1, [1, 1, 1, 1], [1, 1, 1, 1]),
+
+    new BlockRuleModel(-1, [1, -1, -1, 2], [1, -1, -1, 2]),
+    new BlockRuleModel(-1, [2, -1, -1, 1], [2, -1, -1, 1]),
+    new BlockRuleModel(-1, [-1, 2, 1, -1], [-1, 2, 1, -1]),
+    new BlockRuleModel(-1, [-1, 1, 2, -1], [-1, 1, 2, -1]),
+    
   ]
 
   public static MooreRules: Map<string, MooreRulesSet> = new Map<string, MooreRulesSet>([
-    ["life", new MooreRulesSet(ConstantRules.RuleLife, new ColorMap(ConstantColorMaps.OptionalWhiteBlack))],
-    ["126",new MooreRulesSet(ConstantRules.Rule126, new ColorMap(ConstantColorMaps.OptionalWhiteBlack))]
+    ["Life", new MooreRulesSet(ConstantRules.RuleLife, new ColorMap(ConstantColorMaps.LifeColors))],
+    ["126",new MooreRulesSet(ConstantRules.Rule126, new ColorMap(ConstantColorMaps.Rule126Colors))]
   ])
 
   public static BlockRules: Map<string, BlockRulesSet> = new Map<string, BlockRulesSet>([
-    ["hpp", new BlockRulesSet(ConstantRules.HppGasRule, new ColorMap(ConstantColorMaps.WhiteBlack))]
+    ["HPP", new BlockRulesSet(ConstantRules.HppGasRule, new ColorMap(ConstantColorMaps.HppColors))]
   ])
 }

@@ -1,13 +1,32 @@
-<button type="button" class="btn btn-outline-secondary" (click)="changeState()">Change state</button>
-<label>Current State: {{ColorMap.currentState}}</label>
-<!-- <button type="button" class="btn btn-outline-secondary" (click)="addTransition()">Add transition</button> -->
-<button type="button" class="btn btn-outline-success">Save</button>
-<div class="container">
-  <div class="row">
-      <ng-container *ngFor="let rule of RuleModels">
-        <direct-rule  *ngIf="rule.isDirect()" class="col-4" [conditionModel]="rule.ConditionModel.Condition" 
-        [result]="rule.Result" [ColorMap]="ColorMap"></direct-rule>
-        <sum-rule  *ngIf="rule.isSum()" class="col"></sum-rule>
-      </ng-container>
-  </div>
+<div class="dropdown">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="addRuleButton"
+    data-bs-toggle="dropdown" aria-expanded="false">
+    Add rule
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="addRuleButton">
+    <li><a class="dropdown-item">Direct</a></li>
+    <li><a class="dropdown-item">Totalistic</a></li>
+    <li><a class="dropdown-item">Complex</a></li>
+  </ul>
 </div>
+<p></p>
+<ng-container *ngFor="let rule of RuleModels; let i = index">
+  <div class="rule">
+    <direct-rule class="condition" *ngIf="rule.isDirect()" [conditionModel]="rule.ConditionModel.Condition"
+      [ColorMap]="ColorMap"></direct-rule>
+    <sum-rule class="condition" *ngIf="rule.isSum()" [conditionModel]="rule.ConditionModel.Condition"
+      [ColorMap]="ColorMap"></sum-rule>
+    <complex-condition class="condition" *ngIf="rule.isComplex()" [conditionModel]="rule.ConditionModel.Condition"
+      [ColorMap]="ColorMap"></complex-condition>
+
+    <span class="small-box">-></span>
+    <span class="small-box">
+      <table>
+        <td [style.background-color]="getColor(rule.Result)"></td>
+      </table>
+    </span>
+    <button type="button" class="btn btn-sm btn-outline-danger small-box" (click)="deleteRule(i)">
+      <i class="fa fa-trash"></i>
+    </button>
+  </div>
+</ng-container>

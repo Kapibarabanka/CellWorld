@@ -1,4 +1,3 @@
-import { DirectConditionModel } from './condition-models/direct-condition-model';
 import { ConditionModel } from './condition-model';
 export class MooreRuleModel{
   constructor(
@@ -7,10 +6,14 @@ export class MooreRuleModel{
   ){}
 
   public isDirect(): boolean {
-    return this.ConditionModel.ConditionType == "direct";
+    return this.ConditionModel.isDirect();
   }
 
   public isSum(): boolean {
-    return this.ConditionModel.ConditionType == "sum";
+    return this.ConditionModel.isSum();
+  }
+
+  public isComplex(): boolean {
+    return this.ConditionModel.isComplex();
   }
 }

@@ -1,6 +1,13 @@
 block-rule {
-  margin: 2px 8px;
-  padding: 5px 5px;
   border: 1px solid #ccc;
   border-radius: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin: 7px 7px;
+}
+
+.btn {
+  margin: 0px 7px;
 }

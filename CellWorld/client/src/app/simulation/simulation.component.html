@@ -1,24 +1,47 @@
-<div>
-  <button type="button" class="btn btn-outline-secondary" [disabled]="isSimulating" (click)="changeState()"> Change
-    state </button>
-  <label>Current State: {{cellGrid.currentState}}</label>
-
+<div class="main">
+  <label>Select rule set:</label>
+  <div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="addRuleButton" data-bs-toggle="dropdown"
+      aria-expanded="false">
+      {{ruleToSimulate}}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="addRuleButton">
+      <li><a *ngFor="let ruleName of rulesNames" class="dropdown-item" (click)="selectRule(ruleName)">{{ruleName}}</a>
+      </li>
+    </ul>
+  </div>
+  <label>Select state to draw:</label>
+  <div class="dropdown">
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="stateButton" data-bs-toggle="dropdown"
+      aria-expanded="false">
+      <span>{{GridColorMap.currentState}}:</span>
+      <span class="small-box">
+        <table>
+          <td [style.background-color]="GridColorMap.getColor(GridColorMap.currentState)"></td>
+        </table>
+      </span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="sateButton">
+      <li>
+        <div *ngFor="let state of GridColorMap.States" class="dropdown-item" (click)="selectState(state)">
+          <span>{{state}}:</span>
+          <span class="small-box">
+            <table>
+              <td [style.background-color]="GridColorMap.getColor(state)"></td>
+            </table>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
   <button type="button" class="btn btn-outline-success" [disabled]="isSimulating"
     (click)="startSimulation()">Start</button>
   <button type="button" class="btn btn-outline-warning" [disabled]="!isSimulating" (click)="stopSimulation()">
     Stop</button>
-  <button type="button" class="btn btn-outline-danger" [disabled]="isSimulating" (click)="cellGrid.clearGrid()"> Clear
+  <button type="button" class="btn btn-outline-danger" [disabled]="isSimulating" (click)="cellGrid.clearGrid()">
+    Clear
   </button>
   <button type="button" class="btn btn-outline-secondary" [disabled]="isSimulating" (click)="cellGrid.fillWithStatic()">
     Fill With Static </button>
-
-  <label>Select rule:</label>
-  <select type="button" class="btn btn-outline-secondary" [disabled]="isSimulating" required
-    [(ngModel)]="ruleToSimulate">
-    <option *ngFor="let ruleName of rulesNames" [value]="ruleName">
-      {{ruleName}}
-    </option>
-  </select>
+  <div id="sketch-holder" align="center"></div>
 </div>
-
-<div id="sketch-holder" align="center"></div>

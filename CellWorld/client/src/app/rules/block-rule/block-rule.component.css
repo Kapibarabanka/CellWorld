@@ -7,6 +7,11 @@ table td {
   border:0.5px solid rgb(179, 177, 177);
 }
 
-.rule{
-  padding: 0px;
+.small-box {
+  font-size: 15px;
+  display: inline-block;
+  margin: 0px 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle; 
 }
