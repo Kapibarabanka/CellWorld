@@ -2,7 +2,16 @@
 </direct-rule>
 <sum-rule class="small-box" *ngIf="left.isSum()" [conditionModel]="left.Condition" [ColorMap]="ColorMap"></sum-rule>
 
-<div class="small-box">{{op}}</div>
+<div class="dropdown small-box">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="addRuleButton" data-bs-toggle="dropdown"
+    aria-expanded="false">
+    {{selectedOperator}}
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="addRuleButton">
+    <li><a *ngFor="let operator of Operators" class="dropdown-item" (click)="selectOperator(operator)">{{operator}}</a>
+    </li>
+  </ul>
+</div>
 
 <direct-rule class="small-box" *ngIf="right.isDirect()" [conditionModel]="right.Condition" [ColorMap]="ColorMap">
 </direct-rule>

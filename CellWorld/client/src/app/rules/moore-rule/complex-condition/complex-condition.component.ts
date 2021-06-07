@@ -12,11 +12,18 @@ export class ComplexConditionComponent implements OnInit {
   @Input() conditionModel: ComplexConditionModel;
   @Input() ColorMap: ColorMap;
 
+  public Operators = [
+    'AND',
+    'OR',
+    'XOR',
+    'NOT'
+  ]
+
   public get left(): ConditionModel {
     return this.conditionModel.LeftCondition
   }
 
-  public get op(): string {
+  public get selectedOperator(): string {
     return this.conditionModel.Operator.toUpperCase();
   }
 
@@ -24,12 +31,14 @@ export class ComplexConditionComponent implements OnInit {
     return this.conditionModel.RightCondition
   }
 
-  constructor() { 
-    
+  constructor() {
   }
 
   ngOnInit(): void {
-    let a = 1;
+  }
+
+  public selectOperator(op: string){
+    this.conditionModel.Operator = op;
   }
 
 }
