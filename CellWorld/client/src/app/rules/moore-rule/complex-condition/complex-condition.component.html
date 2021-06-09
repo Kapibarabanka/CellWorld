@@ -1,6 +1,16 @@
-<direct-rule class="small-box" *ngIf="left.isDirect()" [conditionModel]="left.Condition" [ColorMap]="ColorMap">
+<direct-rule class="small-box" *ngIf="left != null && left.isDirect()" [conditionModel]="left.Condition" [ColorMap]="ColorMap">
 </direct-rule>
-<sum-rule class="small-box" *ngIf="left.isSum()" [conditionModel]="left.Condition" [ColorMap]="ColorMap"></sum-rule>
+<sum-rule class="small-box" *ngIf="left != null && left.isSum()" [conditionModel]="left.Condition" [ColorMap]="ColorMap"></sum-rule>
+<div class="dropdown small-box" *ngIf="left == null">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="addRuleButton"
+    data-bs-toggle="dropdown" aria-expanded="false">
+    Select rule type
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="addRuleButton">
+    <li><a class="dropdown-item" (click)="addDirectRule(true)">Direct</a></li>
+    <li><a class="dropdown-item" (click)="addSumRule(true)">Totalistic</a></li>
+  </ul>
+</div>
 
 <div class="dropdown small-box">
   <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="addRuleButton" data-bs-toggle="dropdown"
@@ -13,6 +23,16 @@
   </ul>
 </div>
 
-<direct-rule class="small-box" *ngIf="right.isDirect()" [conditionModel]="right.Condition" [ColorMap]="ColorMap">
+<direct-rule class="small-box" *ngIf="right != null && right.isDirect()" [conditionModel]="right.Condition" [ColorMap]="ColorMap">
 </direct-rule>
-<sum-rule class="small-box" *ngIf="right.isSum()" [conditionModel]="right.Condition" [ColorMap]="ColorMap"></sum-rule>
+<sum-rule class="small-box" *ngIf="right != null && right.isSum()" [conditionModel]="right.Condition" [ColorMap]="ColorMap"></sum-rule>
+<div class="dropdown small-box" *ngIf="right == null">
+  <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="addRuleButton"
+    data-bs-toggle="dropdown" aria-expanded="false">
+    Select rule type
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="addRuleButton">
+    <li><a class="dropdown-item" (click)="addDirectRule(false)">Direct</a></li>
+    <li><a class="dropdown-item" (click)="addSumRule(false)">Totalistic</a></li>
+  </ul>
+</div>

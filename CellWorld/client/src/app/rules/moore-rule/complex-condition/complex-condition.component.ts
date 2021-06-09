@@ -41,4 +41,12 @@ export class ComplexConditionComponent implements OnInit {
     this.conditionModel.Operator = op;
   }
 
+  public addDirectRule(isLeft: boolean) {
+
+  }
+
+  public addSumRule(isLeft: boolean) {
+    
+  }
+
 }

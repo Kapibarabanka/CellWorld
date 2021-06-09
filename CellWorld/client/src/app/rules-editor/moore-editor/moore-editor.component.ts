@@ -1,3 +1,4 @@
+import { ComplexConditionModel } from "./../../rules/moore-rule/condition-models/complex-condition-model";
 import { DirectConditionModel } from "./../../rules/moore-rule/condition-models/direct-condition-model";
 import { MooreRuleModel } from "./../../rules/moore-rule/moore-rule-model";
 import {
@@ -63,6 +64,16 @@ export class MooreEditorComponent implements OnInit, OnChanges {
     this.RuleModels.push(
       new MooreRuleModel(
         new ConditionModel("sum", new SumConditionModel()),
+        defaultState
+      )
+    );
+  }
+
+  public addComplexRule() {
+    const defaultState = 0;
+    this.RuleModels.push(
+      new MooreRuleModel(
+        new ConditionModel("complex", new ComplexConditionModel()),
         defaultState
       )
     );
