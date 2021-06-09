@@ -1,14 +1,25 @@
 export class SumConditionModel {
-  constructor (
-    public CellsToSum: Array<boolean>,
-    public RequiredSum: number
-    ){}
+  public CellsToSum: Array<boolean>;
+  public RequiredSum: number;
 
-    public get(i: number, j: number): boolean {
-      return this.CellsToSum[i * 3 + j];
+  constructor();
+  constructor(cellsToSum: boolean[], requiredSum: number);
+  constructor(cellsToSum?: boolean[], requiredSum?: number) {
+    this.RequiredSum = requiredSum || 0;
+    this.CellsToSum = cellsToSum || [];
+    if (cellsToSum === undefined) {
+      for (var i = 0; i < 9; i++) {
+        this.CellsToSum.push(false);
+      }
     }
-  
-    public set(i: number, j: number, val: boolean) {
-      this.CellsToSum[i * 3 + j] = val;
-    }
+  }
+
+
+  public get(i: number, j: number): boolean {
+    return this.CellsToSum[i * 3 + j];
+  }
+
+  public set(i: number, j: number, val: boolean) {
+    this.CellsToSum[i * 3 + j] = val;
+  }
 }

@@ -4,8 +4,8 @@
     Add rule
   </button>
   <ul class="dropdown-menu" aria-labelledby="addRuleButton">
-    <li><a class="dropdown-item">Direct</a></li>
-    <li><a class="dropdown-item">Totalistic</a></li>
+    <li><a class="dropdown-item" (click)="addDirectRule()">Direct</a></li>
+    <li><a class="dropdown-item" (click)="addSumRule()">Totalistic</a></li>
     <li><a class="dropdown-item">Complex</a></li>
   </ul>
 </div>
@@ -22,7 +22,7 @@
     <span class="small-box">-></span>
     <span class="small-box">
       <table>
-        <td [style.background-color]="getColor(rule.Result)"></td>
+        <td [style.background-color]="getColor(rule.Result)" (mousedown)="changeResultState(i)"></td>
       </table>
     </span>
     <button type="button" class="btn btn-sm btn-outline-danger small-box" (click)="deleteRule(i)">
