@@ -7,7 +7,7 @@
           [value]="ruleName" (click)="selectRule(ruleName)">
           {{ruleName}}
         </button>
-        <button type="button" class="btn btn-outline-success rule-button">Add rule set</button>
+        <button type="button" class="btn btn-outline-success rule-button" (click)="addMooreRuleSet()">Add rule set</button>
       </div>
       <div>Block rules:</div>
       <div class="btn-group-vertical">
@@ -15,7 +15,7 @@
           [value]="ruleName" (click)="selectRule(ruleName)">
           {{ruleName}}
         </button>
-        <button type="button" class="btn btn-outline-success rule-button">Add rule set</button>
+        <button type="button" class="btn btn-outline-success rule-button" (click)="addBlockRuleSet()">Add rule set</button>
       </div>
     </div>
 

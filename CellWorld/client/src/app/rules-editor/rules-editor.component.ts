@@ -91,6 +91,16 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
     }
   }
 
+  public addMooreRuleSet(){
+    this.rulesService.setMooreRuleSet("Moore Rule Set", new MooreRulesSet([], new ColorMap()))
+    this.updateRuleSetLists();
+  }
+
+  public addBlockRuleSet(){
+    this.rulesService.setBlockRuleSet("Block Rule Set", new BlockRulesSet([], new ColorMap()))
+    this.updateRuleSetLists();
+  }
+
   public deleteRuleSet() {
     if (this.isMooreMode) {
       this.rulesService.deleteMooreRuleSet(this.currentRuleSetName);
