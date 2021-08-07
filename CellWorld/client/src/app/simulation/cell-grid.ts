@@ -1,32 +1,32 @@
+import { SimulationSettings } from './simulation-settings';
 import { ColorMap } from "src/app/colors/color-map";
 import * as p5 from "p5";
 
 export class CellGrid extends p5 {
   public id: string;
   public ColorMap: ColorMap;
-  // public colorMap = [
-  //   'white',
-  //   'black'
-  // ]
-  public cellSize = 5;
+  public cellSize: number;
   public gridWidth: number;
   public gridHeight: number;
   public currentLayer: Array<Array<number>>;
 
-  constructor(sketch = (p) => {}) {
+  constructor(sketch = (p) => { }) {
     super(sketch);
   }
 
   setup() {
-    this.id = "sketch-holder";
-    this.cellSize = 5;
+    this.id = SimulationSettings.CanvasName;
+    this.cellSize = SimulationSettings.CellSize;
 
-    let width = this.windowWidth - 300;
-    let height = this.windowHeight - 120;
+    let width = this.windowWidth - SimulationSettings.WidthMargin;
+    let height = this.windowHeight - SimulationSettings.HeightMargin;
 
     this.gridWidth = Math.floor(width / this.cellSize / 2) * 2;
     this.gridHeight = Math.floor(height / this.cellSize / 2) * 2;
-    //this.gridWidth = this.gridHeight;
+
+    if (SimulationSettings.IsSquare) {
+      this.gridWidth = this.gridHeight;
+    }
 
     this.currentLayer = this.getEmptyMatrix(this.gridWidth, this.gridHeight);
     let canvas = this.createCanvas(
@@ -48,11 +48,8 @@ export class CellGrid extends p5 {
   }
 
   mouseClicked() {
-    if (
-      this.mouseX <= this.width &&
-      this.mouseX >= 0 &&
-      this.mouseY <= this.height &&
-      this.mouseY >= 0
+    if (this.mouseX <= this.width && this.mouseX >= 0 &&
+      this.mouseY <= this.height && this.mouseY >= 0
     ) {
       this.setCell(this.mouseX, this.mouseY);
     }
@@ -87,7 +84,7 @@ export class CellGrid extends p5 {
     }
   }
 
-  public getEmptyMatrix(width: number, height: number): Array<Array<number>> {
+  public getEmptyMatrix(width: number, height: number): number[][] {
     const res = [];
     for (var i = 0; i < height; i++) {
       res[i] = [];

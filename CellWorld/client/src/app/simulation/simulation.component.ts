@@ -1,3 +1,4 @@
+import { SimulationSettings } from './simulation-settings';
 import { RulesService } from "./../services/rules.service";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subject, timer, Observable } from "rxjs";
@@ -35,9 +36,6 @@ export class SimulationComponent implements OnInit, OnDestroy {
 
   simulation: Array<Array<Array<number>>> = [];
 
-  speed: number = 200;
-  stepsPerRequest = 50;
-
   constructor(
     private dataService: DataService,
     private rulesService: RulesService
@@ -45,11 +43,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     this.rulesNames = rulesService.getRuleSetsNames();
     this.needsToSimulate.subscribe(() => {
       this.simulate(
-        this.dataService.fetchSimulationResults(
-          this.startLayer,
-          this.ruleToSimulate,
-          this.stepsPerRequest
-        )
+        this.dataService.fetchSimulationResults(this.startLayer, this.ruleToSimulate)
       );
     });
   }
@@ -99,7 +93,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
   public startSimulation() {
     this.simulation = [];
     this.isSimulating = true;
-    timer(0, this.speed)
+    timer(0, SimulationSettings.SpeedDelay)
       .pipe(takeUntil(this.needsToStop))
       .subscribe((x) => {
         if (!!this.simulation[0]) {
