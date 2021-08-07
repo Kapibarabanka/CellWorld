@@ -1,9 +1,9 @@
+/* For color picker */
 @import "../../../node_modules/@syncfusion/ej2-base/styles/bootstrap.css";
 @import "../../../node_modules/@syncfusion/ej2-buttons/styles/bootstrap.css";
 @import "../../../node_modules/@syncfusion/ej2-popups/styles/bootstrap.css";
 @import "../../../node_modules/@syncfusion/ej2-splitbuttons/styles/bootstrap.css";
 @import "../../../node_modules/@syncfusion/ej2-inputs/styles/bootstrap.css";
-
 
 #sidebar{
   background-color: #f8f9fa;
@@ -20,44 +20,11 @@
   border-left:0.5px solid #BDBDBDFF;
 }
 
-.rule-button{
-  margin: 3px 0px;
-}
-
-.allign{
-  width: 100%;
-  display: block;
+.side-list-button{
+  margin: 1px 0px !important; 
 }
 
 .btn-group-vertical{
   align-content: center;
   width: 100%;
-}
-
-table td {
-  width:15px;
-  height:15px;
-  text-align:center;
-  vertical-align:middle;
-  background-color:#ccc;
-  border:0.5px solid rgb(179, 177, 177);
-}
-
-.state-button{
-  margin: 3px 0px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-.inp{
-  width: 30px;
-}
-
-.small-box {
-  font-size: 15px;
-  display: inline-block;
-  margin: 0px 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  vertical-align: middle;
 }

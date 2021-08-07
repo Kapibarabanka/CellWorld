@@ -1,4 +1,4 @@
-<div class="small-box" >SUM OF</div>
+<div class="small-box">SUM OF</div>
 <table class="small-box">
   <tr *ngFor="let row of CellsToSum; let i = index">
     <td *ngFor="let cell of row; let j = index" (mousedown)="onChangeCellsToSum(i, j)">
@@ -6,6 +6,5 @@
     </td>
   </tr>
 </table>
-<div class="small-box" >==</div>
-<input mdbInput type="text" name="text" [(ngModel)]="conditionModel.RequiredSum"
-class="small-box inp" >
+<div class="small-box">==</div>
+<input mdbInput type="number" [(ngModel)]="conditionModel.RequiredSum" class="small-box inp">

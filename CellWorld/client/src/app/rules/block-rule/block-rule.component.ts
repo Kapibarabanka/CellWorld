@@ -10,8 +10,6 @@ import { ColorMap } from 'src/app/colors/color-map';
 export class BlockRuleComponent implements OnInit {
   @Input() rule: BlockRuleModel;
   @Input() colorMap: ColorMap;
-  @Output() ruleOutput = new EventEmitter<BlockRuleModel>();
-  @Output() toDelete = new EventEmitter<boolean>();
   
   public get FromBlock(): number[][] {
     return [
@@ -34,21 +32,15 @@ export class BlockRuleComponent implements OnInit {
 
   public onChangeToBlock(i: number, j: number) {
     this.rule.setTo(i, j, this.colorMap.currentState);
-    this.ruleOutput.emit(this.rule)
     return false;
   }
 
   public onChangeFromBlock(i: number, j: number) {
     this.rule.setFrom(i, j, this.colorMap.currentState);
-    this.ruleOutput.emit(this.rule)
     return false;
   }
 
   public getColor(state: number) {
     return this.colorMap.getColor(state)
   } 
-
-  public onDelete(){
-    this.toDelete.emit(true);
-  }
 }

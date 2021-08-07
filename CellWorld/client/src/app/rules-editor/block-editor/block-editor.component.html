@@ -1,4 +1,11 @@
 <button type="button" class="btn btn-outline-secondary" (click)="addRule()">Add rule</button>
 <p></p>
-<block-rule *ngFor="let rule of RuleModels; let i = index" [rule]="rule" [colorMap]="ColorMap"
-  (ruleOutput)="updateRule(i, $event)" (toDelete)="deleteRule(i)"></block-rule>
+<ng-container *ngFor="let rule of RuleModels; let i = index">
+  <div class="rule">
+    <block-rule  [rule]="rule" [colorMap]="ColorMap">
+    </block-rule>
+    <button type="button" class="btn btn-sm btn-outline-danger small-box" (click)="deleteRule(i)">
+      <i class="fa fa-trash"></i>
+    </button>
+  </div>
+</ng-container>

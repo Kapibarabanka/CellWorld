@@ -1,5 +1,5 @@
 import { ComplexConditionModel } from "./../condition-models/complex-condition-model";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { ColorMap } from "src/app/colors/color-map";
 import { ConditionModel } from "../condition-model";
 import { DirectConditionModel } from "../condition-models/direct-condition-model";
@@ -10,7 +10,7 @@ import { SumConditionModel } from "../condition-models/sum-condition-model";
   templateUrl: "./complex-condition.component.html",
   styleUrls: ["./complex-condition.component.css"],
 })
-export class ComplexConditionComponent implements OnInit {
+export class ComplexConditionComponent {
   @Input() conditionModel: ComplexConditionModel;
   @Input() ColorMap: ColorMap;
 
@@ -27,10 +27,6 @@ export class ComplexConditionComponent implements OnInit {
   public get right(): ConditionModel {
     return this.conditionModel.RightCondition;
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   public selectOperator(op: string) {
     this.conditionModel.Operator = op;

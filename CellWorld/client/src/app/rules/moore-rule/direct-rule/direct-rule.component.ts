@@ -1,5 +1,5 @@
 import { DirectConditionModel } from './../condition-models/direct-condition-model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ColorMap } from 'src/app/colors/color-map';
 
 @Component({
@@ -7,7 +7,7 @@ import { ColorMap } from 'src/app/colors/color-map';
   templateUrl: './direct-rule.component.html',
   styleUrls: ['./direct-rule.component.css']
 })
-export class DirectRuleComponent implements OnInit {
+export class DirectRuleComponent {
   @Input() conditionModel: DirectConditionModel;
   @Input() ColorMap: ColorMap;
 
@@ -17,11 +17,6 @@ export class DirectRuleComponent implements OnInit {
       [this.conditionModel.Condition[3], this.conditionModel.Condition[4], this.conditionModel.Condition[5]],
       [this.conditionModel.Condition[6], this.conditionModel.Condition[7], this.conditionModel.Condition[8]],
     ]
-  }
-
-  constructor() { }
-
-  ngOnInit(): void {
   }
 
   public onChangeCondition(i: number, j: number) {

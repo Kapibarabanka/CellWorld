@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ColorMap } from 'src/app/colors/color-map';
 import { SumConditionModel } from '../condition-models/sum-condition-model';
 
@@ -7,11 +7,10 @@ import { SumConditionModel } from '../condition-models/sum-condition-model';
   templateUrl: './sum-rule.component.html',
   styleUrls: ['./sum-rule.component.css']
 })
-export class SumRuleComponent implements OnInit {
+export class SumRuleComponent {
   @Input() conditionModel: SumConditionModel;
   @Input() result: number;
   @Input() ColorMap: ColorMap;
-  @Output() deleteModel = new EventEmitter<boolean>();
 
   public get CellsToSum(): boolean[][] {
     return [
@@ -21,30 +20,13 @@ export class SumRuleComponent implements OnInit {
     ]
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
   public onChangeCellsToSum(i: number, j: number) {
     this.conditionModel.set(i, j, !this.CellsToSum[i][j]);
     return false;
   }
 
-  public getBoolColor(state: boolean) {
-    if (state) {
-      return 'black'
-    } else {
-      return 'white'
-    }
-  }
-
   public getColor(state: number) {
     return this.ColorMap.getColor(state)
-  } 
-
-  public onDelete(){
-    this.deleteModel.emit(true);
   }
 
 }

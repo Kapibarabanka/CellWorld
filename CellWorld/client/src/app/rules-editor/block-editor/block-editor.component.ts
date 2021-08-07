@@ -1,6 +1,6 @@
 import { ColorMap } from './../../colors/color-map';
 import { BlockRuleModel } from './../../rules/block-rule/block-rule-model';
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BlockRulesSet } from 'src/app/rules/block-rule/block-rules-set';
 
 @Component({
@@ -8,7 +8,7 @@ import { BlockRulesSet } from 'src/app/rules/block-rule/block-rules-set';
   templateUrl: './block-editor.component.html',
   styleUrls: ['./block-editor.component.css']
 })
-export class BlockEditorComponent implements OnInit, OnChanges {
+export class BlockEditorComponent {
   @Input() RulesSet: BlockRulesSet;
   
   public get ColorMap(): ColorMap {
@@ -18,19 +18,8 @@ export class BlockEditorComponent implements OnInit, OnChanges {
     return this.RulesSet.Rules;
   }
 
-  constructor() { }
-  ngOnChanges(changes: SimpleChanges): void {
-  }
-
-  ngOnInit(): void {
-  }
-
   public changeState() {
     this.ColorMap.toggleState();
-  }
-
-  public updateRule(idx: number, rule: BlockRuleModel){
-    this.RuleModels[idx] = rule;
   }
 
   public deleteRule(idx: number){

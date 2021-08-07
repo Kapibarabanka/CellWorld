@@ -3,19 +3,21 @@
     <div id="sidebar" class="col">
       <div>Moore rules:</div>
       <div class="btn-group-vertical">
-        <button type="button" class="btn btn-outline-secondary rule-button" *ngFor="let ruleName of mooreRuleSetsNames"
+        <button type="button" class="btn btn-outline-secondary side-list-button" *ngFor="let ruleName of mooreRuleSetsNames"
           [value]="ruleName" (click)="selectRule(ruleName)">
           {{ruleName}}
         </button>
-        <button type="button" class="btn btn-outline-success rule-button" (click)="addMooreRuleSet()">Add rule set</button>
+        <button type="button" class="btn btn-outline-success side-list-button" (click)="addMooreRuleSet()">Add rule
+          set</button>
       </div>
       <div>Block rules:</div>
       <div class="btn-group-vertical">
-        <button type="button" class="btn btn-outline-secondary rule-button" *ngFor="let ruleName of blockRuleSetsNames"
+        <button type="button" class="btn btn-outline-secondary side-list-button" *ngFor="let ruleName of blockRuleSetsNames"
           [value]="ruleName" (click)="selectRule(ruleName)">
           {{ruleName}}
         </button>
-        <button type="button" class="btn btn-outline-success rule-button" (click)="addBlockRuleSet()">Add rule set</button>
+        <button type="button" class="btn btn-outline-success side-list-button" (click)="addBlockRuleSet()">Add rule
+          set</button>
       </div>
     </div>
 
@@ -30,20 +32,20 @@
 
     <div id="color-panel" class="col-2">
       <div>States to colors:</div>
-      <div class="btn-group-vertical" role="group">
-        <div *ngFor="let state of ColorMap.States" class="allign">
-          <input type="radio" class="btn-check" id="btnradio{{state}}" name="state_radio" 
-          (click)="selectState(state)">
-          <label class="btn btn-outline-secondary rule-button allign" for="btnradio{{state}}">
+      <div class="btn-group-vertical">
+        <ng-container *ngFor="let state of ColorMap.States">
+          <input type="radio" class="btn-check" id="btnradio{{state}}" name="state_radio" [checked]="state == ColorMap.currentState" (click)="selectState(state)">
+          <label class="btn btn-outline-secondary side-list-button" for="btnradio{{state}}">
             <input class="inp small-box" [value]="state" [disabled]="state==-1">:
-            <input ejs-colorpicker type="color" [value]="ColorMap.getColor(state)" (change)="updateColorMap($event, state)"/>
+            <input ejs-colorpicker type="color" [value]="ColorMap.getColor(state)"
+              (change)="updateColorMap($event, state)" />
             <button type="button" class="btn btn-sm btn-outline-danger small-box" [disabled]="state==-1">
               <i class="fa fa-trash"></i>
             </button>
           </label>
-        </div>
+        </ng-container>
+        <button type="button" class="btn btn-outline-success side-list-button">Add color</button>
       </div>
-      <button type="button" class="btn btn-outline-success rule-button allign">Add color</button>
     </div>
   </div>
 </div>

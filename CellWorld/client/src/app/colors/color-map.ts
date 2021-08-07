@@ -1,4 +1,3 @@
-import { ConstantColorMaps } from './../constants/constant-color-maps';
 export class ColorMap{
   public statesToColors: Map<number, string>;
   public currentState: number;

@@ -1,1 +1,38 @@
+.rule {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  margin: 7px 7px;
+  padding: 8px;
+  vertical-align: middle;
+}
 
+.small-box {
+  font-size: 15px;
+  display: inline-block;
+  margin: 0px 5px;
+  vertical-align: middle;
+}
+
+table td {
+  width:15px;
+  height:15px;
+  text-align:center;
+  vertical-align:middle;
+  background-color:#ccc;
+  border:0.5px solid rgb(179, 177, 177);
+}
+
+.dropdown {
+  display: inline-block;
+}
+
+.inp{
+  width: 30px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
