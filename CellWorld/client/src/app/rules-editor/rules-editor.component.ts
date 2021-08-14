@@ -17,15 +17,10 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
   public currentRuleSetName: string;
   public inputRuleSetName: string;
 
-  public currentMooreRuleSet: MooreRulesSet;
-  public currentBlockRuleSet: BlockRulesSet;
-  public isMooreMode: boolean;
+  public currentRuleSet: MooreRulesSet | BlockRulesSet;
 
   public get ColorMap(): ColorMap {
-    if (this.isMooreMode) {
-      return this.currentMooreRuleSet.ColorMap;
-    }
-    return this.currentBlockRuleSet.ColorMap;
+    return this.currentRuleSet.ColorMap;
   }
 
   constructor(private rulesService: RulesService) {
@@ -44,13 +39,9 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
     this.inputRuleSetName = ruleSetName;
     const ruleType = this.rulesService.getRuleSetType(ruleSetName);
     if (ruleType == SimulationType.Moore) {
-      this.currentMooreRuleSet = this.rulesService.getMooreRulesSet(ruleSetName);
-      this.currentBlockRuleSet = null;
-      this.isMooreMode = true;
+      this.currentRuleSet = this.rulesService.getMooreRulesSet(ruleSetName);
     } else {
-      this.currentBlockRuleSet = this.rulesService.getBlockRulesSet(ruleSetName);
-      this.currentMooreRuleSet = null;
-      this.isMooreMode = false;
+      this.currentRuleSet = this.rulesService.getBlockRulesSet(ruleSetName);
     }
   }
 
@@ -71,10 +62,10 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
   }
 
   public saveRuleSet() {
-    if (this.isMooreMode) {
+    if (this.currentRuleSet.isMoore) {
       this.rulesService.setMooreRuleSet(
         this.inputRuleSetName,
-        this.currentMooreRuleSet
+        this.currentRuleSet as MooreRulesSet
       );
       if (this.inputRuleSetName != this.currentRuleSetName) {
         this.rulesService.deleteMooreRuleSet(this.currentRuleSetName);
@@ -84,14 +75,13 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
     } else {
       this.rulesService.setBlockRuleSet(
         this.inputRuleSetName,
-        this.currentBlockRuleSet
+        this.currentRuleSet as BlockRulesSet
       );
       if (this.inputRuleSetName != this.currentRuleSetName) {
         this.rulesService.deleteBlockRuleSet(this.currentRuleSetName);
         this.currentRuleSetName = this.inputRuleSetName;
         this.updateRuleSetLists();
       }
-      console.log(JSON.stringify(this.currentBlockRuleSet ));
     }
   }
 
@@ -106,7 +96,7 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
   }
 
   public deleteRuleSet() {
-    if (this.isMooreMode) {
+    if (this.currentRuleSet.isMoore) {
       this.rulesService.deleteMooreRuleSet(this.currentRuleSetName);
     } else {
       this.rulesService.deleteBlockRuleSet(this.currentRuleSetName);
