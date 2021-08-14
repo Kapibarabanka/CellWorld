@@ -1,7 +1,7 @@
 import { SimulationSettings } from './simulation-settings';
 import { RulesService } from "./../services/rules.service";
 import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
-import { Subject, timer, Observable } from "rxjs";
+import { Subject, timer } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { CellGrid } from "./cell-grid";
 import { DataService } from "../services/data.service";
@@ -28,13 +28,13 @@ export class SimulationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   public needsToStop = new Subject<true>();
   public needsToSimulate = new Subject<true>();
-  public startLayer: Array<Array<number>>;
+  public startLayer: number[][];
   public isSimulating = false;
 
   public rulesNames: string[];
   public ruleToSimulate: string;
 
-  simulation: Array<Array<Array<number>>> = [];
+  simulationResults: number[][][] = [];
 
   constructor(
     private dataService: DataService,
@@ -42,31 +42,26 @@ export class SimulationComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.rulesNames = rulesService.getRuleSetsNames();
     this.needsToSimulate.subscribe(() => {
-      this.simulate(
-        this.dataService.fetchSimulationResults(this.startLayer, this.ruleToSimulate)
-      );
+      const results = this.dataService.fetchSimulationResults(this.startLayer, this.ruleToSimulate)
+      results.subscribe((nextLayers: number[][][]) => {
+        this.simulationResults = this.simulationResults.concat(nextLayers);
+      });
     });
   }
 
   public ngOnInit() {
-    if (!this.cellGrid) {
-      setTimeout(() => {
-        this.cellGrid = new CellGrid();
-        const savedState = this.dataService.getSavedState();
-        if (
-          savedState != null &&
-          !!savedState.ruleSetName &&
-          this.rulesNames.includes(savedState.ruleSetName)
-        ) {
-          this.selectRule(savedState.ruleSetName);
-          if (!!savedState.matrix) {
-            this.cellGrid.currentLayer = savedState.matrix;
-          }
-        } else {
-          this.selectRule(this.rulesNames[0]);
+    setTimeout(() => {
+      this.cellGrid = new CellGrid();
+      const savedState = this.dataService.getSavedState();
+      if (savedState != null && !!savedState.ruleSetName && this.rulesNames.includes(savedState.ruleSetName)) {
+        this.selectRule(savedState.ruleSetName);
+        if (!!savedState.matrix) {
+          this.cellGrid.currentLayer = savedState.matrix;
         }
-      }, 10); //to prevent filling before init
-    }
+      } else {
+        this.selectRule(this.rulesNames[0]);
+      }
+    }, 10); //to prevent filling before init
   }
 
   public ngAfterViewInit(): void {
@@ -75,12 +70,12 @@ export class SimulationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.cellGrid.brushIsActive = false;
       });
       el.addEventListener('hidden.bs.dropdown', () => {
-        setTimeout( () => { this.cellGrid.brushIsActive = true; }, 10 );
+        setTimeout(() => { this.cellGrid.brushIsActive = true; }, 10);
       });
     })
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.dataService.saveState(
       new SavedState(this.cellGrid.currentLayer, this.ruleToSimulate)
     );
@@ -102,26 +97,20 @@ export class SimulationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public startSimulation() {
-    this.simulation = [];
+    this.simulationResults = [];
     this.isSimulating = true;
     timer(0, SimulationSettings.SpeedDelay)
       .pipe(takeUntil(this.needsToStop))
       .subscribe((x) => {
-        if (!!this.simulation[0]) {
-          this.cellGrid.currentLayer = this.simulation.shift();
-          if (this.simulation.length == 30) {
-            this.startLayer = this.simulation.pop();
+        if (!!this.simulationResults[0]) {
+          this.cellGrid.currentLayer = this.simulationResults.shift();
+          if (this.simulationResults.length == 30) {
+            this.startLayer = this.simulationResults.pop();
             this.needsToSimulate.next(true);
           }
         }
       });
     this.startLayer = this.cellGrid.currentLayer;
     this.needsToSimulate.next(true);
-  }
-
-  private simulate(result: Observable<Object>) {
-    result.subscribe((simulation: number[][][]) => {
-      this.simulation = this.simulation.concat(simulation);
-    });
   }
 }
