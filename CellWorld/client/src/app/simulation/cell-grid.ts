@@ -8,6 +8,7 @@ export class CellGrid extends p5 {
   public cellSize: number;
   public gridWidth: number;
   public gridHeight: number;
+  public brushIsActive: boolean;
   public currentLayer: Array<Array<number>>;
 
   constructor(sketch = (p) => { }) {
@@ -15,6 +16,7 @@ export class CellGrid extends p5 {
   }
 
   setup() {
+    this.brushIsActive = true;
     this.id = SimulationSettings.CanvasName;
     this.cellSize = SimulationSettings.CellSize;
 
@@ -48,21 +50,14 @@ export class CellGrid extends p5 {
   }
 
   mouseClicked() {
-    if (this.mouseX <= this.width && this.mouseX >= 0 &&
-      this.mouseY <= this.height && this.mouseY >= 0
-    ) {
+    if (this.brushIsActive && this.cursorInBounds()) {
       this.setCell(this.mouseX, this.mouseY);
     }
     return false;
   }
 
   mouseDragged() {
-    if (
-      this.mouseX <= this.width &&
-      this.mouseX >= 0 &&
-      this.mouseY <= this.height &&
-      this.mouseY >= 0
-    ) {
+    if (this.brushIsActive && this.cursorInBounds()) {
       this.setCell(this.mouseX, this.mouseY);
     }
     return false;
@@ -134,5 +129,10 @@ export class CellGrid extends p5 {
       const y = i * this.cellSize;
       this.rect(x, y, this.cellSize, this.cellSize);
     }
+  }
+
+  private cursorInBounds(): boolean {
+    return this.mouseX <= this.width && this.mouseX >= 0 &&
+      this.mouseY <= this.height && this.mouseY >= 0
   }
 }

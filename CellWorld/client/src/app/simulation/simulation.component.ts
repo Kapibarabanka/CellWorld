@@ -1,6 +1,6 @@
 import { SimulationSettings } from './simulation-settings';
 import { RulesService } from "./../services/rules.service";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
 import { Subject, timer, Observable } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { CellGrid } from "./cell-grid";
@@ -13,7 +13,7 @@ import { SavedState } from "../services/saved-state";
   templateUrl: "./simulation.component.html",
   styleUrls: ["./simulation.component.css"],
 })
-export class SimulationComponent implements OnInit, OnDestroy {
+export class SimulationComponent implements OnInit, OnDestroy, AfterViewInit {
   public static GridId = "sketch-holder";
   public get GridId() {
     return SimulationComponent.GridId;
@@ -67,6 +67,17 @@ export class SimulationComponent implements OnInit, OnDestroy {
         }
       }, 10); //to prevent filling before init
     }
+  }
+
+  public ngAfterViewInit(): void {
+    Array.from(document.getElementsByClassName("dropdown")).forEach(el => {
+      el.addEventListener('shown.bs.dropdown', () => {
+        this.cellGrid.brushIsActive = false;
+      });
+      el.addEventListener('hidden.bs.dropdown', () => {
+        setTimeout( () => { this.cellGrid.brushIsActive = true; }, 10 );
+      });
+    })
   }
 
   ngOnDestroy(): void {
