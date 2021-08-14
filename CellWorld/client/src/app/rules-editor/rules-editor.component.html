@@ -36,15 +36,23 @@
         <ng-container *ngFor="let state of ColorMap.States">
           <input type="radio" class="btn-check" id="btnradio{{state}}" name="state_radio" [checked]="state == ColorMap.currentState" (click)="selectState(state)">
           <label class="btn btn-outline-secondary side-list-button" for="btnradio{{state}}">
-            <input class="inp small-box" [value]="state" [disabled]="state==-1">:
+            <input class="inp small-box" [value]="state" [disabled]="true">:
             <input ejs-colorpicker type="color" [value]="ColorMap.getColor(state)"
               (change)="updateColorMap($event, state)" />
-            <button type="button" class="btn btn-sm btn-outline-danger small-box" [disabled]="state==-1">
+            <button type="button" class="btn btn-sm btn-outline-danger small-box">
               <i class="fa fa-trash"></i>
             </button>
           </label>
         </ng-container>
-        <button type="button" class="btn btn-outline-success side-list-button">Add color</button>
+        <input type="radio" class="btn-check" id="btnradio-1" name="state_radio" [checked]="ColorMap.currentState === -1" (click)="selectState(-1)">
+          <label class="btn btn-outline-secondary side-list-button" for="btnradio-1">
+            <input class="inp small-box" [value]="-1" [disabled]="true">:
+            <input ejs-colorpicker type="color" [value]="ColorMap.getColor(-1)" (change)="updateDefaultColor($event)" />
+            <button type="button" class="btn btn-sm btn-outline-danger small-box" [disabled]="true">
+              <i class="fa fa-trash"></i>
+            </button>
+          </label>
+        <button type="button" class="btn btn-outline-success side-list-button" (click)="addState()">Add state</button>
       </div>
     </div>
   </div>

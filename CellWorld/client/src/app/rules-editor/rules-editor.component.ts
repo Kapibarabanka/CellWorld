@@ -39,23 +39,19 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
     this.ColorMap.statesToColors.delete(-1);
   }
 
-  public selectRule(ruleName: string) {
-    if (!!this.currentRuleSetName && !!this.ColorMap) {
-      this.ColorMap.statesToColors.delete(-1);
-    }
-    this.currentRuleSetName = ruleName;
-    this.inputRuleSetName = ruleName;
-    const ruleType = this.rulesService.getRuleSetType(ruleName);
+  public selectRule(ruleSetName: string) {
+    this.currentRuleSetName = ruleSetName;
+    this.inputRuleSetName = ruleSetName;
+    const ruleType = this.rulesService.getRuleSetType(ruleSetName);
     if (ruleType == SimulationType.Moore) {
-      this.currentMooreRuleSet = this.rulesService.getMooreRulesSet(ruleName);
+      this.currentMooreRuleSet = this.rulesService.getMooreRulesSet(ruleSetName);
       this.currentBlockRuleSet = null;
       this.isMooreMode = true;
     } else {
-      this.currentBlockRuleSet = this.rulesService.getBlockRulesSet(ruleName);
+      this.currentBlockRuleSet = this.rulesService.getBlockRulesSet(ruleSetName);
       this.currentMooreRuleSet = null;
       this.isMooreMode = false;
     }
-    this.ColorMap.statesToColors.set(-1, "#ccc");
   }
 
   public selectState(state: number) {
@@ -64,6 +60,14 @@ export class RulesEditorComponent implements OnInit, OnDestroy {
 
   public updateColorMap(args: ColorPickerEventArgs, state: number): void {
     this.ColorMap.statesToColors.set(state, args.currentValue.hex);
+  }
+
+  public updateDefaultColor(args: ColorPickerEventArgs): void {
+    this.ColorMap.defaultStateColor = args.currentValue.hex;
+  }
+
+  public addState(){
+    this.ColorMap.addState();
   }
 
   public saveRuleSet() {
